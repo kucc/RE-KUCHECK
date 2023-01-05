@@ -1,15 +1,15 @@
 import {
-    StyledContent,
-    StyledCopyRight,
-    StyledFooter,
-    StyledFooterContainer,
-    StyledFooterGithubLink,
-    StyledFooterLogo,
-    StyledFooterMargin,
-    StyledHorizontalLine,
-    StyledRow,
-    StyledSubContent,
-    StyledTitle
+  StyledContent,
+  StyledCopyRight,
+  StyledFooter,
+  StyledFooterContainer,
+  StyledFooterGithubLink,
+  StyledFooterLogo,
+  StyledFooterMargin,
+  StyledHorizontalLine,
+  StyledRow,
+  StyledSubContent,
+  StyledTitle
 } from './style';
 
 export const Footer = () => {
