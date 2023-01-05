@@ -8,24 +8,19 @@ import { useHistory } from 'react-router-dom';
 //   logoutMember,
 //   setProfileId
 // } from '@redux/actions/_member_action';
-
 import useDetectClose from '@hooks/useDetectClose';
 import { PATH } from '@utility/COMMON_FUNCTION';
 import { StyledDownArrow } from '@utility/COMMON_STYLE';
 
-import HamburgerIcon from '../../svg/header/mobileHamburger.svg';
 import {
   StyledDropContent,
   StyledLeftContainer,
-  StyledLoginLink,
   StyledMainLogo,
   StyledMenuButton,
-  StyledMobileHamburgerButton,
   StyledTimeTableLink,
   StyledTopHeader,
   StyledTopHeaderContainer,
   StyledUserContainer,
-  StyledUserName
 } from './style';
 
 export const TopHeader = () => {
@@ -39,11 +34,11 @@ export const TopHeader = () => {
   const [isLoginOpen, setIsLoginOpen] = useDetectClose(dropDownRef, false);
 
   const handleMobileHamburger = () => {
-    if (!isHamburger) {
-      document.body.classList.add('open-modal');
-    } else {
-      document.body.classList.remove('open-modal');
-    }
+    // if (!isHamburger) {
+    document.body.classList.add('open-modal');
+    // } else {
+    //   document.body.classList.remove('open-modal');
+    // }
     // dispatch(setHamburgerRequest(!isHamburger));
   };
 
@@ -68,31 +63,26 @@ export const TopHeader = () => {
           alt='logo'
           onClick={() => history.push(PATH.main)}
         />
-        <StyledMobileHamburgerButton
-          src={HamburgerIcon}
-          onClick={handleMobileHamburger}
-        />
+        {/* <StyledMobileHamburgerButton src={HamburgerIcon} onClick={handleMobileHamburger} /> */}
         <StyledLeftContainer>
           <span>
-            <StyledTimeTableLink to={PATH.timeTable}>
-              동방 시간표
-            </StyledTimeTableLink>
-            {member ? (
-              <>
-                <StyledMenuButton onClick={() => setIsLoginOpen(!isLoginOpen)}>
-                  <StyledUserContainer>
-                    <StyledUserName>{member.name}</StyledUserName>님
-                  </StyledUserContainer>
-                  <StyledDownArrow width='4' thin='2' />
-                </StyledMenuButton>
-                <StyledDropContent ref={dropDownRef} isLoginOpen={isLoginOpen}>
-                  <button onClick={handleGoProfile}>내정보</button>
-                  <button onClick={handleLogout}>로그아웃</button>
-                </StyledDropContent>
-              </>
-            ) : (
+            <StyledTimeTableLink to={PATH.timeTable}>동방 시간표</StyledTimeTableLink>
+            {/* {member ? ( */}
+            <>
+              <StyledMenuButton onClick={() => setIsLoginOpen(!isLoginOpen)}>
+                <StyledUserContainer>
+                  {/* <StyledUserName>{member.name}</StyledUserName>님 */}
+                </StyledUserContainer>
+                <StyledDownArrow width='4' thin='2' />
+              </StyledMenuButton>
+              <StyledDropContent ref={dropDownRef} isLoginOpen={isLoginOpen}>
+                <button onClick={handleGoProfile}>내정보</button>
+                <button onClick={handleLogout}>로그아웃</button>
+              </StyledDropContent>
+            </>
+            {/* ) : (
               <StyledLoginLink to={PATH.login}>LOGIN</StyledLoginLink>
-            )}
+            )} */}
           </span>
         </StyledLeftContainer>
       </StyledTopHeader>

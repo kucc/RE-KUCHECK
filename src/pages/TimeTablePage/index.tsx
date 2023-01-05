@@ -1,4 +1,4 @@
-import { StyledCommonTitle } from "@utility/COMMON_STYLE";
+import { StyledCommonTitle } from '@utility/COMMON_STYLE';
 
 export const TimeTablePage = () => {
   return (

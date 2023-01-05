@@ -55,7 +55,7 @@ export const StyledTab = styled.button`
   }
 `;
 
-export const StyledTabText = styled.span`
+export const StyledTabText = styled.span<{ active?: boolean }>`
   color: ${GRAY};
   font-size: 18px;
   font-family: 'sdBo';
@@ -100,7 +100,7 @@ export const StyledSidePadding = styled.div`
   }
 `;
 
-export const StyledVerticalLine = styled.div`
+export const StyledVerticalLine = styled.div<{ length?: number }>`
   border-right: 1px solid #b6b6b677;
   height: ${props => (props.length ? `${props.length}px` : '40px')};
   margin-left: 5%;
@@ -123,7 +123,7 @@ export const StyledSelectItem = styled.div`
   }
 `;
 
-export const StyledArrow = styled.i`
+export const StyledArrow = styled.i<{ thin?: number; width?: number }>`
   display: inline-block;
   border: solid ${BLACK};
   border-width: ${props =>
@@ -132,9 +132,7 @@ export const StyledArrow = styled.i`
   padding: ${props => (props.width ? `${props.width}px` : '3px')};
   @media (max-width: 1279px) {
     border-width: ${props =>
-      props.thin
-        ? `0px ${props.thin / 2}px ${props.thin / 2}px 0px`
-        : '0 1.5px 1.5px 0'};
+      props.thin ? `0px ${props.thin / 2}px ${props.thin / 2}px 0px` : '0 1.5px 1.5px 0'};
     padding: ${props => (props.width ? `${props.width / 2}px` : '1.5px')};
   }
 `;
@@ -190,7 +188,7 @@ export const StyledInputNumber = styled(InputNumber)`
   }
 `;
 
-export const StyledSelect = styled(Select)`
+export const StyledSelect = styled(Select)<{ width?: number }>`
   .ant-select-selector {
     border-radius: 20px !important;
     height: 61px !important;

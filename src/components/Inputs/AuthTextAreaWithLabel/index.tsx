@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import {
   StyledLabel,
   StyledRequiredText,
@@ -15,12 +13,10 @@ export const AuthTextAreaWithLabel = ({
   value,
   onChange,
   isRequired = true,
-}) => {
+}: any) => {
   return (
     <Wrapper isLabelTitle={labelTitle}>
-      {labelTitle && (
-        <StyledLabel htmlFor={inputName}>{labelTitle}</StyledLabel>
-      )}
+      {labelTitle && <StyledLabel htmlFor={inputName}>{labelTitle}</StyledLabel>}
       {!isRequired && <StyledRequiredText>(선택)</StyledRequiredText>}
       <StyledTextArea
         name={inputName}
@@ -31,14 +27,4 @@ export const AuthTextAreaWithLabel = ({
       />
     </Wrapper>
   );
-};
-
-AuthTextAreaWithLabel.propTypes = {
-  labelTitle: PropTypes.string,
-  inputName: PropTypes.string,
-  inputType: PropTypes.string,
-  placeholder: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-  isRequired: PropTypes.bool,
 };
