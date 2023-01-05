@@ -1,48 +1,47 @@
-import { useEffect, useState } from "react";
+import { useState } from 'react';
 
-import { useSelector } from "react-redux";
-
-import { EmptyBox, MainCourse } from "@components";
+// import { useSelector } from "react-redux";
+import { EmptyBox, MainCourse } from '@components';
 
 import {
   StyledCourseTab,
   StyledTab,
   StyledTabText,
-} from "@utility/COMMON_STYLE";
+} from '@utility/COMMON_STYLE';
 
-import { StyledCourseContainer } from "./style";
+import { StyledCourseContainer } from './style';
 
 export const MainCourseTab = () => {
-  const mainCourseData = useSelector((state) => state.course.mainCourse.data);
-  const searchStringInput = useSelector((state) => state.main.stringInput); // 검색어
-  const searchLanguage = useSelector((state) => state.main.language); // 사용 언어
+  // const mainCourseData = useSelector(state => state.course.mainCourse.data);
+  // const searchStringInput = useSelector(state => state.main.stringInput); // 검색어
+  // const searchLanguage = useSelector(state => state.main.language); // 사용 언어
 
   const [courseTab, setCourseTab] = useState(0);
   const [courseList, setCourseList] = useState([]);
 
-  useEffect(() => {
-    let searchArray = mainCourseData;
-    if (searchStringInput) {
-      // 문자열 검색
-      const regex = new RegExp(searchStringInput, "gi");
+  // useEffect(() => {
+  //   let searchArray = mainCourseData;
+  //   if (searchStringInput) {
+  //     // 문자열 검색
+  //     const regex = new RegExp(searchStringInput, 'gi');
 
-      searchArray = mainCourseData.filter(
-        (res) =>
-          res.courseName.match(regex) || res.courseLeader.name.match(regex)
-      );
-    }
+  //     searchArray = mainCourseData.filter(
+  //       res =>
+  //         res.courseName.match(regex) || res.courseLeader.name.match(regex),
+  //     );
+  //   }
 
-    if (searchLanguage) {
-      // 사용언어
-      const regex = new RegExp(searchLanguage, "gi");
+  //   if (searchLanguage) {
+  //     // 사용언어
+  //     const regex = new RegExp(searchLanguage, 'gi');
 
-      searchArray = mainCourseData.filter((res) =>
-        res.language.find((element) => element.match(regex))
-      );
-    }
+  //     searchArray = mainCourseData.filter(res =>
+  //       res.language.find(element => element.match(regex)),
+  //     );
+  //   }
 
-    setCourseList(searchArray);
-  }, [mainCourseData, searchStringInput, searchLanguage]);
+  //   setCourseList(searchArray);
+  // }, [mainCourseData, searchStringInput, searchLanguage]);
 
   return (
     <StyledCourseContainer>
@@ -62,7 +61,7 @@ export const MainCourseTab = () => {
       </StyledCourseTab>
       {courseList.length === 0 && <EmptyBox />}
       {courseList.length > 0 &&
-        courseList.map((res) => {
+        courseList.map(res => {
           if (courseTab === 0) return <MainCourse course={res} key={res.id} />;
           else if (courseTab === res.courseType)
             return <MainCourse course={res} key={res.id} />;

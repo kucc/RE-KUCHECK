@@ -16,6 +16,7 @@ import {
   TimeTablePage,
 } from '@pages';
 
+import './App.less';
 import GlobalStyle from './GlobalStyle';
 import { Footer, TopHeader } from './components';
 import { PATH } from './utility';
@@ -33,7 +34,6 @@ const NotForMemberRoute = ({ component, ...res }: any) => {
 function App() {
   return (
     <>
-      {' '}
       <GlobalStyle />
       <TopHeader />
       <Switch>

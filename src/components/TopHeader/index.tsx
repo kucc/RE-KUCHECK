@@ -10,7 +10,6 @@ import { useHistory } from 'react-router-dom';
 // } from '@redux/actions/_member_action';
 import useDetectClose from '@hooks/useDetectClose';
 import { PATH } from '@utility/COMMON_FUNCTION';
-import { StyledDownArrow } from '@utility/COMMON_STYLE';
 
 import {
   StyledDropContent,
@@ -73,7 +72,7 @@ export const TopHeader = () => {
                 <StyledUserContainer>
                   {/* <StyledUserName>{member.name}</StyledUserName>님 */}
                 </StyledUserContainer>
-                <StyledDownArrow width='4' thin='2' />
+                {/* <StyledDownArrow width='4' thin='2' /> */}
               </StyledMenuButton>
               <StyledDropContent ref={dropDownRef} isLoginOpen={isLoginOpen}>
                 <button onClick={handleGoProfile}>내정보</button>

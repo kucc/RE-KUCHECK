@@ -1,80 +1,57 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { getMainCourseRequest } from '@redux/actions/_course_action';
-import { getProfileRequest } from '@redux/actions/_member_action';
+// import { getMainCourseRequest } from '@redux/actions/_course_action';
 
-import { EmptyBox, MainCourse } from '@components';
-
-import { getToken } from '@/api';
-import { MEMBER_ROLE, PATH } from '@utility/COMMON_FUNCTION';
-import { StyledCourseTab, StyledTab, StyledTabText } from '@utility/COMMON_STYLE';
-
-import EmailIcon from '../../svg/profile/email.svg';
-import GithubIcon from '../../svg/profile/github.svg';
-import InstagramIcon from '../../svg/profile/instagram.svg';
-import {
-  StyledComment,
-  StyledCourseContainer,
-  StyledMobileModifyButton,
-  StyledName,
-  StyledPcModifyButton,
-  StyledSocialBox,
-  StyledSocialContainer,
-  StyledSocialLink,
-  StyledUserContainer,
-  StyledUserDetailComment,
-  StyledUserEmoji,
-  StyledUserInfoContainer,
-  StyledUserRole,
-} from './style';
+// import { getToken } from '@/api';
 
 export const ProfilePage = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const mainCourseData = useSelector(state => state.course.mainCourse.data);
+  // const mainCourseData = useSelector(state => state.course.mainCourse.data);
 
-  const member = useSelector(state => state.member.currentMember);
-  const selectUserId = useSelector(state => state.member.profileId);
-  const {
-    status: profileStatus,
-    data: profileInfo,
-    error: profileError,
-  } = useSelector(state => ({
-    status: state.member.profileInfo.status,
-    data: state.member.profileInfo.data,
-    error: state.member.profileInfo.error,
-  }));
+  // const member = useSelector(state => state.member.currentMember);
+  // const selectUserId = useSelector(state => state.member.profileId);
+  // const {
+  //   status: profileStatus,
+  //   data: profileInfo,
+  //   error: profileError,
+  // } = useSelector(state => ({
+  //   status: state.member.profileInfo.status,
+  //   data: state.member.profileInfo.data,
+  //   error: state.member.profileInfo.error,
+  // }));
 
   const [courseTab, setCourseTab] = useState('now');
   const [isMyProfile, setIsMyProfile] = useState(false);
 
-  useEffect(() => {
-    // 임의 코스 데이터
-    dispatch(getMainCourseRequest('21-2'));
+  // useEffect(() => {
+  //   // 임의 코스 데이터
+  //   dispatch(getMainCourseRequest('21-2'));
 
-    const token = getToken();
+  //   const token = getToken();
 
-    if (!token && !selectUserId) {
-      alert('로그인 후 이용 가능합니다.');
+  //   if (!token && !selectUserId) {
+  //     alert('로그인 후 이용 가능합니다.');
 
-      history.push(PATH.login);
-    }
+  //     history.push(PATH.login);
+  //   }
 
-    if (member?.id === selectUserId || (member?.id && selectUserId === null)) {
-      dispatch(getProfileRequest(member.id));
+  //   if (member?.id === selectUserId || (member?.id && selectUserId === null)) {
+  //     dispatch(getProfileRequest(member.id));
 
-      setIsMyProfile(true);
-    }
-  }, [dispatch, history, member?.id, selectUserId]);
+  //     setIsMyProfile(true);
+  //   }
+  // }, [dispatch, history, member?.id, selectUserId]);
+
+  const profileInfo = {};
 
   return (
     <>
-      <StyledUserInfoContainer>
+      {/* <StyledUserInfoContainer>
         <StyledUserEmoji>{profileInfo.emoji}</StyledUserEmoji>
         <StyledUserContainer>
           <StyledName>
@@ -121,11 +98,7 @@ export const ProfilePage = () => {
           mainCourseData.map(res => {
             return <MainCourse course={res} key={res.id} />;
           })}
-      </StyledCourseContainer>
+      </StyledCourseContainer> */}
     </>
   );
-};
-
-ProfilePage.propTypes = {
-  member: PropTypes.object,
 };

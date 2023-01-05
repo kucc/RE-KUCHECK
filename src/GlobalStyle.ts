@@ -6,6 +6,10 @@ html, body, #root {
   height: 100%;
 }
 
+iframe {
+  display: none;
+}
+
 body {
   overflow-x: hidden;
   font-family: "sdMe", "Apple SD Gothic Neo", "Malgun Gothic", "arial sans-serif";
