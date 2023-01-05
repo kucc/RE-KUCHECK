@@ -1,4 +1,5 @@
-import { DefaultLogo } from '../DefaultLogo';
+import { DefaultLogo } from '@components';
+
 import { StyledEmptyBoxContainer, StyledEmptyBoxText } from './style';
 
 export const EmptyBox = () => {

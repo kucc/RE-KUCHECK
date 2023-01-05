@@ -1,20 +1,12 @@
-
 // import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 // import { setHamburgerRequest } from '@redux/actions/_main_action';
-
-import {
-  CheckCircleIcon,
-  EditIcon,
-  HomeIcon,
-  LockStatesIcon,
-  NoticeIcon
-} from '@/svg/header';
+import { CheckCircleIcon, EditIcon, HomeIcon, LockStatesIcon, NoticeIcon } from '@/svg/header';
 import { BLACK, RED } from '@utility/COLORS';
 import { MEMBER_ROLE, PATH } from '@utility/COMMON_FUNCTION';
 
-import { DefaultLogo } from '..';
+// import { DefaultLogo } from '..';
 import {
   StyleActive,
   StyledHeaderContainer,
@@ -22,10 +14,10 @@ import {
   StyledLinkButton,
   StyledMobileHamburgerContainer,
   StyledMobileLogoContainer,
-  StyledMobileOverlayContainer
+  StyledMobileOverlayContainer,
 } from './style';
 
-export const Header = ({ pathname } : {pathname : string}) => {
+export const Header = ({ pathname }: { pathname: string }) => {
   const history = useHistory();
   // const dispatch = useDispatch();
 
@@ -45,13 +37,10 @@ export const Header = ({ pathname } : {pathname : string}) => {
 
   return (
     <StyledMobileHamburgerContainer isHamburger={isHamburger}>
-      <StyledMobileOverlayContainer
-        isHamburger={isHamburger}
-        onClick={closeOverlay}
-      />
+      <StyledMobileOverlayContainer isHamburger={isHamburger} onClick={closeOverlay} />
       <StyledHeaderContainer isHamburger={isHamburger}>
         <StyledMobileLogoContainer>
-          <DefaultLogo
+          {/* <DefaultLogo
             logoName='type-1-3'
             width={103}
             height={103}
@@ -59,7 +48,7 @@ export const Header = ({ pathname } : {pathname : string}) => {
               handleLink(PATH.main);
             }}
             isPointer={true}
-          />
+          /> */}
           <StyledHorizontalLine />
         </StyledMobileLogoContainer>
         <StyledLinkButton
@@ -76,9 +65,7 @@ export const Header = ({ pathname } : {pathname : string}) => {
             handleLink(PATH.courseCreate);
           }}>
           <StyleActive active={pathname === PATH.courseCreate}>
-            <EditIcon
-              fill={pathname === PATH.courseCreate ? RED : BLACK}
-            />
+            <EditIcon fill={pathname === PATH.courseCreate ? RED : BLACK} />
             <span>활동 개설</span>
           </StyleActive>
         </StyledLinkButton>
@@ -87,9 +74,7 @@ export const Header = ({ pathname } : {pathname : string}) => {
             handleLink(PATH.attendance);
           }}>
           <StyleActive active={pathname === PATH.attendance}>
-            <CheckCircleIcon
-              fill={pathname === PATH.attendance ? RED : BLACK}
-            />
+            <CheckCircleIcon fill={pathname === PATH.attendance ? RED : BLACK} />
             <span>출결 관리</span>
           </StyleActive>
         </StyledLinkButton>
@@ -108,9 +93,7 @@ export const Header = ({ pathname } : {pathname : string}) => {
               handleLink(PATH.admin);
             }}>
             <StyleActive active={pathname === PATH.admin}>
-              <LockStatesIcon
-                fill={pathname === PATH.admin ? RED : BLACK}
-              />
+              <LockStatesIcon fill={pathname === PATH.admin ? RED : BLACK} />
               <span>관리자</span>
             </StyleActive>
           </StyledLinkButton>
@@ -119,4 +102,3 @@ export const Header = ({ pathname } : {pathname : string}) => {
     </StyledMobileHamburgerContainer>
   );
 };
-

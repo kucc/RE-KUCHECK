@@ -1,15 +1,13 @@
-import { Dropdown, Menu } from "antd";
-import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
+import { Dropdown, Menu } from 'antd';
 
-import {
-  setSearchLanguage,
-  setSearchStringInput,
-} from "@redux/actions/_main_action";
+// import { useDispatch, useSelector } from "react-redux";
+// import {
+//   setSearchLanguage,
+//   setSearchStringInput,
+// } from '@redux/actions/_main_action';
+import { StyledDownArrow } from '@utility/COMMON_STYLE';
 
-import { StyledDownArrow } from "@utility/COMMON_STYLE";
-
-import magnifyingGlassIcon from "../../../svg/main/magnifyingGlassIcon.svg";
+import magnifyingGlassIcon from '../../../svg/main/magnifyingGlassIcon.svg';
 import {
   StyledDropDown,
   StyledMagnifyingGlassIcon,
@@ -17,25 +15,25 @@ import {
   StyledSearchButton,
   StyledSearchContainer,
   StyledSearchInput,
-} from "./style";
+} from './style';
 
 export const MainSearch = ({ currentSemester, handleCurrentSemester }) => {
   const dispatch = useDispatch();
 
-  const { pastSemester } = useSelector((state) => state.common.commonInfo.data);
-  const searchStringInput = useSelector((state) => state.main.stringInput);
-  const searchLanguage = useSelector((state) => state.main.language);
+  const { pastSemester } = useSelector(state => state.common.commonInfo.data);
+  const searchStringInput = useSelector(state => state.main.stringInput);
+  const searchLanguage = useSelector(state => state.main.language);
 
-  const languageList = ["Database", "Html", "Javascript", "Node", "React", "C"];
+  const languageList = ['Database', 'Html', 'Javascript', 'Node', 'React', 'C'];
 
-  const handleSearch = (e) => {
-    dispatch(setSearchLanguage(""));
+  const handleSearch = e => {
+    dispatch(setSearchLanguage(''));
 
     dispatch(setSearchStringInput(e.target.value));
   };
 
-  const handleLanguage = (language) => {
-    dispatch(setSearchStringInput(""));
+  const handleLanguage = language => {
+    dispatch(setSearchStringInput(''));
 
     dispatch(setSearchLanguage(language));
   };
@@ -58,7 +56,7 @@ export const MainSearch = ({ currentSemester, handleCurrentSemester }) => {
   const LanguageMenu = (
     <Menu>
       {languageList &&
-        languageList.map((res) => {
+        languageList.map(res => {
           return (
             <Menu.Item key={res}>
               <a onClick={() => handleLanguage(res)}>{res}</a>
@@ -71,26 +69,26 @@ export const MainSearch = ({ currentSemester, handleCurrentSemester }) => {
   return (
     <StyledMainSearchContainer>
       <StyledDropDown>
-        <Dropdown overlay={SemesterMenu} placement="bottomLeft">
+        <Dropdown overlay={SemesterMenu} placement='bottomLeft'>
           <StyledSearchButton>20{currentSemester}학기</StyledSearchButton>
         </Dropdown>
       </StyledDropDown>
       <StyledSearchContainer>
         <StyledSearchInput
-          placeholder="세션명, 세션장, 사용 언어를 검색해보세요!"
+          placeholder='세션명, 세션장, 사용 언어를 검색해보세요!'
           value={searchStringInput}
           onChange={handleSearch}
         />
         <StyledMagnifyingGlassIcon src={magnifyingGlassIcon} />
       </StyledSearchContainer>
       <StyledDropDown>
-        <Dropdown overlay={LanguageMenu} placement="bottomLeft">
+        <Dropdown overlay={LanguageMenu} placement='bottomLeft'>
           <StyledSearchButton>
             {searchLanguage ? (
               searchLanguage
             ) : (
               <>
-                <StyledDownArrow width="5" />
+                <StyledDownArrow width='5' />
                 <span>사용 언어</span>
               </>
             )}
@@ -99,9 +97,4 @@ export const MainSearch = ({ currentSemester, handleCurrentSemester }) => {
       </StyledDropDown>
     </StyledMainSearchContainer>
   );
-};
-
-MainSearch.propTypes = {
-  currentSemester: PropTypes.string,
-  handleCurrentSemester: PropTypes.func,
 };
