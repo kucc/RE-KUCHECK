@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { BACKGROUND_GRAY, BLACK, GRAY, LINE_GRAY } from '@utility';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ isLabelTitle?: boolean }>`
   margin-top: ${props => (props.isLabelTitle ? '38px' : '20px')};
   &:first-child {
     margin: 0;
@@ -41,7 +41,7 @@ export const StyledInput = styled.input`
   }
 `;
 
-export const StyledTextArea = styled.textarea`
+export const StyledTextArea = styled.textarea<{ type: any }>`
   width: 100%;
   height: 117px;
   padding: 20px 28px;
