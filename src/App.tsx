@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-import 'moment/locale/ko';
+// import 'moment/locale/ko';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import {
