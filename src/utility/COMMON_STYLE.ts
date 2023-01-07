@@ -235,4 +235,11 @@ export const StyledCommonTitle = styled.div`
   font-family: 'tmoneyBo';
   color: ${BLACK};
   padding-left: 49px;
+  padding-top: 50px;
 `;
+
+export const StyledCommonLayout = styled.div`
+  padding-top: 78px;
+  padding-left: 18px;
+  padding-right: 18px;
+`
