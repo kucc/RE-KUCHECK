@@ -239,7 +239,5 @@ export const StyledCommonTitle = styled.div`
 `;
 
 export const StyledCommonLayout = styled.div`
-  padding-top: 78px;
-  padding-left: 18px;
-  padding-right: 18px;
+  padding: 78px 18px 0px;
 `
