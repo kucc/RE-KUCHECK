@@ -10,7 +10,7 @@ export const StyledTitle = styled.div`
   margin-top: 24px;
   font-size: 12px;
   font-family: 'sdBo';
-`;
+`
 
 export const StyledLine = styled.hr`
   height: 2px;
@@ -66,17 +66,15 @@ export const StyledDetailContainer = styled.div`
   padding-bottom: 0.5rem;
 
 `
-export const StyledDetailTitle = styled.span`
+
+export const StyledDetailTitleBase = styled.span`
   font-size: 10px;
   font-family: 'sfPro';
   font-weight: bold;
-  min-width: 50px;
 `
 
-export const StyledDetailTitle2 = styled.span`
-  font-size: 10px;
-  font-family: 'sfPro';
-  font-weight: bold;
+export const StyledDetailTitle = styled(StyledDetailTitleBase)`
+  min-width: 50px;
 `
 
 export const StyledDetailDesc = styled.span`
