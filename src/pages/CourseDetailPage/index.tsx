@@ -15,11 +15,10 @@ import {
         StyledLine2,
       } from './style';
 import { RED } from '@utility/COLORS';
-import { sessionDetail, sessionCurriculum, sessionStack } from './data';
+import { userInform, sessionInform, sessionCurriculum, sessionStack } from './data';
 
 export const CourseDetailPage = () => {
   // const courseId = props.match.params.id;
-  const userName = '정인아';
   return (
     <StyledCommonLayout>
 
@@ -27,10 +26,10 @@ export const CourseDetailPage = () => {
         <StyledTitle>팀장</StyledTitle>
         <StyledLine width="32px" />
         <StyledDesc direction="row" style={{paddingTop: '5px', paddingBottom: '5px'}}>
-          <StyledEmoji>🧑</StyledEmoji>
+          <StyledEmoji>{userInform.emoji}</StyledEmoji>
           <StyledDescBox>
-            <StyledDescTitle><span style={{fontWeight: 'bold'}}>{userName}</span>님</StyledDescTitle>
-            <StyledDescDetail fontSize='10px'>안녕하십니까~ 저는 정인아입니다요 ...</StyledDescDetail>
+            <StyledDescTitle><span style={{fontWeight: 'bold'}}>{userInform.name}</span>님</StyledDescTitle>
+            <StyledDescDetail fontSize='10px'>{userInform.desc}</StyledDescDetail>
           </StyledDescBox>
           <img src='/img/arrow.svg' />
         </StyledDesc>
@@ -60,12 +59,12 @@ export const CourseDetailPage = () => {
         <StyledLine width="56px" />
         <StyledDesc direction="column" style={{gap: '10px'}}>
           <div>
-            <StyledDescTitle style={{fontWeight: 'bold', marginBottom: '2px'}}>바닐라 자바스크립트 세션</StyledDescTitle>
-            <StyledDescDetail fontSize='9px'>난이도: <span style={{color: `${RED}`}}>easy</span> / 투자시간: <span style={{color: `${RED}`}}>1학점</span></StyledDescDetail>
+            <StyledDescTitle style={{fontWeight: 'bold', marginBottom: '2px'}}>{sessionInform.course}</StyledDescTitle>
+            <StyledDescDetail fontSize='9px'>난이도: <span style={{color: `${RED}`}}>{sessionInform.level}</span> / 투자시간: <span style={{color: `${RED}`}}>{sessionInform.credit}</span></StyledDescDetail>
           </div>
           <StyledLine2 />
           <div style={{display: 'flex', flexDirection: 'column', gap: '15px'}}>
-            {sessionDetail.map((detail, i)=>(
+            {sessionInform.detail.map((detail, i)=>(
               <>
                 <StyledDetailContainer gap='6px' key={i}>
                   <StyledDetailTitle>{detail.title}</StyledDetailTitle>
