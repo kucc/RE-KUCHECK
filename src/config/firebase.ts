@@ -1,8 +1,11 @@
-import firebase from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 import 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import 'firebase/database';
 import 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 import 'firebase/storage';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -14,10 +17,8 @@ const firebaseConfig = {
   databaseURL: process.env.REACT_APP_DATABASE_URL,
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 
-export const authService = firebase.auth();
-export const storageService = firebase.storage();
-export const databaseService = firebase.database();
-export const firestoreService = firebase.firestore();
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const storage = getStorage(app);
