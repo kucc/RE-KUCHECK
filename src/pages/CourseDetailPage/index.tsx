@@ -26,15 +26,14 @@ import {
 export const CourseDetailPage = ({ match }: RouteComponentProps<{ id: string }>) => {
   const courseId = match.params.id;
 
-  // location.
-  const { isLoading, data } = useQuery({
+  const { isLoading, isError, data } = useQuery({
     queryFn: getCourse,
     queryKey: [QUERY_KEY.course, courseId],
   });
 
   if (isLoading) return <div>로딩중...</div>;
 
-  console.log(data);
+  if (isError) return <div>에러에요.</div>;
 
   return (
     <StyledCommonLayout>
