@@ -1,5 +1,6 @@
-import { Component } from 'react';
+import { Component, useRef } from 'react';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // import 'moment/locale/ko';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
@@ -32,23 +33,31 @@ const NotForMemberRoute = ({ component, ...res }: any) => {
 };
 
 function App() {
+  const queryClientRef = useRef<QueryClient>();
+
+  if (!queryClientRef.current) {
+    queryClientRef.current = new QueryClient({});
+  }
+
   return (
     <>
-      <GlobalStyle />
-      <TopHeader />
-      <Switch>
-        <NotForMemberRoute path={PATH.login} component={LoginPage} />
-        <NotForMemberRoute path={PATH.signUp} component={JoinPage} />
-        <Route exact path={PATH.main} component={MainPage} />
-        <Route path={PATH.courseCreate} component={CourseCreatePage} />
-        <Route path={PATH.courseDetail} component={CourseDetailPage} />
-        <Route path={PATH.attendance} component={AttendancePage} />
-        <Route path={PATH.timeTable} component={TimeTablePage} />
-        <Route path={PATH.profile} component={ProfilePage} />
-        <Route path={PATH.notice} component={NoticePage} />
-        <Route path={PATH.admin} component={AdminPage} />
-      </Switch>
-      <Footer />
+      <QueryClientProvider client={queryClientRef.current}>
+        <GlobalStyle />
+        <TopHeader />
+        <Switch>
+          <NotForMemberRoute path={PATH.login} component={LoginPage} />
+          <NotForMemberRoute path={PATH.signUp} component={JoinPage} />
+          <Route exact path={PATH.main} component={MainPage} />
+          <Route path={PATH.courseCreate} component={CourseCreatePage} />
+          <Route path={PATH.courseDetail} component={CourseDetailPage} />
+          <Route path={PATH.attendance} component={AttendancePage} />
+          <Route path={PATH.timeTable} component={TimeTablePage} />
+          <Route path={PATH.profile} component={ProfilePage} />
+          <Route path={PATH.notice} component={NoticePage} />
+          <Route path={PATH.admin} component={AdminPage} />
+        </Switch>
+        <Footer />
+      </QueryClientProvider>
     </>
   );
 }
