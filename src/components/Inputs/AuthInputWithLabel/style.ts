@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 import { BACKGROUND_GRAY, BLACK, GRAY, LINE_GRAY } from '@utility';
 
-export const Wrapper = styled.div<{ isLabelTitle?: boolean }>`
+export const Wrapper = styled.div<{ isLabelTitle?: string }>`
+  width: 100%;
   margin-top: ${props => (props.isLabelTitle ? '38px' : '20px')};
   &:first-child {
     margin: 0;
@@ -15,6 +16,7 @@ export const StyledLabel = styled.label`
   font-family: 'sdBo';
   color: ${BLACK};
   margin: 0 6px 8px 30px;
+  margin-left: 122px;
   @media (max-width: 1224px) {
     font-size: 12px;
   }
@@ -22,22 +24,25 @@ export const StyledLabel = styled.label`
 
 export const StyledInput = styled.input`
   color: ${BLACK};
-  width: 100%;
+  width: calc(100% - 204px);
+  margin-left: 102px;
+  margin-right: 102px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
   height: 60px;
-  font-size: 18px;
-  padding: 20px 34px;
   background-color: ${BACKGROUND_GRAY};
-  border-radius: 39px;
   border: 1px solid ${LINE_GRAY};
   outline: none;
+  font-size: 14px;
+  height: 60px;
+  padding: 12px 34px;
+  border-radius: 25px;
+  box-shadow: 0px 8px 8.5px rgba(0, 0, 0, 0.160784);
   &::placeholder {
     color: ${GRAY};
-  }
-  @media (max-width: 1224px) {
-    font-size: 14px;
-    height: 52px;
-    padding: 12px 34px;
-    border-radius: 25px;
   }
 `;
 

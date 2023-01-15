@@ -3,9 +3,8 @@ import styled from 'styled-components';
 
 import { BLACK } from '@utility/COLORS';
 
-export const StyledForm = styled.form`
+export const StyledForm = styled.div`
   width: 100%;
-  margin: 0 auto;
 
   a,
   button {
