@@ -32,6 +32,7 @@ export const LoginForm = () => {
   };
 
   const onClickLogin = async () => {
+    if (isLoading) return;
     if (!email.length || !password.length) {
       alert('이메일이나 비밀번호를 전부 입력해주세요');
       return;

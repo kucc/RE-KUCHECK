@@ -9,11 +9,11 @@ export const StyledCenterContainer = styled.div`
   position: relative;
 `;
 
-export const StyledAuthContainer = styled.div`
+export const StyledAuthContainer = styled.div<{ isLogin: boolean }>`
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  height: 100vh;
+  height: ${props => (props.isLogin ? '100vh' : 'auto')};
   background-color: white;
 `;
 
