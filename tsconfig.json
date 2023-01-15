@@ -1,4 +1,4 @@
-{  
+{
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "esModuleInterop": true,
@@ -21,9 +21,14 @@
       "@components/*": ["./src/components/*"],
       "@components": ["./src/components"],
       "@constants": ["./src/constants"],
+      "@constants/*": ["./src/constants/*"],
       "@pages/*": ["./src/pages/*"],
       "@pages": ["./src/pages"],
       "@hoc/*": ["./src/hoc/*"],
+      "@apis": ["./src/apis"],
+      "@apis/*": ["./src/apis/*"],
+      "@config": ["./src/config"],
+      "@config/*": ["./src/config/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@font/*": ["./src/font/*"],
       "@utility/*": ["./src/utility/*"],
