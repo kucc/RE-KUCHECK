@@ -1,30 +1,34 @@
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from 'react-router-dom';
 
-import { AuthDescription } from "@components";
+import { AuthDescription } from '@components';
 
-import { PATH } from "@utility/COMMON_FUNCTION";
+import { useGetProfile } from '@hooks';
+import { PATH } from '@utility/COMMON_FUNCTION';
 
-import LoginForm from "./LoginForm";
+import { LoginForm } from './LoginForm';
 import {
-    StyledAuthContainer,
-    StyledAuthMainImg,
-    StyledCenterContainer
-} from "./style";
+  StyledAuthContainer,
+  StyledAuthMainImg,
+  StyledCenterContainer,
+} from './style';
 
 export const LoginPage = () => {
+  const { user, isLoading } = useGetProfile();
   const { pathname } = useLocation();
   const isLogin = pathname === PATH.login; // true, false
   const history = useHistory();
+
+  if (isLoading) return <div />;
+  if (user) {
+    history.replace('/');
+  }
 
   return (
     <StyledCenterContainer>
       <StyledAuthContainer isLogin={isLogin}>
         <AuthDescription isLogin={isLogin} />
         <LoginForm />
-        <StyledAuthMainImg
-          alt="KUCC"
-          onClick={() => history.push(PATH.main)}
-        />
+        <StyledAuthMainImg alt='KUCC' onClick={() => history.push(PATH.main)} />
       </StyledAuthContainer>
     </StyledCenterContainer>
   );
