@@ -37,7 +37,7 @@ export const StyledInput = styled.input`
   border: 1px solid ${LINE_GRAY};
   outline: none;
   font-size: 14px;
-  height: 60px;
+  height: 50px;
   padding: 12px 34px;
   border-radius: 25px;
   box-shadow: 0px 8px 8.5px rgba(0, 0, 0, 0.160784);
@@ -47,7 +47,16 @@ export const StyledInput = styled.input`
 `;
 
 export const StyledTextArea = styled.textarea<{ type: any }>`
-  width: 100%;
+  max-width: 600px;
+  width: calc(100% - 204px);
+  margin-left: 102px;
+  margin-right: 102px;
+  box-shadow: 0px 8px 8.5px rgba(0, 0, 0, 0.160784);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
   height: 117px;
   padding: 20px 28px;
   font-size: 16px;
@@ -59,9 +68,6 @@ export const StyledTextArea = styled.textarea<{ type: any }>`
   outline: none;
   &::placeholder {
     color: ${GRAY};
-  }
-  @media (max-width: 1224px) {
-    font-size: 14px;
   }
 `;
 
