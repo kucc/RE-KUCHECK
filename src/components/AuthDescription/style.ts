@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { BLACK, RED } from '@utility/COLORS';
 
-export const DescriptionForm = styled.div`
+export const DescriptionForm = styled.div<{ isLogin: boolean }>`
   text-align: center;
   place-items: center;
   margin-top: ${props => (props.isLogin === true ? '110px' : '74px')};
