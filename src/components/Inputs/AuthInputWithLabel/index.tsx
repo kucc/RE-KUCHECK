@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import { StyledInput, StyledLabel, StyledRequiredText, Wrapper } from './style';
 
 export const AuthInputWithLabel = ({
@@ -10,12 +8,18 @@ export const AuthInputWithLabel = ({
   value,
   onChange,
   isRequired = true,
+}: {
+  labelTitle?: string;
+  inputName?: string;
+  inputType?: string;
+  placeholder?: string;
+  value: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  isRequired?: boolean;
 }) => {
   return (
     <Wrapper isLabelTitle={labelTitle}>
-      {labelTitle && (
-        <StyledLabel htmlFor={inputName}>{labelTitle}</StyledLabel>
-      )}
+      {labelTitle && <StyledLabel htmlFor={inputName}>{labelTitle}</StyledLabel>}
       {!isRequired && <StyledRequiredText>(선택)</StyledRequiredText>}
       <StyledInput
         name={inputName}
@@ -26,14 +30,4 @@ export const AuthInputWithLabel = ({
       />
     </Wrapper>
   );
-};
-
-AuthInputWithLabel.propTypes = {
-  labelTitle: PropTypes.string,
-  inputName: PropTypes.string,
-  inputType: PropTypes.string,
-  placeholder: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-  isRequired: PropTypes.bool,
 };
