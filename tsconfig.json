@@ -30,6 +30,8 @@
       "@config": ["./src/config"],
       "@config/*": ["./src/config/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@recoil": ["./src/recoil"],
+      "@recoil/*": ["./src/recoil/*"],
       "@font/*": ["./src/font/*"],
       "@utility/*": ["./src/utility/*"],
       "@utility": ["./src/utility"],
