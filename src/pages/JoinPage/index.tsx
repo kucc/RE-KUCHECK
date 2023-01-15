@@ -1,15 +1,15 @@
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
-import { AuthDescription } from "@components";
+import { AuthDescription } from '@components';
 import {
   StyledAuthContainer,
   StyledAuthMainImg,
-  StyledCenterContainer
-} from "@pages/LoginPage/style";
+  StyledCenterContainer,
+} from '@pages/LoginPage/style';
 
-import { PATH } from "@utility/COMMON_FUNCTION";
+import { PATH } from '@utility/COMMON_FUNCTION';
 
-import JoinForm from "./JoinForm";
+import JoinForm from './JoinForm';
 
 export const JoinPage = () => {
   const history = useHistory();
@@ -19,10 +19,7 @@ export const JoinPage = () => {
       <StyledAuthContainer>
         <AuthDescription />
         <JoinForm />
-        <StyledAuthMainImg
-          alt="KUCC"
-          onClick={() => history.push(PATH.main)}
-        />
+        <StyledAuthMainImg alt='KUCC' onClick={() => history.push(PATH.main)} />
       </StyledAuthContainer>
     </StyledCenterContainer>
   );
