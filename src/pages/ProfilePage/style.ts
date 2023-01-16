@@ -13,6 +13,7 @@ export const StyledUserInfoContainer = styled.div`
     text-align: center;
     padding: 0;
     margin-bottom: 20px;
+    gap: 12px;
   }
 `;
 
@@ -32,7 +33,7 @@ export const StyledUserContainer = styled.div`
 `;
 
 export const StyledName = styled.div`
-  font-family: 'tmoneyBo';
+  font-family: 'sdMe';
   font-size: 24px;
   line-height: 32px;
   color: ${BLACK};
@@ -54,28 +55,34 @@ export const StyledUserRole = styled.span`
 `;
 
 export const StyledComment = styled.div`
+  font-family: 'sdMe';
   font-size: 16px;
   @media (max-width: 1279px) {
     font-size: 10px;
+    margin: 10px 0 12.5px 0;
   }
 `;
 
 export const StyledSocialContainer = styled.div`
   display: flex;
-  margin-top: 16px;
+  flex-direction: row;
+  gap: 28px;
+  justify-content: flex-start;
   @media (max-width: 1279px) {
-    display: block;
-    margin-top: 12px;
+    gap: 16px;
+    justify-content: center;
   }
 `;
 
 export const StyledSocialBox = styled.span`
-  margin-right: 28px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
   @media (max-width: 1279px) {
-    margin-right: 18px;
+    gap: 4.5px;
   }
-  :last-child {
-    margin-right: 0;
+  img {
+    width: 10px;
   }
 `;
 
@@ -83,12 +90,10 @@ export const StyledSocialLink = styled.a`
   font-family: 'sdLi';
   font-size: 14px;
   color: ${BLACK};
-  margin-left: 8px;
   text-decoration: underline;
   text-underline-position: under;
   @media (max-width: 1279px) {
     font-size: 8px;
-    margin-left: 4px;
   }
 `;
 
@@ -123,9 +128,17 @@ export const StyledMobileModifyButton = styled(StyledModifyButton)`
 `;
 
 export const StyledUserDetailComment = styled.div`
-  border: 1px solid ${LINE_GRAY};
-  padding: 28px 44px;
+  border: 1.5px solid ${LINE_GRAY};
+  padding: 25px 44px;
   border-radius: 18px;
+  font-family: 'sdLi';
+  font-size: 16px;
+  @media (max-width: 1279px) {
+    border: 0.8px solid ${LINE_GRAY};
+    padding: 14px 30px;
+    font-size: 10px;
+    text-align: center;
+  }
 `;
 
 export const StyledCourseContainer = styled.div`
