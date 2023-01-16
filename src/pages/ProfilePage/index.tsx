@@ -20,6 +20,10 @@ import {
   StyledMobileModifyButton,
   StyledUserDetailComment,
   StyledCourseContainer,
+  StyledCourseTab,
+  StyledTab,
+  StyledTabText,
+  StyledTabLine,
 } from './style'
 
 import { profileInfo } from './data';
@@ -113,19 +117,27 @@ export const ProfilePage = () => {
           {comment}
           <br />
         </>
-      ))}</StyledUserDetailComment>
+      ))}
+      </StyledUserDetailComment>
       {/* {isMyProfile && <StyledMobileModifyButton>수정하기</StyledMobileModifyButton>} */}
       <StyledMobileModifyButton>수정하기</StyledMobileModifyButton>
       <StyledCourseContainer>
-        {/* <StyledCourseTab>
+        <StyledCourseTab>
           <StyledTab onClick={() => setCourseTab('now')}>
             <StyledTabText active={courseTab === 'now'}>현재 활동</StyledTabText>
+            {courseTab === 'now' ? 
+              <StyledTabLine /> : ""
+            }
           </StyledTab>
+          |
           <StyledTab onClick={() => setCourseTab('past')}>
             <StyledTabText active={courseTab === 'past'}>지난 활동</StyledTabText>
+            {courseTab === 'past' ? 
+              <StyledTabLine /> : ""
+            }
           </StyledTab>
         </StyledCourseTab>
-        {mainCourseData.length === 0 && <EmptyBox />}
+        {/* {mainCourseData.length === 0 && <EmptyBox />}
         {mainCourseData.length > 0 &&
           mainCourseData.map(res => {
             return <MainCourse course={res} key={res.id} />;

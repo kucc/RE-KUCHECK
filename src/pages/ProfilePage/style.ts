@@ -147,3 +147,44 @@ export const StyledCourseContainer = styled.div`
     margin: 42px 0 86px 0;
   }
 `;
+
+export const StyledCourseTab = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  color: ${LINE_GRAY};
+  margin-left: 18px;
+  @media (max-width: 1279px) {
+    gap: 15px;
+  }
+`
+
+export const StyledTab = styled.span`
+  font-family: 'sdBo';
+  font-size: 18px;
+  text-align: center;
+  width: 83px;
+  @media (max-width: 1279px) {
+    width: 56px;
+    font-size: 12px;
+  }
+`
+
+export const StyledTabText = styled.span`
+  color: ${({active} : {active: boolean}) => active === true ? BLACK : LINE_GRAY};
+`
+
+export const StyledTabLine = styled.hr`
+  height: 4px;
+  width: 83px;
+  margin-top: 11px;
+  background-color: ${BLACK};
+  border: 0;
+  border-radius: 3px;
+  @media (max-width: 1279px) {
+    height: 2px;
+    width: 56px;
+    margin-top: 9px;
+    
+  }
+`
