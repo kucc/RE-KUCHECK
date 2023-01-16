@@ -1,14 +1,34 @@
 import { useState } from 'react';
+import EmailIcon from '../../svg/profile/email.svg';
+import GithubIcon from '../../svg/profile/github.svg';
+import InstagramIcon from '../../svg/profile/instagram.svg';
+import { StyledCommonLayout } from '@utility/COMMON_STYLE';
 
 // import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import {
+  StyledUserInfoContainer,
+  StyledUserEmoji,
+  StyledUserContainer,
+  StyledName,
+  StyledUserRole,
+  StyledComment,
+  StyledSocialContainer,
+  StyledSocialBox,
+  StyledSocialLink,
+  StyledPcModifyButton,
+  StyledMobileModifyButton,
+  StyledUserDetailComment,
+  StyledCourseContainer,
+} from './style'
 
+import { profileInfo } from './data';
 // import { getMainCourseRequest } from '@redux/actions/_course_action';
 
 // import { getToken } from '@/api';
 
 export const ProfilePage = () => {
-  const history = useHistory();
+  // const history = useHistory();
   // const dispatch = useDispatch();
 
   // const mainCourseData = useSelector(state => state.course.mainCourse.data);
@@ -27,6 +47,12 @@ export const ProfilePage = () => {
 
   const [courseTab, setCourseTab] = useState('now');
   const [isMyProfile, setIsMyProfile] = useState(false);
+  const MEMBER_ROLE = {
+    MANAGER: '운영진',
+  }
+  const email = `mailto:${profileInfo.email}`;
+  const github = `https://github.com/${profileInfo.github_id}`;
+  const instagram = `https://www.instagram.com/${profileInfo.instagram_id}`;
 
   // useEffect(() => {
   //   // 임의 코스 데이터
@@ -47,11 +73,11 @@ export const ProfilePage = () => {
   //   }
   // }, [dispatch, history, member?.id, selectUserId]);
 
-  const profileInfo = {};
+  // const profileInfo = {};
 
   return (
-    <>
-      {/* <StyledUserInfoContainer>
+    <StyledCommonLayout>
+      <StyledUserInfoContainer>
         <StyledUserEmoji>{profileInfo.emoji}</StyledUserEmoji>
         <StyledUserContainer>
           <StyledName>
@@ -62,30 +88,36 @@ export const ProfilePage = () => {
           <StyledSocialContainer>
             <StyledSocialBox>
               <img src={EmailIcon} />
-              <StyledSocialLink href='mailto:ina20118@korea.ac.kr' target='_blank'>
+              <StyledSocialLink href={email} target='_blank'>
                 {profileInfo.email}
               </StyledSocialLink>
             </StyledSocialBox>
             <StyledSocialBox>
               <img src={GithubIcon} />
-              <StyledSocialLink href='https://github.com' target='_blank'>
+              <StyledSocialLink href={github} target='_blank'>
                 {profileInfo.github_id}
               </StyledSocialLink>
             </StyledSocialBox>
             <StyledSocialBox>
               <img src={InstagramIcon} />
-              <StyledSocialLink href='https://www.instagram.com/' target='_blank'>
-                {profileInfo.instagram_id}
+              <StyledSocialLink href={instagram} target='_blank'>
+                @{profileInfo.instagram_id}
               </StyledSocialLink>
             </StyledSocialBox>
           </StyledSocialContainer>
         </StyledUserContainer>
         <StyledPcModifyButton>수정하기</StyledPcModifyButton>
       </StyledUserInfoContainer>
-      <StyledUserDetailComment>{profileInfo.detail_comment}</StyledUserDetailComment>
-      {isMyProfile && <StyledMobileModifyButton>수정하기</StyledMobileModifyButton>}
+      <StyledUserDetailComment>{profileInfo.detail_comment.split('\n').map((comment) => (
+        <>
+          {comment}
+          <br />
+        </>
+      ))}</StyledUserDetailComment>
+      {/* {isMyProfile && <StyledMobileModifyButton>수정하기</StyledMobileModifyButton>} */}
+      <StyledMobileModifyButton>수정하기</StyledMobileModifyButton>
       <StyledCourseContainer>
-        <StyledCourseTab>
+        {/* <StyledCourseTab>
           <StyledTab onClick={() => setCourseTab('now')}>
             <StyledTabText active={courseTab === 'now'}>현재 활동</StyledTabText>
           </StyledTab>
@@ -97,8 +129,8 @@ export const ProfilePage = () => {
         {mainCourseData.length > 0 &&
           mainCourseData.map(res => {
             return <MainCourse course={res} key={res.id} />;
-          })}
-      </StyledCourseContainer> */}
-    </>
+          })} */}
+      </StyledCourseContainer>
+    </StyledCommonLayout>
   );
 };
