@@ -8,7 +8,7 @@ export const StyledMainContainer = styled.div`
   width: 1280px;
   padding-top: 128px;
   margin: 0 auto;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     width: 100%;
     padding-top: 76px;
   }
@@ -18,7 +18,7 @@ export const StyledIncludeHeaderMain = styled.main`
   min-height: 500px;
   margin-left: 136px;
   border-left: 1.5px solid ${LINE_GRAY};
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     margin: 0;
   }
 `;
@@ -26,7 +26,7 @@ export const StyledIncludeHeaderMain = styled.main`
 export const StyledUnIncludeHeaderMain = styled.main`
   width: 100%;
   padding-left: 76px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     padding: 0 18px;
   }
 `;
@@ -35,7 +35,7 @@ export const StyledCourseTab = styled.div`
   padding: 12px 0;
   margin-bottom: 24px;
   border-bottom: 1px solid ${LINE_GRAY};
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     padding: 8px 0;
     margin-bottom: 12px;
   }
@@ -50,7 +50,7 @@ export const StyledTab = styled.button`
   &:last-child {
     border: none;
   }
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     padding: 0 20px;
   }
 `;
@@ -66,14 +66,14 @@ export const StyledTabText = styled.span<{ active?: boolean }>`
       color: ${BLACK};
       border-bottom: 3px solid ${BLACK};
     `}
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 12px;
     padding: 8px 0;
   }
 `;
 export const StyledOldMain = styled.div`
   padding-top: 80px;
-  @media (max-width: 1224px) {
+  @media (max-width: 800px) {
     padding-top: 65px;
   }
 `;
@@ -85,7 +85,7 @@ export const StyledBackground = styled.div`
 export const StyledSideMargin = styled.div`
   margin-left: 14.21%;
   margin-right: 14.21%;
-  @media (max-width: 1224px) {
+  @media (max-width: 800px) {
     margin-left: 5.64%;
     margin-right: 5.64%;
   }
@@ -94,7 +94,7 @@ export const StyledSideMargin = styled.div`
 export const StyledSidePadding = styled.div`
   padding-left: 14.21%;
   padding-right: 14.21%;
-  @media (max-width: 1224px) {
+  @media (max-width: 800px) {
     padding-left: 5.64%;
     padding-right: 5.64%;
   }
@@ -115,7 +115,7 @@ export const StyledSelectItem = styled.div`
   justify-content: center;
   cursor: pointer;
   font-size: 13px;
-  @media (max-width: 1224px) {
+  @media (max-width: 800px) {
     margin: 0px 7%;
     font-size: 9px;
     font-family: 'sdBo';
@@ -123,14 +123,14 @@ export const StyledSelectItem = styled.div`
   }
 `;
 
-export const StyledArrow = styled.i<{ thin?: number; width?: number }>`
+export const StyledArrow = styled.i<{ thin?: number; width?: number; height?: number }>`
   display: inline-block;
   border: solid ${BLACK};
   border-width: ${(props: any) =>
     props.thin ? `0px ${props.thin}px ${props.thin}px 0px` : '0 3px 3px 0'};
   margin-bottom: 2px;
   padding: ${(props: any) => (props.width ? `${props.width}px` : '3px')};
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     border-width: ${(props: any) =>
       props.thin ? `0px ${props.thin / 2}px ${props.thin / 2}px 0px` : '0 1.5px 1.5px 0'};
     padding: ${(props: any) => (props.width ? `${props.width / 2}px` : '1.5px')};
@@ -164,7 +164,7 @@ export const StyledTextArea = styled(TextArea)`
   &:focus {
     outline: none;
   }
-  @media (max-width: 1224px) {
+  @media (max-width: 800px) {
     font-size: 12px;
   }
 `;
@@ -182,7 +182,7 @@ export const StyledInputNumber = styled(InputNumber)`
   &:focus {
     outline: none;
   }
-  @media (max-width: 1224px) {
+  @media (max-width: 800px) {
     width: 100%;
     font-size: 12px;
   }
@@ -240,4 +240,4 @@ export const StyledCommonTitle = styled.div`
 
 export const StyledCommonLayout = styled.div`
   padding: 78px 18px 0px;
-`
+`;

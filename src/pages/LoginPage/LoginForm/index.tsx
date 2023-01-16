@@ -44,16 +44,16 @@ export const LoginForm = () => {
       history.replace('/');
     } catch (e) {
       const error = e as FirebaseError;
-      console.log(error.code);
       if (error.code === 'auth/invalid-email') {
         alert('이메일이 유효하지 않습니다.');
       } else if (error.code === 'auth/wrong-password') {
         alert('비밀번호가 일치하지 않습니다.');
       } else if (error.code === 'auth/user-not-found') {
-        alert('해당 이메일로 가입한 존재하지 않습니다.');
+        alert('해당 이메일로 가입한 유저가 존재하지 않습니다.');
       }
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (

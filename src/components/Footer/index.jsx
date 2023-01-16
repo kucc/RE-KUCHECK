@@ -9,7 +9,7 @@ import {
   StyledHorizontalLine,
   StyledRow,
   StyledSubContent,
-  StyledTitle
+  StyledTitle,
 } from './style';
 
 export const Footer = () => {
@@ -29,6 +29,13 @@ export const Footer = () => {
             <StyledContent>
               <StyledSubContent>KUCHECKCHECK</StyledSubContent>
               김세진 · 김채린 · 명재위 · 이희준 · 정인아
+            </StyledContent>
+          </StyledRow>
+          <StyledRow>
+            <StyledTitle>Renewers</StyledTitle>
+            <StyledContent>
+              <StyledSubContent>KURECHECK</StyledSubContent>
+              김유나 · 이희준
             </StyledContent>
           </StyledRow>
           <StyledRow>

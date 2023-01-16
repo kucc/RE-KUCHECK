@@ -7,7 +7,7 @@ export const StyledUserInfoContainer = styled.div`
   height: 158px;
   align-items: center;
   padding: 0 28px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     height: auto;
     flex-direction: column;
     text-align: center;
@@ -18,7 +18,7 @@ export const StyledUserInfoContainer = styled.div`
 
 export const StyledUserEmoji = styled.div`
   font-size: 100px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 70px;
   }
 `;
@@ -26,7 +26,7 @@ export const StyledUserEmoji = styled.div`
 export const StyledUserContainer = styled.div`
   width: 100%;
   margin-left: 35px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     margin: 0;
   }
 `;
@@ -36,7 +36,7 @@ export const StyledName = styled.div`
   font-size: 24px;
   line-height: 32px;
   color: ${BLACK};
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 16px;
     line-height: 20px;
   }
@@ -48,14 +48,14 @@ export const StyledUserRole = styled.span`
   color: ${RED};
   vertical-align: middle;
   margin-left: 10px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 12px;
   }
 `;
 
 export const StyledComment = styled.div`
   font-size: 16px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 10px;
   }
 `;
@@ -63,7 +63,7 @@ export const StyledComment = styled.div`
 export const StyledSocialContainer = styled.div`
   display: flex;
   margin-top: 16px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     display: block;
     margin-top: 12px;
   }
@@ -71,7 +71,7 @@ export const StyledSocialContainer = styled.div`
 
 export const StyledSocialBox = styled.span`
   margin-right: 28px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     margin-right: 18px;
   }
   :last-child {
@@ -86,7 +86,7 @@ export const StyledSocialLink = styled.a`
   margin-left: 8px;
   text-decoration: underline;
   text-underline-position: under;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 8px;
     margin-left: 4px;
   }
@@ -106,7 +106,7 @@ export const StyledPcModifyButton = styled(StyledModifyButton)`
   font-size: 18px;
   flex-shrink: 0;
   margin-left: auto;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     display: none;
   }
 `;
@@ -116,7 +116,7 @@ export const StyledMobileModifyButton = styled(StyledModifyButton)`
   width: 98px;
   height: 29px;
   font-size: 10px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     display: block;
     margin: 12px auto 0 auto;
   }
@@ -130,7 +130,7 @@ export const StyledUserDetailComment = styled.div`
 
 export const StyledCourseContainer = styled.div`
   margin: 60px 0 82px 0;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     margin: 42px 0 86px 0;
   }
 `;
