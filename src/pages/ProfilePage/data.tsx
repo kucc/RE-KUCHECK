@@ -1,5 +1,5 @@
 export const profileInfo: profileInfo = {
-  emoji: '👨‍🎤',
+  emoji: '👨‍🚀',
   name: '정인아',
   role: '운영진',
   email: 'ina20118@korea.ac.kr',

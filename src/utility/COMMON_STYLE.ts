@@ -248,11 +248,17 @@ export const StyledCommonLayout = styled.div`
 export const StyledCourseTitle = styled.div`
   margin-bottom: 2px;
   font-family: 'sdBo';
-  font-size: 14px;
+  font-size: 28px;
+  @media (max-width: 1279px) {
+    font-size: 14px;
+  }
 `
 export const StyledCourseDetail = styled.div`
   font-family: 'sdSb';
-  font-size: 9px;
+  font-size: 18px;
+  @media (max-width: 1279px) {
+    font-size: 9px;
+  }
 `
 export const StyledCourseDetail2 = styled.span`
   color: ${RED};
