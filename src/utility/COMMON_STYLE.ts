@@ -2,7 +2,7 @@ import { InputNumber, Select } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import styled, { css } from 'styled-components';
 
-import { BASE_COLOR, BLACK, GRAY, LINE_GRAY } from './COLORS';
+import { BASE_COLOR, BLACK, GRAY, LINE_GRAY, RED } from './COLORS';
 
 export const StyledMainContainer = styled.div`
   width: 1280px;
@@ -243,4 +243,17 @@ export const StyledCommonLayout = styled.div`
   @media (max-width: 1279px) {
     padding: 78px 18px 0px;
   }
+`
+
+export const StyledCourseTitle = styled.div`
+  margin-bottom: 2px;
+  font-family: 'sdBo';
+  font-size: 14px;
+`
+export const StyledCourseDetail = styled.div`
+  font-family: 'sdSb';
+  font-size: 9px;
+`
+export const StyledCourseDetail2 = styled.span`
+  color: ${RED};
 `

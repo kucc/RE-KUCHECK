@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BLACK, LINE_GRAY } from '@utility/COLORS';
+import { BLACK, LINE_GRAY, RED } from '@utility/COLORS';
 
 export const StyledContainer = styled.div`
   margin-bottom: 25px;
@@ -42,13 +42,26 @@ export const StyledDescBox = styled.span`
   gap: 3px;
 `
 export const StyledDescTitle = styled.div`
-  font-family: 'sdo';
+  font-family: 'sdBo';
   font-size: 14px;
 `
 
 export const StyledDescDetail = styled.div`
-  font-family: 'sdLo';
-  font-size: ${({fontSize} : {fontSize: string}) => fontSize};
+  font-family: 'sdLi';
+  font-size: 10px;
+`
+
+export const StyledCourseTitle = styled.div`
+  margin-bottom: 2px;
+  font-family: 'sdBo';
+  font-size: 14px;
+`
+export const StyledCourseDetail = styled.div`
+  font-family: 'sdBo';
+  font-size: 9px;
+`
+export const StyledCourseDetail2 = styled.span`
+  color: ${RED};
 `
 
 export const StyledEmoji = styled.span`
