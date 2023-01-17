@@ -1,8 +1,6 @@
-import { InputNumber, Select } from 'antd';
-import TextArea from 'antd/lib/input/TextArea';
 import styled, { css } from 'styled-components';
 
-import { BASE_COLOR, BLACK, GRAY, LINE_GRAY } from './COLORS';
+import { BASE_COLOR, BLACK, GRAY, LINE_GRAY, RED } from './COLORS';
 
 export const StyledMainContainer = styled.div`
   width: 1280px;
@@ -123,7 +121,7 @@ export const StyledSelectItem = styled.div`
   }
 `;
 
-export const StyledArrow = styled.i<{ thin?: number; width?: number; height?: number }>`
+export const StyledArrow = styled.i<{ thin?: number; width?: number }>`
   display: inline-block;
   border: solid ${BLACK};
   border-width: ${(props: any) =>
@@ -236,8 +234,31 @@ export const StyledCommonTitle = styled.div`
   color: ${BLACK};
   padding-left: 49px;
   padding-top: 50px;
+  padding-top: 50px;
 `;
 
 export const StyledCommonLayout = styled.div`
   padding: 78px 18px 0px;
+  @media (max-width: 1279px) {
+    padding: 78px 18px 0px;
+  }
+`;
+
+export const StyledCourseTitle = styled.div`
+  margin-bottom: 2px;
+  font-family: 'sdBo';
+  font-size: 28px;
+  @media (max-width: 1279px) {
+    font-size: 14px;
+  }
+`;
+export const StyledCourseDetail = styled.div`
+  font-family: 'sdSb';
+  font-size: 18px;
+  @media (max-width: 1279px) {
+    font-size: 9px;
+  }
+`;
+export const StyledCourseDetail2 = styled.span`
+  color: ${RED};
 `;
