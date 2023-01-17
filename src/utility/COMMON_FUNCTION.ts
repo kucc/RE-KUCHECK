@@ -1,7 +1,7 @@
 export const PATH = {
   // 리뉴얼 페이지 PATH
-  login: '/new/login', // 로그인
-  signUp: '/new/signup', // 회원가입
+  login: '/login', // 로그인
+  signUp: '/signup', // 회원가입
   main: '/main', // 메인
   courseCreate: '/course/create', // 활동 개설
   courseDetail: '/course/detail/:id', // 세션 소개
@@ -31,7 +31,7 @@ export const RandomEmoji = () => {
   return emojis[Math.floor(Math.random() * emojis.length)];
 };
 
-export const renderWord = (courseType : number) => {
+export const renderWord = (courseType: number) => {
   if (courseType === 1) {
     return '세션';
   } else if (courseType === 2) {

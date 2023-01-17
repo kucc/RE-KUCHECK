@@ -1,5 +1,5 @@
 var tsOption = {
-  arrowParens: "avoid",
+  arrowParens: 'avoid',
   jsxSingleQuote: true,
   bracketSameLine: true,
   singleQuote: true,
@@ -7,18 +7,18 @@ var tsOption = {
   bracketSpacing: true,
   useTabs: false,
   tabWidth: 2,
-  trailingComma: "all",
+  trailingComma: 'all',
   printWidth: 100,
-  endOfLine: "auto",
+  endOfLine: 'auto',
   importOrder: [
-    "^react$",
-    "<THIRD_PARTY_MODULES>",
-    "^@(?:redux|actions|reducer)",
-    "^@(?:components|pages)(.*)$",
-    "^@(?:api|constants|hoc|hooks|utility|/)(.*)$",
-    "^[./]",
+    '^react$',
+    '<THIRD_PARTY_MODULES>',
+    '^@(?:redux|actions|reducer)',
+    '^@(?:components|pages)(.*)$',
+    '^@(?:apis|config|constants|hoc|hooks|recoil|utility|/)(.*)$',
+    '^[./]',
   ],
-  plugins: [require.resolve("@trivago/prettier-plugin-sort-imports")],
+  plugins: [require.resolve('@trivago/prettier-plugin-sort-imports')],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
 };
@@ -26,20 +26,20 @@ var tsOption = {
 module.exports = {
   overrides: [
     {
-      files: "*.{ts,tsx}",
+      files: '*.{ts,tsx}',
       options: {
         ...tsOption,
       },
     },
     {
-      files: "*.{js,jsx}",
+      files: '*.{js,jsx}',
       options: {
         ...tsOption,
         printWidth: 80,
       },
     },
     {
-      files: "*.{scss}",
+      files: '*.{scss}',
       options: {
         singleQuote: false,
         semi: true,
@@ -48,7 +48,7 @@ module.exports = {
       },
     },
     {
-      files: "*.{css}",
+      files: '*.{css}',
       options: {
         singleQuote: false,
         semi: true,

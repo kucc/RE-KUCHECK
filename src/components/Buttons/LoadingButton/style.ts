@@ -2,17 +2,14 @@ import styled, { keyframes } from 'styled-components';
 
 import { BACKGROUND_GRAY, BLACK, RED } from '@utility';
 
-export const StyledButton = styled.button`
+export const StyledButton = styled.button<{ isLoading: boolean }>`
   color: ${BLACK};
   background-color: ${BACKGROUND_GRAY};
   font-size: 18px;
-  font-family: 'tmoneyBo';
   border: none;
   border-radius: 30px;
   cursor: 'pointer';
-  @media (max-width: 1224px) {
-    font-size: 16px;
-  }
+  box-shadow: 0px 8px 8.5px rgba(0, 0, 0, 0.160784);
   &.active {
     color: white;
     border-color: white;
@@ -33,6 +30,7 @@ export const StyledLoadingSpinnerContainer = styled.span`
 const spinnerFrames = keyframes`
   to {transform: rotate(360deg);}
 `;
+
 export const StyledLoadingSpinner = styled.span`
   &:before {
     content: '';

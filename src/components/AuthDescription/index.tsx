@@ -1,15 +1,10 @@
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 import { DefaultLogo } from '@components';
 
-import {
-  DescriptionForm,
-  StyledDescriptionBottomText,
-  StyledDescriptionTopText,
-} from './style';
+import { DescriptionForm, StyledDescriptionBottomText, StyledDescriptionTopText } from './style';
 
-export const AuthDescription = ({ isLogin = false }) => {
+export const AuthDescription = ({ isLogin = false }: { isLogin?: boolean }) => {
   const history = useHistory();
 
   return (
@@ -22,9 +17,7 @@ export const AuthDescription = ({ isLogin = false }) => {
         isPointer={true}
       />
       <StyledDescriptionTopText color='red'>KUCC</StyledDescriptionTopText>
-      <StyledDescriptionTopText color='black'>
-        길라잡이
-      </StyledDescriptionTopText>
+      <StyledDescriptionTopText color='black'>길라잡이</StyledDescriptionTopText>
       {isLogin && (
         <StyledDescriptionBottomText>
           고려대학교 중앙 컴퓨터 동아리
@@ -34,8 +27,4 @@ export const AuthDescription = ({ isLogin = false }) => {
       )}
     </DescriptionForm>
   );
-};
-
-AuthDescription.propTypes = {
-  isLogin: PropTypes.bool,
 };
