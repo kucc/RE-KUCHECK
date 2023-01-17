@@ -1,7 +1,9 @@
-import { Component } from 'react';
+import { useRef } from 'react';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // import 'moment/locale/ko';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 
 import {
   AdminPage,
@@ -21,34 +23,34 @@ import GlobalStyle from './GlobalStyle';
 import { Footer, TopHeader } from './components';
 import { PATH } from './utility';
 
-const NotForMemberRoute = ({ component, ...res }: any) => {
-  const isMember = true;
-  return (
-    <Route
-      {...res}
-      render={props => (!isMember ? <Redirect to={PATH.main} /> : <Component {...props} />)}
-    />
-  );
-};
-
 function App() {
+  const queryClientRef = useRef<QueryClient>();
+
+  if (!queryClientRef.current) {
+    queryClientRef.current = new QueryClient({});
+  }
+
   return (
     <>
-      <GlobalStyle />
-      <TopHeader />
-      <Switch>
-        <NotForMemberRoute path={PATH.login} component={LoginPage} />
-        <NotForMemberRoute path={PATH.signUp} component={JoinPage} />
-        <Route exact path={PATH.main} component={MainPage} />
-        <Route path={PATH.courseCreate} component={CourseCreatePage} />
-        <Route path={PATH.courseDetail} component={CourseDetailPage} />
-        <Route path={PATH.attendance} component={AttendancePage} />
-        <Route path={PATH.timeTable} component={TimeTablePage} />
-        <Route path={PATH.profile} component={ProfilePage} />
-        <Route path={PATH.notice} component={NoticePage} />
-        <Route path={PATH.admin} component={AdminPage} />
-      </Switch>
-      <Footer />
+      <RecoilRoot>
+        <QueryClientProvider client={queryClientRef.current}>
+          <GlobalStyle />
+          <TopHeader />
+          <Switch>
+            <Route exact path={PATH.login} component={LoginPage} />
+            <Route path={PATH.signUp} component={JoinPage} />
+            <Route exact path={PATH.main} component={MainPage} />
+            <Route path={PATH.courseCreate} component={CourseCreatePage} />
+            <Route path={PATH.courseDetail} component={CourseDetailPage} />
+            <Route path={PATH.attendance} component={AttendancePage} />
+            <Route path={PATH.timeTable} component={TimeTablePage} />
+            <Route path={PATH.profile} component={ProfilePage} />
+            <Route path={PATH.notice} component={NoticePage} />
+            <Route path={PATH.admin} component={AdminPage} />
+          </Switch>
+          <Footer />
+        </QueryClientProvider>
+      </RecoilRoot>
     </>
   );
 }

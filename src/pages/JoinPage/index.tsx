@@ -1,28 +1,31 @@
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
-import { AuthDescription } from "@components";
+import { AuthDescription } from '@components';
 import {
   StyledAuthContainer,
   StyledAuthMainImg,
-  StyledCenterContainer
-} from "@pages/LoginPage/style";
+  StyledCenterContainer,
+} from '@pages/LoginPage/style';
 
-import { PATH } from "@utility/COMMON_FUNCTION";
+import { useGetProfile } from '@hooks/use-get-profile';
+import { PATH } from '@utility/COMMON_FUNCTION';
 
-import JoinForm from "./JoinForm";
+import JoinForm from './JoinForm';
 
 export const JoinPage = () => {
+  const { user, isLoading } = useGetProfile();
   const history = useHistory();
 
+  if (isLoading) return <div />;
+  if (user) {
+    history.replace('/');
+  }
   return (
     <StyledCenterContainer>
-      <StyledAuthContainer>
+      <StyledAuthContainer isLogin={false}>
         <AuthDescription />
         <JoinForm />
-        <StyledAuthMainImg
-          alt="KUCC"
-          onClick={() => history.push(PATH.main)}
-        />
+        <StyledAuthMainImg alt='KUCC' onClick={() => history.push(PATH.main)} />
       </StyledAuthContainer>
     </StyledCenterContainer>
   );
