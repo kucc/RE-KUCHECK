@@ -241,9 +241,16 @@ export const StyledCommonTitle = styled.div`
 `;
 
 export const StyledCommonLayout = styled.div`
-  padding: 110px 76px 0px;
+  padding: 110px 28px 0px;
   @media (max-width: 1279px) {
-    padding: 54px 18px 0px;
+    padding: 60px 18px 0px;
+  }
+`
+
+export const StyledCommonPcLayout = styled.div`
+  padding: 0px 48px 0px;
+  @media (max-width: 1279px) {
+    padding: 0;
   }
 `
 
@@ -263,4 +270,28 @@ export const StyledCourseDetail = styled.div`
 `
 export const StyledCourseDetail2 = styled.span`
   color: ${RED};
+`
+
+export const StyledBackArrowWrapper = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: solid 1px ${GRAY};
+  box-shadow: 0px 5px 5px ${GRAY};
+  position: relative;
+  cursor: pointer;
+  @media (max-width: 1279px) {
+   width: 30px;
+   height: 30px;
+  }
+`
+export const StyledBackArrow = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10.5px;
+  @media (max-width: 1279px) {
+   width: 7px;
+  }
 `

@@ -5,7 +5,10 @@ import { useHistory } from 'react-router-dom';
 import { getUser } from '@apis';
 import { QUERY_KEY } from '@constants';
 import {
+  StyledBackArrow,
+  StyledBackArrowWrapper,
   StyledCommonLayout,
+  StyledCommonPcLayout,
   StyledCourseDetail,
   StyledCourseDetail2,
   StyledCourseTitle,
@@ -96,6 +99,10 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
 
   return (
     <StyledCommonLayout>
+      <StyledBackArrowWrapper onClick={() => {history.goBack();}}>
+        <StyledBackArrow src={`${process.env.PUBLIC_URL}/img/common/backArrow.svg`} />
+      </StyledBackArrowWrapper>
+      <StyledCommonPcLayout>
       <StyledUserInfoContainer>
         <StyledUserEmoji>{data.emoji}</StyledUserEmoji>
         <StyledUserContainer>
@@ -197,6 +204,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
         </StyledMainCourseWrapper>
         
       </StyledCourseContainer>
+      </StyledCommonPcLayout>
     </StyledCommonLayout>
   );
 };
