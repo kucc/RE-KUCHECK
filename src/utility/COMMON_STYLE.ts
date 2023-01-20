@@ -56,12 +56,10 @@ export const StyledTab = styled.button`
 `;
 
 export const StyledTabText = styled.span<{ active?: boolean }>`
-export const StyledTabText = styled.span<{ active?: boolean }>`
   color: ${GRAY};
   font-size: 18px;
   font-family: 'sdBo';
   padding: 14px 12px;
-  ${(props: any) =>
   ${(props: any) =>
     props.active &&
     css`
@@ -103,7 +101,6 @@ export const StyledSidePadding = styled.div`
 `;
 
 export const StyledVerticalLine = styled.div<{ length?: number }>`
-export const StyledVerticalLine = styled.div<{ length?: number }>`
   border-right: 1px solid #b6b6b677;
   height: ${(props: any) => (props.length ? `${props.length}px` : '40px')};
   height: ${(props: any) => (props.length ? `${props.length}px` : '40px')};
@@ -128,19 +125,13 @@ export const StyledSelectItem = styled.div`
 `;
 
 export const StyledArrow = styled.i<{ thin?: number; width?: number }>`
-export const StyledArrow = styled.i<{ thin?: number; width?: number }>`
   display: inline-block;
   border: solid ${BLACK};
-  border-width: ${(props: any) =>
   border-width: ${(props: any) =>
     props.thin ? `0px ${props.thin}px ${props.thin}px 0px` : '0 3px 3px 0'};
   margin-bottom: 2px;
   padding: ${(props: any) => (props.width ? `${props.width}px` : '3px')};
-  padding: ${(props: any) => (props.width ? `${props.width}px` : '3px')};
   @media (max-width: 1279px) {
-    border-width: ${(props: any) =>
-      props.thin ? `0px ${props.thin / 2}px ${props.thin / 2}px 0px` : '0 1.5px 1.5px 0'};
-    padding: ${(props: any) => (props.width ? `${props.width / 2}px` : '1.5px')};
     border-width: ${(props: any) =>
       props.thin ? `0px ${props.thin / 2}px ${props.thin / 2}px 0px` : '0 1.5px 1.5px 0'};
     padding: ${(props: any) => (props.width ? `${props.width / 2}px` : '1.5px')};
@@ -199,7 +190,6 @@ export const StyledInputNumber = styled(InputNumber)`
 `;
 
 export const StyledSelect = styled(Select)<{ width?: number }>`
-export const StyledSelect = styled(Select)<{ width?: number }>`
   .ant-select-selector {
     border-radius: 20px !important;
     height: 61px !important;
@@ -209,7 +199,6 @@ export const StyledSelect = styled(Select)<{ width?: number }>`
     padding-top: 15px !important;
   }
   border-radius: 20px;
-  width: ${(props: any) => `${props.width}px` || '150px'};
   width: ${(props: any) => `${props.width}px` || '150px'};
 `;
 
@@ -252,14 +241,13 @@ export const StyledCommonTitle = styled.div`
 `;
 
 export const StyledCommonLayout = styled.div`
-  padding: 78px 76px 0px;
+  padding: 110px 76px 0px;
   @media (max-width: 1279px) {
-    padding: 78px 18px 0px;
+    padding: 54px 18px 0px;
   }
 `
 
 export const StyledCourseTitle = styled.div`
-  margin-bottom: 2px;
   font-family: 'sdBo';
   font-size: 28px;
   @media (max-width: 1279px) {

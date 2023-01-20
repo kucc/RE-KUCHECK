@@ -6,6 +6,7 @@ export const BACKGROUND_GRAY = '#F5F5F5';
 export const BACKGROUND_FOOTER = '#F8F8F8';
 export const LINE_GRAY = '#DEDEDE';
 export const YELLOW = '#FFE65D';
+export const WHITE = '#FFFFFF';
 
 export const colorArray = [
   '#FE7773',

@@ -17,7 +17,10 @@ interface Course {
   courseLeader: {
     id: string;
     name: string;
+    emoji: string;
+    comment: string;
   };
+  id: string;
   courseMember: string[];
   courseStack: string[];
   language: Language[];
@@ -26,5 +29,5 @@ interface Course {
   difficulty: string;
   maxMemberNum: number;
   requireTime: number;
-  semester: number;
+  semester: string;
 }

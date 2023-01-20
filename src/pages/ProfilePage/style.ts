@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-import { BLACK, GRAY, LINE_GRAY, RED, YELLOW } from '@utility/COLORS';
+import { BLACK, LINE_GRAY, RED, YELLOW, WHITE } from '@utility/COLORS';
 
 export const StyledUserInfoContainer = styled.div`
   display: flex;
   height: 158px;
   align-items: center;
   padding: 0 28px;
+  margin-bottom: 30px;
   @media (max-width: 1279px) {
     height: auto;
     flex-direction: column;
@@ -18,7 +19,7 @@ export const StyledUserInfoContainer = styled.div`
 `;
 
 export const StyledUserEmoji = styled.div`
-  font-size: 100px;
+  font-size: 120px;
   @media (max-width: 1279px) {
     font-size: 70px;
   }
@@ -33,7 +34,7 @@ export const StyledUserContainer = styled.div`
 `;
 
 export const StyledName = styled.div`
-  font-family: 'sdMe';
+  font-family: 'tmoneyBo';
   font-size: 24px;
   line-height: 32px;
   color: ${BLACK};
@@ -57,6 +58,7 @@ export const StyledUserRole = styled.span`
 export const StyledComment = styled.div`
   font-family: 'sdMe';
   font-size: 16px;
+  margin: 10px 0 16px 0;
   @media (max-width: 1279px) {
     font-size: 10px;
     margin: 10px 0 12.5px 0;
@@ -78,12 +80,16 @@ export const StyledSocialBox = styled.span`
   display: flex;
   flex-direction: row;
   gap: 8px;
+  img {
+    width: 15px;
+    @media (max-width: 1279px) {
+    width: 10px;
+  }
+  }
   @media (max-width: 1279px) {
     gap: 4.5px;
   }
-  img {
-    width: 10px;
-  }
+  
 `;
 
 export const StyledSocialLink = styled.a`
@@ -165,6 +171,7 @@ export const StyledCourseTab = styled.div`
 `
 
 export const StyledTab = styled.span`
+  cursor: pointer;
   font-family: 'sdBo';
   font-size: 18px;
   text-align: center;
@@ -217,6 +224,7 @@ export const StyledMainCourseWrapper = styled.div`
 
 export const StyledMainCourse = styled(StyledTextBox)`
   height: auto;
+  cursor: pointer;
   /* padding: 18px 0px 26px 37px; */
   padding: 18px 28px 26px 37px;
   display: flex;
@@ -288,12 +296,9 @@ export const StyledCourseProfileName = styled.span`
 `
 
 export const StyledCourseInfo = styled.div`
-  width: 100%;
-  margin-left: 28px;
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   @media (max-width: 1279px) {
     margin-left: 9.75px;
     flex-direction: column;
@@ -302,24 +307,39 @@ export const StyledCourseInfo = styled.div`
   }
 `
 
-export const StyledStackWrapper = styled.span`
-  height: 27px;
-  margin-bottom: 26px;
-  margin-left: 6px;
+export const StyledStackTitle = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 6px;
   @media (max-width: 1279px) {
-    height: 16px;
+    flex-direction: column;
+    gap: 2.4px;
+  }
+`
+
+export const StyledStackWrapper = styled.span`
+  margin-left: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 3px;
+  @media (max-width: 1279px) {
     margin: 0;
   }
 `
 export const StyledStackImg = styled.img`
   width: 27px;
+  height: 27px;
   @media (max-width: 1279px) {
-    width: 16px;
+    width: 17px;
+    height: 17px;
   }
 `
 
 export const StyledRegisterButton = styled(StyledModifyButton)`
-  background-color: ${RED};
+  background-color: ${WHITE};
+  color: ${RED};
+  border: solid 1px ${RED};
   width: 170px;
   height: 50px;
   font-size: 18px;
@@ -327,11 +347,10 @@ export const StyledRegisterButton = styled(StyledModifyButton)`
   margin-left: auto;
   @media (max-width: 1279px) {
     position: absolute;
-    bottom: 26px;
+    bottom: 20px;
     right: 18px;
     width: 90px;
     height: 24px;
     font-size: 9px;
-    box-shadow: 0 8px 3px 0px ${LINE_GRAY};
   }
 `
