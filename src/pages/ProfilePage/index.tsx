@@ -49,6 +49,8 @@ import {
   StyledUserRole,
 } from './style';
 
+type CourseTab = 'past' | 'now';
+
 export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   const userId = match.params.id;
   const { isLoading, isError, data } = useQuery({
@@ -59,7 +61,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   const history = useHistory();
 
   const [courseSemester, setCourseSemester] = useState<Course[] | null>(null);
-  const [courseTab, setCourseTab] = useState<'past' | 'now'>('now');
+  const [courseTab, setCourseTab] = useState<CourseTab>('now');
 
   useEffect(() => {
     if (!data) return;
@@ -83,6 +85,10 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
     const github_id_index = data.link.lastIndexOf('/');
     github_id = data.link.slice(github_id_index + 1);
   }
+
+  const onClickCourseTab = (course: CourseTab) => () => {
+    setCourseTab(course);
+  };
 
   // useEffect(() => {
   //   // 임의 코스 데이터
@@ -155,18 +161,12 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
         <StyledMobileModifyButton>수정하기</StyledMobileModifyButton>
         <StyledCourseContainer>
           <StyledCourseTab>
-            <StyledTab
-              onClick={() => {
-                setCourseTab('now');
-              }}>
+            <StyledTab onClick={onClickCourseTab('now')}>
               <StyledTabText active={courseTab === 'now'}>현재 활동</StyledTabText>
               {courseTab === 'now' ? <StyledTabLine /> : ''}
             </StyledTab>
             |
-            <StyledTab
-              onClick={() => {
-                setCourseTab('past');
-              }}>
+            <StyledTab onClick={onClickCourseTab('past')}>
               <StyledTabText active={courseTab === 'past'}>지난 활동</StyledTabText>
               {courseTab === 'past' ? <StyledTabLine /> : ''}
             </StyledTab>
