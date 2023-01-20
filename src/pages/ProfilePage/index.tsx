@@ -64,8 +64,8 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   useEffect(() => {
     if (!data) return;
     const courseHistory = data.courseHistory ?? [];
-    const courseNow = courseHistory.filter((course: Course) => course.semester === '22-2');
-    const coursePast = courseHistory.filter((course: Course) => course.semester !== '22-2');
+    const courseNow = courseHistory.filter(course => course.semester === '22-2');
+    const coursePast = courseHistory.filter(course => course.semester !== '22-2');
     if (courseTab === 'now') {
       setCourseSemester(courseNow);
     } else if (courseTab === 'past') {
