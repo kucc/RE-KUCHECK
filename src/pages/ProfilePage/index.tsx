@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { RouteComponentProps } from 'react-router';
 import { useHistory } from 'react-router-dom';
@@ -55,8 +55,13 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   const courseNow = data?.courseHistory?.filter((course: Course) => course?.semester === '22-2');
   const coursePast = data?.courseHistory?.filter((course: Course) => course?.semester !== '22-2');
 
-  const [courseTab, setCourseTab] = useState('now');
   const [courseSemester, setCourseSemester] = useState(courseNow);
+  const [courseTab, setCourseTab] = useState('now');
+
+  useEffect(() => {
+    const courseNow = data?.courseHistory?.filter((course: Course) => course?.semester === '22-2');   
+    setCourseSemester(courseNow);
+  }, [data]);
 
   if (isLoading) return <div>로딩중...</div>;
   if (isError) return <div>에러에요.</div>;
@@ -69,6 +74,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
     github_id = data.link.slice(github_id_index + 1);
   }
 
+  
   // useEffect(() => {
   //   // 임의 코스 데이터
   //   dispatch(getMainCourseRequest('21-2'));
@@ -145,8 +151,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
         </StyledCourseTab>
         <StyledLine />
         <StyledMainCourseWrapper>
-          {courseTab === 'now'}
-        {courseSemester?.map((course, i) => (
+          { courseSemester?.map((course: Course, i: number) => (
             <StyledMainCourse
               key={i}
               onClick={() => {
@@ -166,7 +171,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
               <StyledCourseInfo>
                 <StyledStackTitle>
                   <StyledStackWrapper>
-                    {course.language.map((a, i) => (
+                    {course.language.map((a: string, i: number) => (
                       <StyledStackImg key={i} src={`${process.env.PUBLIC_URL}/img/icon/${a}.svg`} />
                       ))}
                   </StyledStackWrapper>

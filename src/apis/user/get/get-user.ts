@@ -17,7 +17,6 @@ export const getUser = async ({
 }: QueryFunctionContext<[string, string]>): Promise<User> => {
   const [, id] = queryKey;
   const docRef = doc(db, 'users', id);
-  console.log(docRef);
   const docSnap = (await getDoc(docRef)).data() as User;
   if(docSnap.courseHistory !== undefined) {
     await Promise.all(docSnap.courseHistory.map(async (course, i) => {
@@ -28,7 +27,6 @@ export const getUser = async ({
         // docSnap.courseHistory[i].courseLeader.emoji = docSnap2.emoji;
         course.courseLeader.emoji = docSnap2.emoji;
       }
-      console.log(docSnap);
     }))
   }
   return docSnap;
