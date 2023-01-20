@@ -1,56 +1,61 @@
 import { useState } from 'react';
+
+import { useGetProfile } from '@hooks/use-get-profile';
+import {
+  StyledCommonLayout,
+  StyledCourseDetail,
+  StyledCourseDetail2,
+  StyledCourseTitle,
+} from '@utility/COMMON_STYLE';
+
 import EmailIcon from '../../svg/profile/email.svg';
 import GithubIcon from '../../svg/profile/github.svg';
 import InstagramIcon from '../../svg/profile/instagram.svg';
-import { 
-  StyledCommonLayout,
-  StyledCourseTitle,
-  StyledCourseDetail,
-  StyledCourseDetail2
-  } from '@utility/COMMON_STYLE';
-
+import JsImg from '../../svg/stack/js.svg';
+import { profileInfo } from './data';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { useHistory } from 'react-router-dom';
 import {
-  StyledUserInfoContainer,
-  StyledUserEmoji,
-  StyledUserContainer,
-  StyledName,
-  StyledUserRole,
   StyledComment,
-  StyledSocialContainer,
-  StyledSocialBox,
-  StyledSocialLink,
-  StyledPcModifyButton,
-  StyledMobileModifyButton,
-  StyledUserDetailComment,
   StyledCourseContainer,
-  StyledCourseTab,
-  StyledTab,
-  StyledTabText,
-  StyledTabLine,
-  StyledLine,
-  StyledMainCourseWrapper,
-  StyledMainCourse,
+  StyledCourseInfo,
   StyledCourseProfile,
-  StyledCourseProfileImg,
   StyledCourseProfileCircle,
   StyledCourseProfileEmoji,
+  StyledCourseProfileImg,
   StyledCourseProfileName,
-  StyledCourseInfo,
-  StyledStackWrapper,
-  StyledStackImg,
+  StyledCourseTab,
+  StyledLine,
+  StyledMainCourse,
+  StyledMainCourseWrapper,
+  StyledMobileModifyButton,
+  StyledName,
+  StyledPcModifyButton,
   StyledRegisterButton,
-} from './style'
+  StyledSocialBox,
+  StyledSocialContainer,
+  StyledSocialLink,
+  StyledStackImg,
+  StyledStackWrapper,
+  StyledTab,
+  StyledTabLine,
+  StyledTabText,
+  StyledUserContainer,
+  StyledUserDetailComment,
+  StyledUserEmoji,
+  StyledUserInfoContainer,
+  StyledUserRole,
+} from './style';
 
-import JsImg from '../../svg/stack/js.svg';
-
-import { profileInfo } from './data';
 // import { getMainCourseRequest } from '@redux/actions/_course_action';
 
 // import { getToken } from '@/api';
 
 export const ProfilePage = () => {
+  const { user } = useGetProfile();
+
+  console.log(user);
+
   // const history = useHistory();
   // const dispatch = useDispatch();
 
@@ -71,18 +76,18 @@ export const ProfilePage = () => {
   const [courseTab, setCourseTab] = useState('now');
   const [isMyProfile, setIsMyProfile] = useState(false);
   const [register, setRegister] = useState([false, false, false]);
-  const clickRegisterButton = (i:number) => {
+  const clickRegisterButton = (i: number) => {
     const newRegister = [...register];
     newRegister[i] = !newRegister[i];
     setRegister(newRegister);
-  }
+  };
   const MEMBER_ROLE = {
     MANAGER: '운영진',
-  }
+  };
   const email = `mailto:${profileInfo.email}`;
   const github = `https://github.com/${profileInfo.github_id}`;
   const instagram = `https://www.instagram.com/${profileInfo.instagram_id}`;
-  
+
   // useEffect(() => {
   //   // 임의 코스 데이터
   //   dispatch(getMainCourseRequest('21-2'));
@@ -137,12 +142,13 @@ export const ProfilePage = () => {
         </StyledUserContainer>
         <StyledPcModifyButton>수정하기</StyledPcModifyButton>
       </StyledUserInfoContainer>
-      <StyledUserDetailComment>{profileInfo.detail_comment.split('\n').map((comment) => (
-        <>
-          {comment}
-          <br />
-        </>
-      ))}
+      <StyledUserDetailComment>
+        {profileInfo.detail_comment.split('\n').map(comment => (
+          <>
+            {comment}
+            <br />
+          </>
+        ))}
       </StyledUserDetailComment>
       {/* {isMyProfile && <StyledMobileModifyButton>수정하기</StyledMobileModifyButton>} */}
       <StyledMobileModifyButton>수정하기</StyledMobileModifyButton>
@@ -150,58 +156,60 @@ export const ProfilePage = () => {
         <StyledCourseTab>
           <StyledTab onClick={() => setCourseTab('now')}>
             <StyledTabText active={courseTab === 'now'}>현재 활동</StyledTabText>
-            {courseTab === 'now' ? 
-              <StyledTabLine /> : ""
-            }
+            {courseTab === 'now' ? <StyledTabLine /> : ''}
           </StyledTab>
           |
           <StyledTab onClick={() => setCourseTab('past')}>
             <StyledTabText active={courseTab === 'past'}>지난 활동</StyledTabText>
-            {courseTab === 'past' ? 
-              <StyledTabLine /> : ""
-            }
+            {courseTab === 'past' ? <StyledTabLine /> : ''}
           </StyledTab>
         </StyledCourseTab>
         <StyledLine />
         <StyledMainCourseWrapper>
           {[0, 1, 2].map((v, i) => (
             <StyledMainCourse key={i}>
-            <StyledCourseProfile>
-              <StyledCourseProfileImg>
-                <StyledCourseProfileCircle />
-                <StyledCourseProfileEmoji>👨‍🚀</StyledCourseProfileEmoji>
-              </StyledCourseProfileImg>
-              <StyledCourseProfileName>
-                정인아&nbsp;
-                <span>팀장</span>
-              </StyledCourseProfileName>
-            </StyledCourseProfile>
+              <StyledCourseProfile>
+                <StyledCourseProfileImg>
+                  <StyledCourseProfileCircle />
+                  <StyledCourseProfileEmoji>👨‍🚀</StyledCourseProfileEmoji>
+                </StyledCourseProfileImg>
+                <StyledCourseProfileName>
+                  정인아&nbsp;
+                  <span>팀장</span>
+                </StyledCourseProfileName>
+              </StyledCourseProfile>
 
-            <StyledCourseInfo>
+              <StyledCourseInfo>
                 <StyledStackWrapper>
                   {[0, 1, 2].map((a, i) => (
                     <StyledStackImg key={i} src={JsImg} />
                   ))}
                 </StyledStackWrapper>
-              <div style={{marginLeft: '1.5px'}}>
-                <StyledCourseTitle>바닐라 자바스크립트 세션</StyledCourseTitle>
-                <StyledCourseDetail>난이도:&nbsp;<StyledCourseDetail2>easy</StyledCourseDetail2>&ensp;/&ensp;투자시간:&nbsp;<StyledCourseDetail2>1학점</StyledCourseDetail2></StyledCourseDetail>
-              </div>
-            </StyledCourseInfo>
-            {
-              register[i] === false ?
-              <StyledRegisterButton onClick={()=>{
-                clickRegisterButton(i);
-              }}>신청하기&nbsp;0/5</StyledRegisterButton>
-              :
-              <StyledRegisterButton onClick={()=>{
-                clickRegisterButton(i);
-              }}>수강 취소</StyledRegisterButton>
-            }
-          </StyledMainCourse>
+                <div style={{ marginLeft: '1.5px' }}>
+                  <StyledCourseTitle>바닐라 자바스크립트 세션</StyledCourseTitle>
+                  <StyledCourseDetail>
+                    난이도:&nbsp;<StyledCourseDetail2>easy</StyledCourseDetail2>
+                    &ensp;/&ensp;투자시간:&nbsp;<StyledCourseDetail2>1학점</StyledCourseDetail2>
+                  </StyledCourseDetail>
+                </div>
+              </StyledCourseInfo>
+              {register[i] === false ? (
+                <StyledRegisterButton
+                  onClick={() => {
+                    clickRegisterButton(i);
+                  }}>
+                  신청하기&nbsp;0/5
+                </StyledRegisterButton>
+              ) : (
+                <StyledRegisterButton
+                  onClick={() => {
+                    clickRegisterButton(i);
+                  }}>
+                  수강 취소
+                </StyledRegisterButton>
+              )}
+            </StyledMainCourse>
           ))}
-          
-
         </StyledMainCourseWrapper>
         {/* {mainCourseData.length === 0 && <EmptyBox />}
         {mainCourseData.length > 0 &&

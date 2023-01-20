@@ -35,6 +35,8 @@ export const CourseDetailPage = ({ match }: RouteComponentProps<{ id: string }>)
 
   if (isError) return <div>에러에요.</div>;
 
+  console.log(data);
+
   return (
     <StyledCommonLayout>
       <StyledContainer>

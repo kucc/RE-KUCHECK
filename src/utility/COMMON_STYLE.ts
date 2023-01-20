@@ -1,3 +1,4 @@
+import { Input, InputNumber, Select } from 'antd';
 import styled, { css } from 'styled-components';
 
 import { BASE_COLOR, BLACK, GRAY, LINE_GRAY, RED } from './COLORS';
@@ -150,7 +151,7 @@ export const StyledDownArrow = styled(StyledArrow)`
   -webkit-transform: rotate(45deg);
 `;
 
-export const StyledTextArea = styled(TextArea)`
+export const StyledTextArea = styled(Input)`
   background-color: rgb(245, 245, 245);
   border-radius: 15px;
   border: none;
