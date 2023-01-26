@@ -103,7 +103,6 @@ export const StyledSidePadding = styled.div`
 export const StyledVerticalLine = styled.div<{ length?: number }>`
   border-right: 1px solid #b6b6b677;
   height: ${(props: any) => (props.length ? `${props.length}px` : '40px')};
-  height: ${(props: any) => (props.length ? `${props.length}px` : '40px')};
   margin-left: 5%;
 `;
 
@@ -236,7 +235,6 @@ export const StyledCommonTitle = styled.div`
   font-family: 'tmoneyBo';
   color: ${BLACK};
   padding-left: 49px;
-  padding-top: 50px;
   padding-top: 50px;
 `;
 
