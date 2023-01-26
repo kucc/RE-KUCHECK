@@ -140,7 +140,7 @@ export const CourseDetailPage = ({ match }: RouteComponentProps<{ id: string }>)
                 <StyledTitle>사용 언어 및 기술 스택</StyledTitle>
                 <StyledLine />
               </StyledStackLine>
-              <StyledBox>
+              <StyledBox style={{padding: '20px'}}>
                 <StyledDescription>
                   {sessionStack.map((stack, i) => (
                     <StyledDetailContainer key={i}>

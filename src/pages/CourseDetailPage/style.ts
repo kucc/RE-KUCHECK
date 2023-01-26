@@ -106,7 +106,7 @@ export const StyledCurriLine = styled(StyledLineBox)`
 export const StyledLeaderBox = styled.div`
   margin-top: 5px;
   font-family: 'sdBo';
-  padding: 5px;
+  padding: 10px 20px;
   border-radius: 10px;
   border: solid 1.5px rgb(222,222,222);
   font-size: 16px;
@@ -250,8 +250,9 @@ export const StyledCurriWeekTitle = styled(StyledDetailTitleBase)`
   }
 `
 export const StyledStackTitle = styled(StyledDetailTitleBase)`
-  width: 120px;
+  width: 100px;
   margin-right: 21px;
+  white-space: nowrap;
   @media (max-width: 1279px) {
     width: 90px;
     margin-right: 16px;
