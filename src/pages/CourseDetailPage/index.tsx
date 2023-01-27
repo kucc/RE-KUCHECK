@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { RouteComponentProps } from 'react-router';
 import { useHistory } from 'react-router-dom';
-
+import { useEffect } from 'react';
+import { useGetProfile } from '@hooks/use-get-profile';
 import { getCourse } from '@apis';
 import { QUERY_KEY } from '@constants';
 import {
@@ -56,9 +57,12 @@ export const CourseDetailPage = ({ match }: RouteComponentProps<{ id: string }>)
 
   const history = useHistory();
 
+  const { user } = useGetProfile();
+
   if (isLoading) return <div>로딩중...</div>;
   if (isError) return <div>에러에요.</div>;
   console.log(data);
+
   const sessionStack = [
     {
       title: '주요 기술 스택',
@@ -107,7 +111,11 @@ export const CourseDetailPage = ({ match }: RouteComponentProps<{ id: string }>)
           }}>
           <StyledBackArrow src={`${process.env.PUBLIC_URL}/img/common/backArrow.svg`} />
         </StyledBackArrowWrapper>
-        <StyledPcModifyButton>수정하기</StyledPcModifyButton>
+        {data.courseLeader.id === user?.id ? 
+          <StyledPcModifyButton>수정하기</StyledPcModifyButton>
+            :
+          <></> 
+        }
       </div>
       
       <StyledCommonPcLayout>

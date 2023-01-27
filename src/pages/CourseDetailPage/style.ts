@@ -132,10 +132,7 @@ export const StyledArrow = styled.img`
   }
 `
 export const StyledEmoji = styled.span`
-  font-size: 55px;
-  @media (max-width: 1279px) {
-    font-size: 50px;
-  }
+  font-size: 50px;
 `
 export const StyledName = styled.span`
   font-size: 18px;
