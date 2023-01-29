@@ -5,17 +5,19 @@ import { BACKGROUND_GRAY, BLACK, GRAY, LINE_GRAY, RED } from '@utility/COLORS';
 
 export const StyledMainSearchContainer = styled.div`
   display: flex;
+  justify-content: center;
   height: 60px;
   margin-bottom: 30px;
+
   @media (max-width: 800px) {
     flex-wrap: wrap;
+    justify-content: start;
     height: auto;
     margin: 0;
   }
 `;
 
 export const StyledDropDown = styled.div`
-  display: inline-block;
   .ant-btn {
     &:hover,
     &:focus {
