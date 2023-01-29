@@ -1,15 +1,25 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import { BLACK, LINE_GRAY, RED } from '@utility/COLORS';
 
-export const StyledHeaderContainer = styled.div`
+const rotate = keyframes` /* 2. css코드를 씀. */
+  from {
+    margin-left: -100%;
+  }
+
+  to {
+    margin-left: 0%;
+  }
+`;
+
+export const StyledHeaderContainer = styled.div<{ isHamburger: boolean }>`
   width: 136px;
   height: 100%;
   position: fixed;
   padding-right: 21px;
   display: flex;
   flex-direction: column;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     display: none;
   }
 
@@ -25,9 +35,11 @@ export const StyledHeaderContainer = styled.div`
       background-color: white;
       padding: 8px 22px 0 18px;
     `}
+
+  animation: ${rotate} 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
 `;
 
-export const StyledMobileHamburgerContainer = styled.div`
+export const StyledMobileHamburgerContainer = styled.div<{ isHamburger: boolean }>`
   ${props =>
     props.isHamburger &&
     css`
@@ -41,7 +53,7 @@ export const StyledMobileHamburgerContainer = styled.div`
     `}
 `;
 
-export const StyledMobileOverlayContainer = styled.div`
+export const StyledMobileOverlayContainer = styled.div<{ isHamburger: boolean }>`
   display: none;
   width: 100%;
   height: 100%;
@@ -59,7 +71,7 @@ export const StyledMobileOverlayContainer = styled.div`
 
 export const StyledMobileLogoContainer = styled.div`
   display: none;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     display: block;
   }
 `;
@@ -75,7 +87,7 @@ export const StyledLinkButton = styled.span`
   cursor: pointer;
 `;
 
-export const StyleActive = styled.span`
+export const StyleActive = styled.span<{ active: boolean }>`
   color: ${BLACK};
   font-size: 18px;
   padding: 2px 5px;
@@ -89,7 +101,7 @@ export const StyleActive = styled.span`
     width: 20px;
     margin-right: 12px;
   }
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 16px;
   }
 `;

@@ -20,7 +20,7 @@ export const StyledDescriptionTopText = styled.div`
   line-height: 58px;
   color: ${props => (props.color === 'red' ? RED : BLACK)};
   margin-top: ${props => (props.color === 'red' ? '4px' : 0)};
-  @media (max-width: 1224px) {
+  @media (max-width: 800px) {
     font-size: 36px;
     line-height: 40px;
   }
@@ -31,7 +31,7 @@ export const StyledDescriptionBottomText = styled.div`
   line-height: 28px;
   color: ${BLACK};
   margin: 20px 0 84px 0;
-  @media (max-width: 1224px) {
+  @media (max-width: 800px) {
     font-size: 16px;
     line-height: 20px;
   }

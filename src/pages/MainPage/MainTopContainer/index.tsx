@@ -14,7 +14,7 @@ import {
 } from './style';
 
 export const MainTopContainer = () => {
-  const isMobile = useMediaQuery({ query: '(max-width: 1279px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 800px)' });
 
   return (
     <StyledTopContainer>

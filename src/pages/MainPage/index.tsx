@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 // import { useDispatch, useSelector } from "react-redux";
 import { MainTopContainer } from './MainTopContainer';
+import { MainContainer } from './style';
 
 export const MainPage = () => {
   // const dispatch = useDispatch();
@@ -21,20 +22,10 @@ export const MainPage = () => {
   // }, []);
 
   // // 학기에 맞춰 코스 불러오기
-  // useEffect(() => {
-  //   if (commonInfoStatus === SUCCESS) {
-  //     handleCurrentSemester(commonInfoData.currentSemester);
-  //   }
-  // }, [commonInfoData, commonInfoStatus]);
-
-  const handleCurrentSemester = semester => {
-    setCurrentSemester(semester);
-  };
 
   return (
-    <>
+    <MainContainer>
       <MainTopContainer />
-      <div style={{ height: '100vh' }}>2121</div>
-    </>
+    </MainContainer>
   );
 };

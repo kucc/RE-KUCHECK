@@ -8,7 +8,7 @@ export const StyledTopContainer = styled.div`
   text-align: center;
   position: relative;
   padding: 84px 0 60px 0;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     width: 300px;
     padding: 54px 0 37px 0;
   }
@@ -21,7 +21,7 @@ export const StyledLogo = styled.img`
   position: absolute;
   left: 14%;
   top: 14%;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     width: 52px;
     height: 52px;
     top: 36px;
@@ -44,7 +44,7 @@ export const StyledContentText = styled.div`
   font-size: 22px;
   color: ${BLACK};
   margin-top: 22px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 12px;
     margin-top: 13px;
   }
@@ -56,7 +56,7 @@ export const StyledSpeechBubbleContainer = styled.div`
   position: absolute;
   top: -14px;
   right: 0;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     width: 235px;
     height: 61px;
     top: -12px;
@@ -75,7 +75,7 @@ export const StyledSpeechText = styled.div`
   font-family: 'tmoneyBo';
   font-size: 14px;
   color: ${BLACK};
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 8px;
     top: 19px;
   }

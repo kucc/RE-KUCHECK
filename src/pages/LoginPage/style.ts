@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { BASE_COLOR } from '@utility/COLORS';
 
-export const StyledCenterContainer = styled.div`
+export const StyledCenterContainer = styled.main`
   display: flex;
   justify-content: center;
   background-color: ${BASE_COLOR};
@@ -13,7 +13,7 @@ export const StyledAuthContainer = styled.div<{ isLogin: boolean }>`
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  height: ${props => (props.isLogin ? '100vh' : 'auto')};
+  height: ${props => (props.isLogin ? 'calc(100vh - 54px)' : 'auto')};
   background-color: white;
 `;
 

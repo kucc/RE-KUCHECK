@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { BLACK, LINE_GRAY, RED, YELLOW, WHITE } from '@utility/COLORS';
+import { BLACK, LINE_GRAY, RED, WHITE, YELLOW } from '@utility/COLORS';
 
 export const StyledUserInfoContainer = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ export const StyledUserEmoji = styled.div`
 export const StyledUserContainer = styled.div`
   width: 100%;
   margin-left: 35px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     margin: 0;
   }
 `;
@@ -38,7 +38,7 @@ export const StyledName = styled.div`
   font-size: 24px;
   line-height: 32px;
   color: ${BLACK};
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 16px;
     line-height: 20px;
   }
@@ -50,7 +50,7 @@ export const StyledUserRole = styled.span`
   color: ${RED};
   vertical-align: middle;
   margin-left: 10px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 12px;
   }
 `;
@@ -70,7 +70,7 @@ export const StyledSocialContainer = styled.div`
   flex-direction: row;
   gap: 28px;
   justify-content: flex-start;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     gap: 16px;
     justify-content: center;
   }
@@ -83,13 +83,12 @@ export const StyledSocialBox = styled.span`
   img {
     width: 15px;
     @media (max-width: 1279px) {
-    width: 10px;
-  }
+      width: 10px;
+    }
   }
   @media (max-width: 1279px) {
     gap: 4.5px;
   }
-  
 `;
 
 export const StyledSocialLink = styled.a`
@@ -98,7 +97,7 @@ export const StyledSocialLink = styled.a`
   color: ${BLACK};
   text-decoration: underline;
   text-underline-position: under;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 8px;
   }
 `;
@@ -117,7 +116,7 @@ export const StyledPcModifyButton = styled(StyledModifyButton)`
   font-size: 18px;
   flex-shrink: 0;
   margin-left: auto;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     display: none;
   }
 `;
@@ -127,7 +126,7 @@ export const StyledMobileModifyButton = styled(StyledModifyButton)`
   width: 98px;
   height: 29px;
   font-size: 10px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     display: block;
     margin: 12px auto 0 auto;
   }
@@ -139,7 +138,7 @@ const StyledTextBox = styled.div`
   @media (max-width: 1279px) {
     border: 0.8px solid ${LINE_GRAY};
   }
-`
+`;
 
 export const StyledUserDetailComment = styled(StyledTextBox)`
   padding: 25px 44px;
@@ -154,7 +153,7 @@ export const StyledUserDetailComment = styled(StyledTextBox)`
 
 export const StyledCourseContainer = styled.div`
   margin: 60px 0 82px 0;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     margin: 42px 0 86px 0;
   }
 `;
@@ -168,7 +167,7 @@ export const StyledCourseTab = styled.div`
   @media (max-width: 1279px) {
     gap: 15px;
   }
-`
+`;
 
 export const StyledTab = styled.span`
   cursor: pointer;
@@ -180,11 +179,11 @@ export const StyledTab = styled.span`
     width: 56px;
     font-size: 12px;
   }
-`
+`;
 
 export const StyledTabText = styled.span`
-  color: ${({active} : {active: boolean}) => active === true ? BLACK : LINE_GRAY};
-`
+  color: ${({ active }: { active: boolean }) => (active === true ? BLACK : LINE_GRAY)};
+`;
 
 export const StyledTabLine = styled.hr`
   height: 4px;
@@ -198,7 +197,7 @@ export const StyledTabLine = styled.hr`
     width: 56px;
     margin-top: 9px;
   }
-`
+`;
 
 export const StyledLine = styled.hr`
   height: 1px;
@@ -210,7 +209,7 @@ export const StyledLine = styled.hr`
   @media (max-width: 1279px) {
     height: 0.5px;
   }
-`
+`;
 export const StyledMainCourseWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -220,7 +219,7 @@ export const StyledMainCourseWrapper = styled.div`
     gap: 8px;
     margin-top: 12px;
   }
-`
+`;
 
 export const StyledMainCourse = styled(StyledTextBox)`
   height: auto;
@@ -234,8 +233,7 @@ export const StyledMainCourse = styled(StyledTextBox)`
     padding: 15px 18px;
     position: relative;
   }
-
-`
+`;
 
 export const StyledCourseProfile = styled.span`
   display: flex;
@@ -248,7 +246,7 @@ export const StyledCourseProfile = styled.span`
     width: 50px;
     gap: 3px;
   }
-`
+`;
 
 export const StyledCourseProfileImg = styled.span`
   position: relative;
@@ -258,7 +256,7 @@ export const StyledCourseProfileImg = styled.span`
     width: 48px;
     height: 52px;
   }
-`
+`;
 
 export const StyledCourseProfileCircle = styled.span`
   width: 60px;
@@ -271,7 +269,7 @@ export const StyledCourseProfileCircle = styled.span`
     width: 48px;
     height: 48px;
   }
-`
+`;
 
 export const StyledCourseProfileEmoji = styled.span`
   position: absolute;
@@ -282,7 +280,7 @@ export const StyledCourseProfileEmoji = styled.span`
   @media (max-width: 1279px) {
     font-size: 35px;
   }
-`
+`;
 
 export const StyledCourseProfileName = styled.span`
   font-family: 'sdBo';
@@ -293,7 +291,7 @@ export const StyledCourseProfileName = styled.span`
   @media (max-width: 1279px) {
     font-size: 8px;
   }
-`
+`;
 
 export const StyledCourseInfo = styled.div`
   display: flex;
@@ -305,7 +303,7 @@ export const StyledCourseInfo = styled.div`
     justify-content: center;
     align-items: flex-start;
   }
-`
+`;
 
 export const StyledStackTitle = styled.div`
   display: flex;
@@ -315,7 +313,7 @@ export const StyledStackTitle = styled.div`
     flex-direction: column;
     gap: 2.4px;
   }
-`
+`;
 
 export const StyledStackWrapper = styled.span`
   margin-left: 5px;
@@ -326,7 +324,7 @@ export const StyledStackWrapper = styled.span`
   @media (max-width: 1279px) {
     margin: 0;
   }
-`
+`;
 export const StyledStackImg = styled.img`
   width: 27px;
   height: 27px;
@@ -334,7 +332,7 @@ export const StyledStackImg = styled.img`
     width: 17px;
     height: 17px;
   }
-`
+`;
 
 export const StyledRegisterButton = styled(StyledModifyButton)`
   background-color: ${WHITE};
@@ -353,4 +351,4 @@ export const StyledRegisterButton = styled(StyledModifyButton)`
     height: 24px;
     font-size: 9px;
   }
-`
+`;

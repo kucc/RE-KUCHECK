@@ -7,7 +7,7 @@ export const StyledMainSearchContainer = styled.div`
   display: flex;
   height: 60px;
   margin-bottom: 30px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     flex-wrap: wrap;
     height: auto;
     margin: 0;
@@ -26,7 +26,7 @@ export const StyledDropDown = styled.div`
       }
     }
   }
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     order: 1;
     &:last-child {
       margin-left: 5px;
@@ -37,7 +37,7 @@ export const StyledDropDown = styled.div`
 export const StyledSearchContainer = styled.div`
   position: relative;
   margin: 0 10px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     order: 2;
     width: 100%;
     margin: 7px 0 16px 0;
@@ -58,7 +58,7 @@ export const StyledSearchButton = styled(Button)`
   i {
     margin-right: 12px;
   }
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     width: 95px;
     height: 28px;
     font-size: 10px;
@@ -80,7 +80,7 @@ export const StyledSearchInput = styled.input`
   &::placeholder {
     color: ${GRAY};
   }
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     width: 100%;
     height: 28px;
     font-size: 10px;
@@ -94,7 +94,7 @@ export const StyledMagnifyingGlassIcon = styled.img`
   position: absolute;
   left: 37px;
   top: 16px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     width: 12px;
     height: 12px;
     left: 24px;
