@@ -1,7 +1,5 @@
 import { useMediaQuery } from 'react-responsive';
 
-import { MobileSpeechBubble, PcSpeechBubble } from '@/svg/main';
-
 import {
   StyledContentText,
   StyledHighLightText,
@@ -21,7 +19,11 @@ export const MainTopContainer = () => {
       <StyledLogo alt='logo' />
       <StyledSpeechBubbleContainer>
         <StyledSpeechBody>
-          {isMobile ? <MobileSpeechBubble /> : <PcSpeechBubble />}
+          {isMobile ? (
+            <img src='/img/common/MobileSpeechBubble.svg' alt='1' />
+          ) : (
+            <img src='/img/common/PcSpeechBubble.svg' alt='1' />
+          )}
           <StyledSpeechText>
             지금은 <StyledHighLightText>휴식 기간</StyledHighLightText>입니다. 다음 학기에 뵈어요!
           </StyledSpeechText>

@@ -4,7 +4,7 @@ import { BLACK, RED } from '@utility/COLORS';
 
 export const StyledTopContainer = styled.div`
   width: 550px;
-  margin: 0 auto;
+  margin: 30px auto 0px;
   text-align: center;
   position: relative;
   padding: 84px 0 60px 0;
@@ -34,7 +34,7 @@ export const StyledMainText = styled.div<{ isMain?: boolean }>`
   font-family: 'tmoneyBo';
   line-height: 80px;
   color: ${props => (props.isMain ? `${RED}` : `${BLACK}`)};
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 42px;
     line-height: 46px;
   }
