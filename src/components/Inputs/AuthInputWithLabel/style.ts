@@ -17,7 +17,7 @@ export const StyledLabel = styled.label`
   color: ${BLACK};
   margin: 0 6px 8px 30px;
   margin-left: 122px;
-  @media (max-width: 1224px) {
+  @media (max-width: 800px) {
     font-size: 12px;
   }
 `;

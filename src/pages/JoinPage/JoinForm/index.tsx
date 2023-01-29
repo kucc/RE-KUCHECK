@@ -16,7 +16,7 @@ import { FORM_IS_NOT_FULL, PASSWORD_DOSE_NOT_MATCH, RandomEmoji } from '@utility
 
 function JoinForm() {
   const history = useHistory();
-  const isMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 800px)' });
 
   const [inputs, setInputs] = useState({
     email: '',

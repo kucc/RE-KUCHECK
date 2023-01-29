@@ -6,12 +6,11 @@ import { BLACK, RED } from '@utility';
 export const StyledTopHeaderContainer = styled.div`
   width: 100%;
   height: 84px;
-  position: fixed;
   border-top: 8px solid ${RED};
   background-color: white;
   box-shadow: 0px 0px 10px #ebebeb;
   z-index: 2;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     height: 54px;
     border-top: 3px solid ${RED};
     box-shadow: 0px 0px 8px #ebebeb;
@@ -20,21 +19,17 @@ export const StyledTopHeaderContainer = styled.div`
 
 export const StyledTopHeader = styled.div`
   display: flex;
-  width: 1280px;
   height: 100%;
   align-items: center;
   margin: 0 auto;
-  @media (max-width: 1279px) {
-    width: 100%;
-    padding: 0 16px;
-  }
+  padding: 0px 16px;
 `;
 
 export const StyledMainLogo = styled.img`
   width: 103px;
   height: 103px;
   cursor: pointer;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     display: none;
   }
 `;
@@ -42,7 +37,7 @@ export const StyledMainLogo = styled.img`
 export const StyledMobileHamburgerButton = styled.img`
   display: none;
   cursor: pointer;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     display: inline;
   }
 `;
@@ -53,7 +48,7 @@ export const StyledLeftContainer = styled.div`
     font-family: 'tmoneyBo';
   }
   font-size: 18px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     display: flex;
     align-items: center;
     font-size: 12px;
@@ -64,7 +59,7 @@ export const StyledTimeTableLink = styled(Link)`
   color: ${BLACK};
   margin-right: 16px;
   display: none;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     display: inline;
   }
 `;
@@ -89,7 +84,7 @@ export const StyledMenuButton = styled.div`
   display: inline-block;
 `;
 
-export const StyledDropContent = styled.div<{isLoginOpen : boolean}>`
+export const StyledDropContent = styled.div<{ isLoginOpen: boolean }>`
   display: ${props => (props.isLoginOpen ? 'flex' : 'none')};
   flex-direction: column;
   position: absolute;
