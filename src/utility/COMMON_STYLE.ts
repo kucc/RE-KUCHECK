@@ -104,14 +104,14 @@ export const StyledVerticalLine = styled.div<{ length?: number }>`
   margin-left: 5%;
 `;
 
-export const StyledArrow = styled.i<{ thin?: number; width?: number }>`
+export const StyledArrow = styled.i<{ thin?: number; width?: number | string }>`
   display: inline-block;
   border: solid ${BLACK};
   border-width: ${(props: any) =>
     props.thin ? `0px ${props.thin}px ${props.thin}px 0px` : '0 3px 3px 0'};
   margin-bottom: 2px;
   padding: ${(props: any) => (props.width ? `${props.width}px` : '3px')};
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     border-width: ${(props: any) =>
       props.thin ? `0px ${props.thin / 2}px ${props.thin / 2}px 0px` : '0 1.5px 1.5px 0'};
     padding: ${(props: any) => (props.width ? `${props.width / 2}px` : '1.5px')};
@@ -151,14 +151,14 @@ export const StyledCommonTitle = styled.div`
 
 export const StyledCommonLayout = styled.div`
   padding: 78px 18px 0px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     padding: 60px 18px 50px;
   }
 `;
 
 export const StyledCommonPcLayout = styled.div`
   padding: 0px 48px 0px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     padding: 0;
   }
 `;
@@ -166,18 +166,43 @@ export const StyledCommonPcLayout = styled.div`
 export const StyledCourseTitle = styled.div`
   font-family: 'sdBo';
   font-size: 28px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 14px;
   }
 `;
 export const StyledCourseDetail = styled.div`
   font-family: 'sdSb';
   font-size: 18px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 9px;
   }
 `;
 
 export const StyledCourseDetail2 = styled.span`
   color: ${RED};
+`;
+
+export const StyledBackArrowWrapper = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: solid 1px ${GRAY};
+  box-shadow: 0px 5px 5px ${GRAY};
+  position: relative;
+  cursor: pointer;
+  @media (max-width: 1279px) {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
+export const StyledBackArrow = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10.5px;
+  @media (max-width: 1279px) {
+    width: 7px;
+  }
 `;
