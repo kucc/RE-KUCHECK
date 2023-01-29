@@ -1,31 +1,32 @@
-import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useRecoilState } from 'recoil';
 
+import { getCourses } from '@apis';
+import { QUERY_KEY } from '@constants';
+import { currentSemesterState } from '@recoil';
+
+import { MainCourseTab } from './MainCourseTab';
+import { MainSearch } from './MainSearch';
 // import { useDispatch, useSelector } from "react-redux";
 import { MainTopContainer } from './MainTopContainer';
 import { MainContainer } from './style';
 
 export const MainPage = () => {
   // const dispatch = useDispatch();
+  const [currentSemester] = useRecoilState(currentSemesterState);
 
-  // const { status: commonInfoStatus, data: commonInfoData } = useSelector(
-  //   state => ({
-  //     status: state.common.commonInfo.status,
-  //     data: state.common.commonInfo.data,
-  //   }),
-  // );
-  // current Semester : 현재 무슨 학기인지 => string
-  const [currentSemester, setCurrentSemester] = useState('');
+  const { data, isLoading, isError } = useQuery({
+    queryFn: getCourses,
+    queryKey: [QUERY_KEY.course, currentSemester],
+  });
 
-  // 학기 정보 불러오기
-  // useEffect(() => {
-  //   dispatch(getCommonInfoRequest());
-  // }, []);
-
-  // // 학기에 맞춰 코스 불러오기
+  if (isLoading || isError) return <div />;
 
   return (
     <MainContainer>
       <MainTopContainer />
+      <MainSearch />
+      <MainCourseTab mainCourseData={data} />
     </MainContainer>
   );
 };
