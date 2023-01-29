@@ -1,0 +1,63 @@
+import { useEffect, useState } from 'react';
+
+import { useRecoilState } from 'recoil';
+
+// import { useSelector } from "react-redux";
+import { EmptyBox, MainCourse } from '@components';
+
+import { searchLanguageState, searchQueryState } from '@recoil';
+import { StyledCourseTab, StyledTab, StyledTabText } from '@utility/COMMON_STYLE';
+
+import { StyledCourseContainer } from './style';
+
+export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) => {
+  const [courseTab, setCourseTab] = useState(0);
+  const [courseList, setCourseList] = useState<Course[]>([]);
+
+  const [searchQuery] = useRecoilState(searchQueryState);
+  const [searchLanguage] = useRecoilState(searchLanguageState);
+
+  useEffect(() => {
+    let searchArray = mainCourseData;
+    if (searchQuery) {
+      // 문자열 검색
+      const regex = new RegExp(searchQuery, 'gi');
+      searchArray = mainCourseData.filter(
+        res => res.courseName.match(regex) || res.courseLeader.name.match(regex),
+      );
+    }
+    if (searchLanguage) {
+      // 사용언어
+      const regex = new RegExp(searchLanguage, 'gi');
+      searchArray = mainCourseData.filter(res =>
+        res.language.find(element => element.match(regex)),
+      );
+    }
+    setCourseList(searchArray);
+  }, [mainCourseData, searchQuery, searchLanguage]);
+
+  return (
+    <StyledCourseContainer>
+      <StyledCourseTab>
+        <StyledTab onClick={() => setCourseTab(0)}>
+          <StyledTabText active={courseTab === 0}>전체</StyledTabText>
+        </StyledTab>
+        <StyledTab onClick={() => setCourseTab(1)}>
+          <StyledTabText active={courseTab === 1}>세션</StyledTabText>
+        </StyledTab>
+        <StyledTab onClick={() => setCourseTab(2)}>
+          <StyledTabText active={courseTab === 2}>스터디</StyledTabText>
+        </StyledTab>
+        <StyledTab onClick={() => setCourseTab(3)}>
+          <StyledTabText active={courseTab === 3}>프로젝트</StyledTabText>
+        </StyledTab>
+      </StyledCourseTab>
+      {courseList.length === 0 && <EmptyBox />}
+      {courseList.length > 0 &&
+        courseList.map(res => {
+          if (courseTab === 0) return <MainCourse course={res} key={res.id} />;
+          else if (courseTab === res.courseType) return <MainCourse course={res} key={res.id} />;
+        })}
+    </StyledCourseContainer>
+  );
+};
