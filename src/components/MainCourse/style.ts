@@ -5,8 +5,8 @@ import { BLACK, LINE_GRAY, RED, YELLOW } from '@utility/COLORS';
 export const StyledMainCourseContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
   padding: 22px 32px;
+  margin: 0px 20px;
   border: 2px solid ${LINE_GRAY};
   border-radius: 26px;
   margin-top: 12px;
@@ -81,7 +81,7 @@ export const StyledCourseTop = styled.div`
   }
 `;
 
-export const StyledCourseTitle = styled.div`
+export const StyledCourseTitle = styled.div<{ isEllipsis: boolean }>`
   font-family: 'sdBo';
   font-size: 28px;
   color: ${BLACK};
