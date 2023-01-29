@@ -1,5 +1,5 @@
 // import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, cloneElement } from 'react';
 
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -22,6 +22,29 @@ import {
   StyledMobileOverlayContainer,
 } from './style';
 
+const MenuArray = [
+  {
+    title: '홈 화면',
+    path: PATH.main,
+    icon: <HomeIcon />,
+  },
+  {
+    title: '활동 개설',
+    path: PATH.courseCreate,
+    icon: <EditIcon />,
+  },
+  {
+    title: '출결 관리',
+    path: PATH.attendance,
+    icon: <CheckCircleIcon />,
+  },
+  {
+    title: '공지사항',
+    path: PATH.notice,
+    icon: <NoticeIcon />,
+  },
+];
+
 export const Header = ({
   setIsHamburgerOpen,
 }: {
@@ -38,7 +61,6 @@ export const Header = ({
 
   const handleLink = (path: string) => {
     closeOverlay();
-
     history.push(path);
   };
 
@@ -62,42 +84,21 @@ export const Header = ({
           />
           <StyledHorizontalLine />
         </StyledMobileLogoContainer>
-        <StyledLinkButton
-          onClick={() => {
-            handleLink(PATH.main);
-          }}>
-          <StyleActive active={pathname === PATH.main}>
-            <HomeIcon fill={pathname === PATH.main ? RED : BLACK} />
-            <span>홈 화면</span>
-          </StyleActive>
-        </StyledLinkButton>
-        <StyledLinkButton
-          onClick={() => {
-            handleLink(PATH.courseCreate);
-          }}>
-          <StyleActive active={pathname === PATH.courseCreate}>
-            <EditIcon fill={pathname === PATH.courseCreate ? RED : BLACK} />
-            <span>활동 개설</span>
-          </StyleActive>
-        </StyledLinkButton>
-        <StyledLinkButton
-          onClick={() => {
-            handleLink(PATH.attendance);
-          }}>
-          <StyleActive active={pathname === PATH.attendance}>
-            <CheckCircleIcon fill={pathname === PATH.attendance ? RED : BLACK} />
-            <span>출결 관리</span>
-          </StyleActive>
-        </StyledLinkButton>
-        <StyledLinkButton
-          onClick={() => {
-            handleLink(PATH.notice);
-          }}>
-          <StyleActive active={pathname === PATH.notice}>
-            <NoticeIcon fill={pathname === PATH.notice ? RED : BLACK} />
-            <span>공지사항</span>
-          </StyleActive>
-        </StyledLinkButton>
+
+        {MenuArray.map((menu, index) => (
+          <StyledLinkButton
+            key={'menu-' + index}
+            onClick={() => {
+              handleLink(menu.path);
+            }}>
+            <StyleActive active={pathname === menu.path}>
+              {cloneElement(menu.icon, { fill: pathname === menu.path ? RED : BLACK })}
+              <HomeIcon fill={pathname === menu.path ? RED : BLACK} />
+              <span>{menu.title}</span>
+            </StyleActive>
+          </StyledLinkButton>
+        ))}
+
         {user && user.role === MEMBER_ROLE.MANAGER && (
           <StyledLinkButton
             onClick={() => {
