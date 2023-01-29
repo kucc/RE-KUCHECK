@@ -29,11 +29,11 @@ export const StyledLogo = styled.img`
   }
 `;
 
-export const StyledMainText = styled.div`
+export const StyledMainText = styled.div<{ isMain?: boolean }>`
   font-size: 72px;
   font-family: 'tmoneyBo';
   line-height: 80px;
-  color: ${props => (props.main ? `${RED}` : `${BLACK}`)};
+  color: ${props => (props.isMain ? `${RED}` : `${BLACK}`)};
   @media (max-width: 1279px) {
     font-size: 42px;
     line-height: 46px;

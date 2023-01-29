@@ -1,11 +1,6 @@
-import { useEffect, useState } from 'react';
-
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 // import { useDispatch, useSelector } from "react-redux";
-// import { getMainCourseRequest } from '@redux/actions/_course_action';
-import { SUCCESS } from '@utility/ALERT_MESSAGE';
-
 import { MainTopContainer } from './MainTopContainer';
 
 export const MainPage = () => {
@@ -26,16 +21,14 @@ export const MainPage = () => {
   // }, []);
 
   // // 학기에 맞춰 코스 불러오기
-  useEffect(() => {
-    if (commonInfoStatus === SUCCESS) {
-      handleCurrentSemester(commonInfoData.currentSemester);
-    }
-  }, [commonInfoData, commonInfoStatus]);
+  // useEffect(() => {
+  //   if (commonInfoStatus === SUCCESS) {
+  //     handleCurrentSemester(commonInfoData.currentSemester);
+  //   }
+  // }, [commonInfoData, commonInfoStatus]);
 
   const handleCurrentSemester = semester => {
     setCurrentSemester(semester);
-
-    // dispatch(getMainCourseRequest(semester));
   };
 
   return (
@@ -44,9 +37,4 @@ export const MainPage = () => {
       <div style={{ height: '100vh' }}>2121</div>
     </>
   );
-};
-
-MainPage.propTypes = {
-  commonInfoStatus: PropTypes.string,
-  commonInfoData: PropTypes.object,
 };

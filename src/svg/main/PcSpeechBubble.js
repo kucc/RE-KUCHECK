@@ -12,13 +12,7 @@ export const PcSpeechBubble = () => {
           y='0'
           width='384'
           height='86'
-          filterUnits='userSpaceOnUse'>
-          <feOffset input='SourceAlpha' />
-          <feGaussianBlur stdDeviation='4' result='blur' />
-          <feFlood floodColor='#dedede' />
-          <feComposite operator='in' in2='blur' />
-          <feComposite in='SourceGraphic' />
-        </filter>
+          filterUnits='userSpaceOnUse'></filter>
       </defs>
       <g transform='matrix(1, 0, 0, 1, 0, 0)' filter='url(#speechBubble)'>
         <path
