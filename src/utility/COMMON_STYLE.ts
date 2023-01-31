@@ -150,9 +150,9 @@ export const StyledCommonTitle = styled.div`
 `;
 
 export const StyledCommonLayout = styled.div`
-  padding: 78px 18px 0px;
+  padding: 0px 18px;
   @media (max-width: 800px) {
-    padding: 60px 18px 50px;
+    padding: 0px 18px 50px;
   }
 `;
 
