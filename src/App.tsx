@@ -20,7 +20,7 @@ import {
 
 import './App.less';
 import GlobalStyle from './GlobalStyle';
-import { Footer, TopHeader } from './components';
+import { Footer, Sidebar, TopHeader } from './components';
 import { PATH } from './utility';
 
 function App() {
@@ -36,18 +36,20 @@ function App() {
         <QueryClientProvider client={queryClientRef.current}>
           <GlobalStyle />
           <TopHeader />
-          <Switch>
-            <Route exact path={PATH.login} component={LoginPage} />
-            <Route path={PATH.signUp} component={JoinPage} />
-            <Route exact path={PATH.main} component={MainPage} />
-            <Route path={PATH.courseCreate} component={CourseCreatePage} />
-            <Route path={PATH.courseDetail} component={CourseDetailPage} />
-            <Route path={PATH.attendance} component={AttendancePage} />
-            <Route path={PATH.timeTable} component={TimeTablePage} />
-            <Route path={PATH.profile} component={ProfilePage} />
-            <Route path={PATH.notice} component={NoticePage} />
-            <Route path={PATH.admin} component={AdminPage} />
-          </Switch>
+          <Sidebar>
+            <Switch>
+              <Route exact path={PATH.login} component={LoginPage} />
+              <Route path={PATH.signUp} component={JoinPage} />
+              <Route exact path={PATH.main} component={MainPage} />
+              <Route path={PATH.courseCreate} component={CourseCreatePage} />
+              <Route path={PATH.courseDetail} component={CourseDetailPage} />
+              <Route path={PATH.attendance} component={AttendancePage} />
+              <Route path={PATH.timeTable} component={TimeTablePage} />
+              <Route path={PATH.profile} component={ProfilePage} />
+              <Route path={PATH.notice} component={NoticePage} />
+              <Route path={PATH.admin} component={AdminPage} />
+            </Switch>
+          </Sidebar>
           <Footer />
         </QueryClientProvider>
       </RecoilRoot>

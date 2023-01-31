@@ -1,12 +1,17 @@
 // import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Dispatch, SetStateAction, cloneElement } from 'react';
+
+import { useMediaQuery } from 'react-responsive';
+import { useHistory, useLocation } from 'react-router-dom';
 
 // import { setHamburgerRequest } from '@redux/actions/_main_action';
 import { CheckCircleIcon, EditIcon, HomeIcon, LockStatesIcon, NoticeIcon } from '@/svg/header';
+// import { DefaultLogo } from '..';
+import { useGetProfile } from '@hooks/use-get-profile';
 import { BLACK, RED } from '@utility/COLORS';
 import { MEMBER_ROLE, PATH } from '@utility/COMMON_FUNCTION';
 
-// import { DefaultLogo } from '..';
+import { DefaultLogo } from '..';
 import {
   StyleActive,
   StyledHeaderContainer,
@@ -17,30 +22,58 @@ import {
   StyledMobileOverlayContainer,
 } from './style';
 
-export const Header = ({ pathname }: { pathname: string }) => {
+const MenuArray = [
+  {
+    title: '홈 화면',
+    path: PATH.main,
+    icon: <HomeIcon />,
+  },
+  {
+    title: '활동 개설',
+    path: PATH.courseCreate,
+    icon: <EditIcon />,
+  },
+  {
+    title: '출결 관리',
+    path: PATH.attendance,
+    icon: <CheckCircleIcon />,
+  },
+  {
+    title: '공지사항',
+    path: PATH.notice,
+    icon: <NoticeIcon />,
+  },
+];
+
+export const Header = ({
+  setIsHamburgerOpen,
+}: {
+  setIsHamburgerOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const history = useHistory();
-  // const dispatch = useDispatch();
+  const { user } = useGetProfile();
 
-  // const isHamburger = useSelector(state => state.main.isHamburger);
-  // const member = useSelector(state => state.member.currentMember);
+  const location = useLocation();
 
-  const handleLink = path => {
+  const pathname = location.pathname;
+
+  const isMobile = useMediaQuery({ query: '(max-width: 800px)' });
+
+  const handleLink = (path: string) => {
     closeOverlay();
-
     history.push(path);
   };
 
   const closeOverlay = () => {
-    document.body.classList.remove('open-modal');
-    // dispatch(setHamburgerRequest(false));
+    setIsHamburgerOpen(false);
   };
 
   return (
-    <StyledMobileHamburgerContainer isHamburger={isHamburger}>
-      <StyledMobileOverlayContainer isHamburger={isHamburger} onClick={closeOverlay} />
-      <StyledHeaderContainer isHamburger={isHamburger}>
+    <StyledMobileHamburgerContainer isHamburger={isMobile}>
+      <StyledMobileOverlayContainer isHamburger={isMobile} onClick={closeOverlay} />
+      <StyledHeaderContainer isHamburger={isMobile}>
         <StyledMobileLogoContainer>
-          {/* <DefaultLogo
+          <DefaultLogo
             logoName='type-1-3'
             width={103}
             height={103}
@@ -48,46 +81,25 @@ export const Header = ({ pathname }: { pathname: string }) => {
               handleLink(PATH.main);
             }}
             isPointer={true}
-          /> */}
+          />
           <StyledHorizontalLine />
         </StyledMobileLogoContainer>
-        <StyledLinkButton
-          onClick={() => {
-            handleLink(PATH.main);
-          }}>
-          <StyleActive active={pathname === PATH.main}>
-            <HomeIcon fill={pathname === PATH.main ? RED : BLACK} />
-            <span>홈 화면</span>
-          </StyleActive>
-        </StyledLinkButton>
-        <StyledLinkButton
-          onClick={() => {
-            handleLink(PATH.courseCreate);
-          }}>
-          <StyleActive active={pathname === PATH.courseCreate}>
-            <EditIcon fill={pathname === PATH.courseCreate ? RED : BLACK} />
-            <span>활동 개설</span>
-          </StyleActive>
-        </StyledLinkButton>
-        <StyledLinkButton
-          onClick={() => {
-            handleLink(PATH.attendance);
-          }}>
-          <StyleActive active={pathname === PATH.attendance}>
-            <CheckCircleIcon fill={pathname === PATH.attendance ? RED : BLACK} />
-            <span>출결 관리</span>
-          </StyleActive>
-        </StyledLinkButton>
-        <StyledLinkButton
-          onClick={() => {
-            handleLink(PATH.notice);
-          }}>
-          <StyleActive active={pathname === PATH.notice}>
-            <NoticeIcon fill={pathname === PATH.notice ? RED : BLACK} />
-            <span>공지사항</span>
-          </StyleActive>
-        </StyledLinkButton>
-        {member && member.role === MEMBER_ROLE.MANAGER && (
+
+        {MenuArray.map((menu, index) => (
+          <StyledLinkButton
+            key={'menu-' + index}
+            onClick={() => {
+              handleLink(menu.path);
+            }}>
+            <StyleActive active={pathname === menu.path}>
+              {cloneElement(menu.icon, { fill: pathname === menu.path ? RED : BLACK })}
+              <HomeIcon fill={pathname === menu.path ? RED : BLACK} />
+              <span>{menu.title}</span>
+            </StyleActive>
+          </StyledLinkButton>
+        ))}
+
+        {user && user.role === MEMBER_ROLE.MANAGER && (
           <StyledLinkButton
             onClick={() => {
               handleLink(PATH.admin);
