@@ -9,7 +9,7 @@ import {
   StyledHorizontalLine,
   StyledRow,
   StyledSubContent,
-  StyledTitle
+  StyledTitle,
 } from './style';
 
 export const Footer = () => {
@@ -32,10 +32,15 @@ export const Footer = () => {
             </StyledContent>
           </StyledRow>
           <StyledRow>
+            <StyledTitle>Renewers</StyledTitle>
+            <StyledContent>
+              <StyledSubContent>KURECHECK</StyledSubContent>
+              김유나 · 이희준
+            </StyledContent>
+          </StyledRow>
+          <StyledRow>
             <StyledTitle>Github</StyledTitle>
-            <StyledFooterGithubLink
-              href='https://github.com/kucc/KUCheckCheck'
-              target='_blank'>
+            <StyledFooterGithubLink href='https://github.com/kucc/KUCheckCheck' target='_blank'>
               https://github.com/kucc/KUCheckCheck
             </StyledFooterGithubLink>
           </StyledRow>

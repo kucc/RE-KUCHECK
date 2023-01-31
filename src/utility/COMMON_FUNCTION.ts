@@ -2,7 +2,7 @@ export const PATH = {
   // 리뉴얼 페이지 PATH
   login: '/login', // 로그인
   signUp: '/signup', // 회원가입
-  main: '/main', // 메인
+  main: '/', // 메인
   courseCreate: '/course/create', // 활동 개설
   courseDetail: '/course/detail/:id', // 세션 소개
   attendance: '/attendance', // 출결 관리

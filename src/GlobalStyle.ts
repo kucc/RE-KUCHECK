@@ -4,6 +4,8 @@ const GlobalStyle = createGlobalStyle`
 html, body, #root {
   width: 100%;
   height: 100%;
+  max-width: 1280px;
+  margin: auto;
 }
 
 iframe {
@@ -13,11 +15,11 @@ iframe {
 body {
   overflow-x: hidden;
   font-family: "sdMe", "Apple SD Gothic Neo", "Malgun Gothic", "arial sans-serif";
-
   &.open-modal {
     overflow-y: hidden;
   }
 }
+
 
 button {
   cursor: pointer;

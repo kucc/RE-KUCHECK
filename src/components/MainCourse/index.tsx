@@ -1,24 +1,22 @@
-import PropTypes from 'prop-types';
-
 import {
-    StyledCaseSlash,
-    StyledCourseBottom,
-    StyledCourseButton,
-    StyledCourseCase,
-    StyledCourseCaseValue,
-    StyledCourseInfo,
-    StyledCourseLanguageImage,
-    StyledCourseTitle,
-    StyledCourseTop,
-    StyledEmoji,
-    StyledEmojiBackground,
-    StyledLeader,
-    StyledLeaderName,
-    StyledLeaderType,
-    StyledMainCourseContainer
+  StyledCaseSlash,
+  StyledCourseBottom,
+  StyledCourseButton,
+  StyledCourseCase,
+  StyledCourseCaseValue,
+  StyledCourseInfo,
+  StyledCourseLanguageImage,
+  StyledCourseTitle,
+  StyledCourseTop,
+  StyledEmoji,
+  StyledEmojiBackground,
+  StyledLeader,
+  StyledLeaderName,
+  StyledLeaderType,
+  StyledMainCourseContainer,
 } from './style';
 
-export const MainCourse = ({ course }) => {
+export const MainCourse = ({ course }: { course: Course }) => {
   return (
     <StyledMainCourseContainer onClick={() => console.log('전체 클릭')}>
       <StyledLeader>
@@ -52,9 +50,7 @@ export const MainCourse = ({ course }) => {
           <StyledCaseSlash>/</StyledCaseSlash>
           <StyledCourseCase>
             투자시간 :&nbsp;
-            <StyledCourseCaseValue>
-              {course.requireTime}학점
-            </StyledCourseCaseValue>
+            <StyledCourseCaseValue>{course.requireTime}학점</StyledCourseCaseValue>
           </StyledCourseCase>
         </StyledCourseBottom>
       </StyledCourseInfo>
@@ -68,8 +64,4 @@ export const MainCourse = ({ course }) => {
       </StyledCourseButton>
     </StyledMainCourseContainer>
   );
-};
-
-MainCourse.propTypes = {
-  course: PropTypes.object.isRequired,
 };
