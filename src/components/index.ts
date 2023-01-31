@@ -7,3 +7,4 @@ export * from './Header';
 export * from './Inputs';
 export * from './MainCourse';
 export * from './TopHeader';
+export * from './ProfileModal';
