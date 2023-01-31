@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { ProfileModal } from '@components/ProfileModal';
 import { useQuery } from '@tanstack/react-query';
 import { RouteComponentProps } from 'react-router';
 import { useHistory } from 'react-router-dom';
@@ -61,7 +62,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
 
   const [courseSemester, setCourseSemester] = useState<Course[] | null>(null);
   const [courseTab, setCourseTab] = useState<CourseTab>('now');
-
+  const [modal, setModal] = useState(false);
   useEffect(() => {
     if (!data) return;
     const courseHistory = data.courseHistory ?? [];
@@ -76,7 +77,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
 
   if (isLoading) return <div>로딩중...</div>;
   if (isError) return <div>에러에요.</div>;
-
+  data.id = userId;
   const email = `mailto:${data.email}`;
   const instagram = `https://www.instagram.com/${data.instaLink}`;
   let github_id = '';
@@ -107,6 +108,9 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   //     setIsMyProfile(true);
   //   }
   // }, [dispatch, history, member?.id, selectUserId]);
+  const closeModal = () => {
+    setModal(false);
+  }
 
   return (
     <StyledCommonLayout>
@@ -147,7 +151,10 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
               </StyledSocialBox>
             </StyledSocialContainer>
           </StyledUserContainer>
-          <StyledPcModifyButton>수정하기</StyledPcModifyButton>
+          <StyledPcModifyButton
+            onClick={() => {setModal(true)}}
+          >수정하기</StyledPcModifyButton>
+          {modal && <ProfileModal closeModal={() => closeModal} user={data}/>}
         </StyledUserInfoContainer>
         <StyledUserDetailComment>
           {data.detailComment?.split('\n').map(comment => (
@@ -157,7 +164,9 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
             </>
           ))}
         </StyledUserDetailComment>
-        <StyledMobileModifyButton>수정하기</StyledMobileModifyButton>
+        <StyledMobileModifyButton
+          onClick={() => {setModal(true)}}
+        >수정하기</StyledMobileModifyButton>
         <StyledCourseContainer>
           <StyledCourseTab>
             <StyledTab onClick={onClickCourseTab('now')}>
