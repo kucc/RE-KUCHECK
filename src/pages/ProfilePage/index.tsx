@@ -108,9 +108,6 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   //     setIsMyProfile(true);
   //   }
   // }, [dispatch, history, member?.id, selectUserId]);
-  const closeModal = () => {
-    setModal(false);
-  }
 
   return (
     <StyledCommonLayout>
@@ -154,7 +151,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
           <StyledPcModifyButton
             onClick={() => {setModal(true)}}
           >수정하기</StyledPcModifyButton>
-          {modal && <ProfileModal closeModal={() => closeModal} user={data}/>}
+          {modal && <ProfileModal user={data} setModal={() => setModal(false)} />}
         </StyledUserInfoContainer>
         <StyledUserDetailComment>
           {data.detailComment?.split('\n').map(comment => (
