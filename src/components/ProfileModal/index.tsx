@@ -55,7 +55,6 @@ export const ProfileModal = ({ user, setModal }: { user: User, setModal: any }) 
     }
     return false;
 }
-
   return (
     <StyledModal>
       <Modal
@@ -78,7 +77,7 @@ export const ProfileModal = ({ user, setModal }: { user: User, setModal: any }) 
             transform: 'translate(-50%, -50%)',
             backgroundColor: 'rgba(255, 255, 255, 0.75)',
             width: isSmallScreen() ? '80%' : '40%',
-            height: '80%',
+            height: '85%',
             zIndex: '100',
           },
         }}>
