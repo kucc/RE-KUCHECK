@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { RED, LINE_GRAY, GRAY } from '@utility/COLORS';
+import { RED, LINE_GRAY, GRAY, BLACK } from '@utility/COLORS';
 
 export const StyledTitleWrapper = styled.div`
   display: flex;
@@ -85,6 +85,7 @@ position: relative;
     font-weight: 600;
     transition: 0.25s;
     background-color: ${RED};
+    color: ${BLACK};
 `
 
 export const StyledModal = styled.div`
