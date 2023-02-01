@@ -22,15 +22,13 @@ import {
   StyledTitleWrapper,
 } from './style';
 
-export const ProfileModal = ({ closeModal, user }: { closeModal: any; user: User }) => {
+export const ProfileModal = ({ user, setModal }: { user: User, setModal: any }) => {
   const [emoji, setEmoji] = useState(user.emoji);
   const [comment, setComment] = useState(user.comment);
   const [detailComment, setDetailComment] = useState(user.detailComment);
   const [github, setGithub] = useState(user.link);
   const [instagram, setInstagram] = useState(user.instaLink);
   const [email, setEmail] = useState(user.email);
-
-  console.log(user);
   
   const queryClient = useQueryClient();
   const updateUser = useMutation(
@@ -51,13 +49,18 @@ export const ProfileModal = ({ closeModal, user }: { closeModal: any; user: User
       },
     },
   );
-  
+  function isSmallScreen(): boolean {
+    if (typeof window !== 'undefined') {
+        return window.innerWidth < 800;
+    }
+    return false;
+}
+
   return (
     <StyledModal>
       <Modal
-        // className="modal"
         isOpen={true}
-        onRequestClose={closeModal()}
+        onRequestClose={() => setModal(false)}
         style={{
           overlay: {
             position: 'fixed',
@@ -74,7 +77,7 @@ export const ProfileModal = ({ closeModal, user }: { closeModal: any; user: User
             left: '50%',
             transform: 'translate(-50%, -50%)',
             backgroundColor: 'rgba(255, 255, 255, 0.75)',
-            width: '40%',
+            width: isSmallScreen() ? '80%' : '40%',
             height: '80%',
             zIndex: '100',
           },
@@ -82,7 +85,7 @@ export const ProfileModal = ({ closeModal, user }: { closeModal: any; user: User
         <StyledTitleWrapper>
           <StyledTitle>수정하기</StyledTitle>
           <StyledCancelButton 
-              onClick={closeModal()}>
+              onClick={() => setModal(false)}>
               X
             </StyledCancelButton>
           </StyledTitleWrapper>
@@ -148,13 +151,13 @@ export const ProfileModal = ({ closeModal, user }: { closeModal: any; user: User
           <StyledButton
             onClick={() => {
               updateUser.mutate();
-              closeModal();
+              setModal(false);
             }}>
             OK
           </StyledButton>
           <StyledButton
             style={{backgroundColor: 'rgba(255, 255, 255, 0.75)'}}
-            onClick={closeModal()}>
+            onClick={() => {setModal(false)}}>
             Cancel
           </StyledButton>
         </StyledButtonWrapper>
