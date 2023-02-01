@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { BLACK, RED } from '@utility';
+import { RED, LINE_GRAY, GRAY } from '@utility/COLORS';
 
 export const StyledTitleWrapper = styled.div`
   display: flex;
@@ -26,6 +26,10 @@ export const StyledWrapper = styled.div`
 
 export const StyledLine = styled.hr`
   margin: 10px 0;
+  border: 0;
+  border-radius: 3px;
+  height: 2px;
+  background-color: ${GRAY};
 `
 
 export const StyledTitleText = styled.div`
