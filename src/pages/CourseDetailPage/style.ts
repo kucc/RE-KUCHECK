@@ -8,9 +8,11 @@ export const StyledContainer = styled.div`
   gap: 1rem;
   margin-top: 1rem;
   justify-content: flex-end;
+  padding-bottom: 5rem;
   @media (max-width: 800px) {
     flex-direction: column;
     gap: 1.5rem;
+    padding-bottom: 3rem;
   }
 `;
 export const StyledModifyButton = styled.button`
