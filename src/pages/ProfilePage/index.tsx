@@ -6,28 +6,18 @@ import { RouteComponentProps } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { getUser } from '@apis';
 import { QUERY_KEY } from '@constants';
+import { EmptyBox, MainCourse } from '@components';
 import {
   StyledBackArrow,
   StyledBackArrowWrapper,
-  StyledCommonLayout,
   StyledCommonPcLayout,
-  StyledCourseDetail,
-  StyledCourseDetail2,
-  StyledCourseTitle,
 } from '@utility/COMMON_STYLE';
 
 import {
   StyledComment,
   StyledCourseContainer,
-  StyledCourseInfo,
-  StyledCourseProfile,
-  StyledCourseProfileCircle,
-  StyledCourseProfileEmoji,
-  StyledCourseProfileImg,
-  StyledCourseProfileName,
   StyledCourseTab,
   StyledLine,
-  StyledMainCourse,
   StyledMainCourseWrapper,
   StyledMobileModifyButton,
   StyledName,
@@ -36,9 +26,6 @@ import {
   StyledSocialBox,
   StyledSocialContainer,
   StyledSocialLink,
-  StyledStackImg,
-  StyledStackTitle,
-  StyledStackWrapper,
   StyledTab,
   StyledTabLine,
   StyledTabText,
@@ -48,6 +35,7 @@ import {
   StyledUserInfoContainer,
   StyledUserRole,
 } from './style';
+import { MainContainer } from '@pages/MainPage/style';
 
 type CourseTab = 'past' | 'now';
 
@@ -110,7 +98,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   // }, [dispatch, history, member?.id, selectUserId]);
 
   return (
-    <StyledCommonLayout>
+    <MainContainer>
       <StyledBackArrowWrapper
         onClick={() => {
           history.goBack();
@@ -178,57 +166,13 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
           </StyledCourseTab>
           <StyledLine />
           <StyledMainCourseWrapper>
+            {courseSemester?.length === 0 && <EmptyBox />}
             {courseSemester?.map((course: Course, i: number) => (
-              <StyledMainCourse
-                key={i}
-                onClick={() => {
-                  history.push(`/course/detail/${course.id}`);
-                }}>
-                <StyledCourseProfile>
-                  <StyledCourseProfileImg>
-                    <StyledCourseProfileCircle />
-                    <StyledCourseProfileEmoji>{course.courseLeader.emoji}</StyledCourseProfileEmoji>
-                  </StyledCourseProfileImg>
-                  <StyledCourseProfileName>
-                    {course.courseLeader.name}&nbsp;
-                    <span>팀장</span>
-                  </StyledCourseProfileName>
-                </StyledCourseProfile>
-
-                <StyledCourseInfo>
-                  <StyledStackTitle>
-                    <StyledStackWrapper>
-                      {course.language.map((a: string, i: number) => (
-                        <StyledStackImg
-                          key={i}
-                          src={`${process.env.PUBLIC_URL}/img/icon/${a}.svg`}
-                        />
-                      ))}
-                    </StyledStackWrapper>
-                    <StyledCourseTitle>{course.courseName}</StyledCourseTitle>
-                  </StyledStackTitle>
-                  <StyledCourseDetail>
-                    난이도:&nbsp;<StyledCourseDetail2>{course.difficulty}</StyledCourseDetail2>
-                    &ensp;/&ensp;투자시간:&nbsp;
-                    <StyledCourseDetail2>{course.requireTime}학점</StyledCourseDetail2>
-                  </StyledCourseDetail>
-                </StyledCourseInfo>
-                {courseTab === 'now' ? (
-                  <StyledRegisterButton
-                  // onClick={() => {
-                  //   courseCancelButton(i);
-                  // }}
-                  >
-                    수강 취소
-                  </StyledRegisterButton>
-                ) : (
-                  ''
-                )}
-              </StyledMainCourse>
+              <MainCourse course={course} key={i} profile={true}/>
             ))}
           </StyledMainCourseWrapper>
         </StyledCourseContainer>
       </StyledCommonPcLayout>
-    </StyledCommonLayout>
+    </MainContainer>
   );
 };
