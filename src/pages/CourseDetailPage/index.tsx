@@ -1,14 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { RouteComponentProps } from 'react-router';
 import { useHistory } from 'react-router-dom';
-import { useEffect } from 'react';
 import { useGetProfile } from '@hooks/use-get-profile';
 import { getCourse } from '@apis';
 import { QUERY_KEY } from '@constants';
 import {
   StyledBackArrow,
   StyledBackArrowWrapper,
-  StyledCommonLayout,
   StyledCommonPcLayout,
   StyledCourseDetail,
   StyledCourseDetail2,
@@ -45,6 +43,7 @@ import {
   StyledStackWrapper,
   StyledTitle,
 } from './style';
+import { MainContainer } from '@pages/MainPage/style';
 
 // import { userInfo } from 'os';
 
@@ -103,7 +102,7 @@ export const CourseDetailPage = ({ match }: RouteComponentProps<{ id: string }>)
     ],
   };
   return (
-    <StyledCommonLayout>
+    <MainContainer>
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
         <StyledBackArrowWrapper
           onClick={() => {
@@ -216,6 +215,6 @@ export const CourseDetailPage = ({ match }: RouteComponentProps<{ id: string }>)
           </StyledPcBox2>
         </StyledContainer>
       </StyledCommonPcLayout>
-    </StyledCommonLayout>
+    </MainContainer>
   );
 };
