@@ -40,6 +40,7 @@ export const StyledSearchContainer = styled.div`
   position: relative;
   margin: 0 10px;
   @media (max-width: 800px) {
+    display: flex;
     order: 2;
     width: 100%;
     margin: 7px 0 16px 0;
