@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { RED, LINE_GRAY, GRAY, BLACK } from '@utility/COLORS';
+import { RED, LINE_GRAY, GRAY, BLACK, WHITE } from '@utility/COLORS';
 
 export const StyledTitleWrapper = styled.div`
   display: flex;
@@ -38,7 +38,7 @@ export const StyledTitleText = styled.div`
 `
 
 export const StyledEmoji = styled.span`
-  font-size: 50px;
+  font-size: 70px;
   cursor: pointer;
   display: inline-block;
 `
@@ -86,6 +86,12 @@ position: relative;
     transition: 0.25s;
     background-color: ${RED};
     color: ${BLACK};
+`
+
+export const StyledWithdrawalButton = styled(StyledButton)`
+  background-color: ${GRAY};
+  margin: 10px;
+  opacity: 0.7;
 `
 
 export const StyledModal = styled.div`

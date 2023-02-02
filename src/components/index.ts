@@ -9,3 +9,4 @@ export * from './MainCourse';
 export * from './Sidebar';
 export * from './TopHeader';
 export * from './ProfileModal';
+export * from './AlertModal';
