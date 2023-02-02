@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 
 import { db } from '@config';
 import { RandomEmoji } from '@utility/COMMON_FUNCTION';
-
+import { AlertModal } from '..';
 import {
   StyledButton,
   StyledCancelButton,
@@ -20,6 +20,7 @@ import {
   StyledTitleText,
   StyledWrapper,
   StyledTitleWrapper,
+  StyledWithdrawalButton,
 } from './style';
 
 export const ProfileModal = ({ user, setModal }: { user: User, setModal: any }) => {
@@ -29,7 +30,7 @@ export const ProfileModal = ({ user, setModal }: { user: User, setModal: any }) 
   const [github, setGithub] = useState(user.link);
   const [instagram, setInstagram] = useState(user.instaLink);
   const [email, setEmail] = useState(user.email);
-  
+  const [promptModal, setPromptModal] = useState(false);
   const queryClient = useQueryClient();
   const updateUser = useMutation(
     async () => {
@@ -54,7 +55,8 @@ export const ProfileModal = ({ user, setModal }: { user: User, setModal: any }) 
         return window.innerWidth < 800;
     }
     return false;
-}
+  }
+
   return (
     <StyledModal>
       <Modal
@@ -145,7 +147,10 @@ export const ProfileModal = ({ user, setModal }: { user: User, setModal: any }) 
               }}></StyledInput>
           </StyledForm>
         </StyledWrapper>
-
+        <StyledWithdrawalButton
+          onClick={() => {setPromptModal(true)}}
+        >탈퇴하기</StyledWithdrawalButton>
+        {promptModal && <AlertModal isPromptModalOpened={() => {setPromptModal(false)}}/>}
         <StyledButtonWrapper>
           <StyledButton
             onClick={() => {
