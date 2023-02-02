@@ -1,12 +1,11 @@
 import styled, { css } from 'styled-components';
 
-import { BLACK, LINE_GRAY, RED, YELLOW } from '@utility/COLORS';
+import { BLACK, LINE_GRAY, RED, WHITE, YELLOW } from '@utility/COLORS';
 
 export const StyledMainCourseContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 22px 32px;
-  margin: 0px 20px;
   border: 2px solid ${LINE_GRAY};
   border-radius: 26px;
   margin-top: 12px;
@@ -150,3 +149,9 @@ export const StyledCourseButton = styled.button`
     margin: auto 0 0 auto;
   }
 `;
+
+export const StyledCourseCancelButton = styled(StyledCourseButton)`
+  background-color: ${WHITE};
+  color: ${RED};
+  border: solid 1px ${RED};
+`

@@ -2,6 +2,7 @@ import {
   StyledCaseSlash,
   StyledCourseBottom,
   StyledCourseButton,
+  StyledCourseCancelButton,
   StyledCourseCase,
   StyledCourseCaseValue,
   StyledCourseInfo,
@@ -15,10 +16,18 @@ import {
   StyledLeaderType,
   StyledMainCourseContainer,
 } from './style';
+import { useHistory } from 'react-router-dom';
 
-export const MainCourse = ({ course }: { course: Course }) => {
+export const MainCourse = ({ course, profile }: { course: Course, profile?: boolean }) => {
+  const history = useHistory();
+  const NOW_SEMESTER = "22-2";
+
   return (
-    <StyledMainCourseContainer onClick={() => console.log('전체 클릭')}>
+    <StyledMainCourseContainer 
+      onClick={() => {
+        history.push(`/course/detail/${course.id}`);
+      }}
+    >
       <StyledLeader>
         <StyledEmojiBackground>
           <StyledEmoji>🧑‍🎤</StyledEmoji>
@@ -54,14 +63,21 @@ export const MainCourse = ({ course }: { course: Course }) => {
           </StyledCourseCase>
         </StyledCourseBottom>
       </StyledCourseInfo>
-      <StyledCourseButton
-        onClick={e => {
-          e.stopPropagation();
-
-          console.log('부분 클릭');
-        }}>
-        신청하기 1/5
-      </StyledCourseButton>
+      {
+        course.semester === NOW_SEMESTER ?
+        profile && <StyledCourseCancelButton>수강 취소</StyledCourseCancelButton>
+        || 
+        <StyledCourseButton
+          onClick={e => {
+            e.stopPropagation();
+            
+            console.log('부분 클릭');
+          }}>
+          신청하기 1/5
+        </StyledCourseButton>
+        : 
+        ""
+      }
     </StyledMainCourseContainer>
   );
 };
