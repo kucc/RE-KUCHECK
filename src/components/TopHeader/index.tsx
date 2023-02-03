@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 
 import { signOut } from 'firebase/auth';
-import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 
 import { auth } from '@config';
@@ -32,12 +31,8 @@ export const TopHeader = () => {
 
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
 
-  const isMobile = useMediaQuery({ query: '(max-width: 800px)' });
-
   const dropDownRef = useRef(null);
   const [isLoginOpen, setIsLoginOpen] = useDetectClose(dropDownRef, false);
-
-  console.log(isMobile);
 
   const handleMobileHamburger = () => {
     setIsHamburgerOpen(true);
@@ -50,7 +45,7 @@ export const TopHeader = () => {
   };
 
   const handleGoProfile = () => {
-    history.push(PATH.profile);
+    history.push(`/profile/${user?.id}`);
   };
 
   return (
