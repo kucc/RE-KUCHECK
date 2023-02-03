@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteUser, getAuth } from 'firebase/auth';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import Modal from 'react-modal';
+import { useHistory } from 'react-router-dom';
 
 import { db } from '@config';
 import { useGetProfile } from '@hooks/use-get-profile';
@@ -25,6 +26,7 @@ import {
   StyledWithdrawalButton,
   StyledWrapper,
 } from './style';
+import { PATH } from '@utility/COMMON_FUNCTION';
 
 export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) => {
   const [emoji, setEmoji] = useState(user.emoji);
@@ -35,6 +37,8 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
   const [email, setEmail] = useState(user.email);
   const [promptModal, setPromptModal] = useState(false);
   const queryClient = useQueryClient();
+  const history = useHistory();
+
   const updateUser = useMutation(
     async () => {
       const docRef = doc(db, 'users', user.id);
@@ -53,10 +57,6 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
       },
     },
   );
-  console.log(user);
-  const auth = getAuth();
-  const userData: any = auth.currentUser;
-  console.log(userData);
 
   const { resetUser } = useGetProfile();
 
@@ -68,6 +68,8 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
       await deleteDoc(deleteDocRef);
       await deleteUser(userData);
       resetUser();
+      alert('회원 탈퇴 되었습니다.');
+      history.push(PATH.login);
     } catch {
       console.log('Error');
     }
@@ -79,7 +81,7 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
     }
     return false;
   }
-  
+
   return (
     <StyledModal>
       <Modal

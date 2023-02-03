@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { ProfileModal } from '@components/ProfileModal';
 import { useQuery } from '@tanstack/react-query';
 import { RouteComponentProps } from 'react-router';
@@ -51,17 +51,26 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   const [courseSemester, setCourseSemester] = useState<Course[] | null>(null);
   const [courseTab, setCourseTab] = useState<CourseTab>('now');
   const [modal, setModal] = useState(false);
+  const [uId, setUId] = useState<null | string>(null);
+  const didMount = useRef(false);
 
-  const isUserLogin = async () => {
+  const isUserLogin = () => {
     const auth = getAuth();
-    const userData: any = auth.currentUser;
-    return userData;
+    if(auth.currentUser !== null) {
+      setUId(auth.currentUser.uid);
+    }
+    else if(auth.currentUser === null) {
+      history.push(PATH.login);
+      alert('로그인 후 이용 가능합니다.');
+      return;
+    }
   }
 
   useEffect(() => {
-    if(isUserLogin() === null) {
-      alert('로그인 후 이용 가능합니다.');
-      history.push(PATH.login);
+    if (didMount.current) {
+      isUserLogin();
+    } else {
+      didMount.current = true;
     }
     if (!data) return;
     const courseHistory = data.courseHistory ?? [];
@@ -72,7 +81,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
     } else if (courseTab === 'past') {
       setCourseSemester(coursePast);
     }
-  }, [data, courseTab, history]);
+  }, [data, courseTab]);
 
   if (isLoading) return <div>로딩중...</div>;
   if (isError) return <div>에러에요.</div>;
@@ -130,9 +139,12 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
               </StyledSocialBox>
             </StyledSocialContainer>
           </StyledUserContainer>
-          <StyledPcModifyButton
+          {uId === userId &&
+            <StyledPcModifyButton
             onClick={() => {setModal(true)}}
-          >수정하기</StyledPcModifyButton>
+            >수정하기</StyledPcModifyButton>
+          }
+
           {modal && <ProfileModal user={data} setModal={() => setModal(false)} />}
         </StyledUserInfoContainer>
         <StyledUserDetailComment>
@@ -143,9 +155,11 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
             </>
           ))}
         </StyledUserDetailComment>
-        <StyledMobileModifyButton
-          onClick={() => {setModal(true)}}
-        >수정하기</StyledMobileModifyButton>
+        {uId === userId &&
+          <StyledMobileModifyButton
+            onClick={() => {setModal(true)}}
+          >수정하기</StyledMobileModifyButton>
+        }
         <StyledCourseContainer>
           <StyledCourseTab>
             <StyledTab onClick={onClickCourseTab('now')}>
