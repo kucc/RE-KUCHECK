@@ -1,16 +1,19 @@
 import { useState } from 'react';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { doc, updateDoc } from 'firebase/firestore';
+import { deleteUser, getAuth } from 'firebase/auth';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import Modal from 'react-modal';
 
 import { db } from '@config';
+import { useGetProfile } from '@hooks/use-get-profile';
 import { RandomEmoji } from '@utility/COMMON_FUNCTION';
+
 import { AlertModal } from '..';
 import {
   StyledButton,
-  StyledCancelButton,
   StyledButtonWrapper,
+  StyledCancelButton,
   StyledEmoji,
   StyledForm,
   StyledInput,
@@ -18,12 +21,12 @@ import {
   StyledModal,
   StyledTitle,
   StyledTitleText,
-  StyledWrapper,
   StyledTitleWrapper,
   StyledWithdrawalButton,
+  StyledWrapper,
 } from './style';
 
-export const ProfileModal = ({ user, setModal }: { user: User, setModal: any }) => {
+export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) => {
   const [emoji, setEmoji] = useState(user.emoji);
   const [comment, setComment] = useState(user.comment);
   const [detailComment, setDetailComment] = useState(user.detailComment);
@@ -50,16 +53,37 @@ export const ProfileModal = ({ user, setModal }: { user: User, setModal: any }) 
       },
     },
   );
+  console.log(user);
+  const auth = getAuth();
+  const userData: any = auth.currentUser;
+  console.log(userData);
+
+  const { resetUser } = useGetProfile();
+
+  const deleteUserData = useMutation(async () => {
+    try {
+      const deleteDocRef = doc(db, 'users', user.id);
+      const auth = getAuth();
+      const userData: any = auth.currentUser;
+      await deleteDoc(deleteDocRef);
+      await deleteUser(userData);
+      resetUser();
+    } catch {
+      console.log('Error');
+    }
+  });
+
   function isSmallScreen(): boolean {
     if (typeof window !== 'undefined') {
-        return window.innerWidth < 800;
+      return window.innerWidth < 800;
     }
     return false;
   }
-
+  
   return (
     <StyledModal>
       <Modal
+        ariaHideApp={false}
         isOpen={true}
         onRequestClose={() => setModal(false)}
         style={{
@@ -85,11 +109,8 @@ export const ProfileModal = ({ user, setModal }: { user: User, setModal: any }) 
         }}>
         <StyledTitleWrapper>
           <StyledTitle>수정하기</StyledTitle>
-          <StyledCancelButton 
-              onClick={() => setModal(false)}>
-              X
-            </StyledCancelButton>
-          </StyledTitleWrapper>
+          <StyledCancelButton onClick={() => setModal(false)}>X</StyledCancelButton>
+        </StyledTitleWrapper>
         <StyledLine />
         <StyledWrapper>
           <StyledForm>
@@ -148,9 +169,19 @@ export const ProfileModal = ({ user, setModal }: { user: User, setModal: any }) 
           </StyledForm>
         </StyledWrapper>
         <StyledWithdrawalButton
-          onClick={() => {setPromptModal(true)}}
-        >탈퇴하기</StyledWithdrawalButton>
-        {promptModal && <AlertModal isPromptModalOpened={() => {setPromptModal(false)}}/>}
+          onClick={() => {
+            setPromptModal(true);
+          }}>
+          탈퇴하기
+        </StyledWithdrawalButton>
+        {promptModal && (
+          <AlertModal
+            isPromptModalOpened={() => {
+              setPromptModal(false);
+            }}
+            setDeleteUser={() => {deleteUserData.mutate()}}
+          />
+        )}
         <StyledButtonWrapper>
           <StyledButton
             onClick={() => {
@@ -160,12 +191,14 @@ export const ProfileModal = ({ user, setModal }: { user: User, setModal: any }) 
             OK
           </StyledButton>
           <StyledButton
-            style={{backgroundColor: 'rgba(255, 255, 255, 0.75)'}}
-            onClick={() => {setModal(false)}}>
+            style={{ backgroundColor: 'rgba(255, 255, 255, 0.75)' }}
+            onClick={() => {
+              setModal(false);
+            }}>
             Cancel
           </StyledButton>
         </StyledButtonWrapper>
       </Modal>
-      </StyledModal>
+    </StyledModal>
   );
 };
