@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRecoilState, useResetRecoilState } from 'recoil';
@@ -13,12 +13,12 @@ export const useGetProfile = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const unlisten = onAuthStateChanged(auth, async fbUser => {
       if (fbUser && user === null) {
         setIsLoading(true);
         const { uid } = fbUser;
-        const firestoreUser: User = await getUser(uid);
+        const firestoreUser: User = await getUser({ queryKey: ['', uid] } as any);
         setUser(firestoreUser);
         setIsLoading(false);
       } else {
