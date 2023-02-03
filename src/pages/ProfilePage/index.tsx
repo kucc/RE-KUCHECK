@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import { ProfileModal } from '@components/ProfileModal';
 import { useQuery } from '@tanstack/react-query';
 import { RouteComponentProps } from 'react-router';
@@ -12,7 +11,7 @@ import {
   StyledBackArrowWrapper,
   StyledCommonPcLayout,
 } from '@utility/COMMON_STYLE';
-
+import { PATH } from '@utility/COMMON_FUNCTION';
 import {
   StyledComment,
   StyledCourseContainer,
@@ -36,6 +35,7 @@ import {
   StyledUserRole,
 } from './style';
 import { MainContainer } from '@pages/MainPage/style';
+import { getAuth } from 'firebase/auth';
 
 type CourseTab = 'past' | 'now';
 
@@ -51,7 +51,19 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   const [courseSemester, setCourseSemester] = useState<Course[] | null>(null);
   const [courseTab, setCourseTab] = useState<CourseTab>('now');
   const [modal, setModal] = useState(false);
+
+  const isUserLogin = () => {
+    const auth = getAuth();
+    const userData: any = auth.currentUser;
+    console.log('ddd', userData);
+    return userData;
+  }
+
   useEffect(() => {
+    if(isUserLogin() === null) {
+      alert('로그인 후 이용 가능합니다.');
+      history.push(PATH.login);
+    }
     if (!data) return;
     const courseHistory = data.courseHistory ?? [];
     const courseNow = courseHistory.filter(course => course.semester === '22-2');
@@ -61,11 +73,13 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
     } else if (courseTab === 'past') {
       setCourseSemester(coursePast);
     }
-  }, [data, courseTab]);
+  }, [data, courseTab, history]);
 
   if (isLoading) return <div>로딩중...</div>;
   if (isError) return <div>에러에요.</div>;
+
   data.id = userId;
+
   const email = `mailto:${data.email}`;
   const instagram = `https://www.instagram.com/${data.instaLink}`;
   let github_id = '';
@@ -77,25 +91,6 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   const onClickCourseTab = (course: CourseTab) => () => {
     setCourseTab(course);
   };
-
-  // useEffect(() => {
-  //   // 임의 코스 데이터
-  //   dispatch(getMainCourseRequest('21-2'));
-
-  //   const token = getToken();
-
-  //   if (!token && !selectUserId) {
-  //     alert('로그인 후 이용 가능합니다.');
-
-  //     history.push(PATH.login);
-  //   }
-
-  //   if (member?.id === selectUserId || (member?.id && selectUserId === null)) {
-  //     dispatch(getProfileRequest(member.id));
-
-  //     setIsMyProfile(true);
-  //   }
-  // }, [dispatch, history, member?.id, selectUserId]);
 
   return (
     <MainContainer>
