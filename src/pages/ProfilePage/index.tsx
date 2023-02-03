@@ -52,10 +52,9 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   const [courseTab, setCourseTab] = useState<CourseTab>('now');
   const [modal, setModal] = useState(false);
 
-  const isUserLogin = () => {
+  const isUserLogin = async () => {
     const auth = getAuth();
     const userData: any = auth.currentUser;
-    console.log('ddd', userData);
     return userData;
   }
 
