@@ -1,3 +1,11 @@
+import { useState } from 'react';
+
+import { doc, updateDoc } from 'firebase/firestore';
+import { useHistory } from 'react-router-dom';
+
+import { db } from '@config';
+import { useGetProfile } from '@hooks/use-get-profile';
+
 import {
   StyledCaseSlash,
   StyledCourseBottom,
@@ -16,18 +24,94 @@ import {
   StyledLeaderType,
   StyledMainCourseContainer,
 } from './style';
-import { useHistory } from 'react-router-dom';
 
-export const MainCourse = ({ course, profile }: { course: Course, profile?: boolean }) => {
+export const MainCourse = ({ course, profile }: { course: Course; profile?: boolean }) => {
   const history = useHistory();
-  const NOW_SEMESTER = "22-2";
+  const NOW_SEMESTER = '22-2';
+
+  const { user } = useGetProfile();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  console.log(course);
+
+  const {
+    maxMemberNum,
+    courseMember,
+    courseAttendance,
+    courseName,
+    language,
+    difficulty,
+    requireTime,
+    semester,
+    id: courseId,
+  } = course;
+
+  const onClickApplication = async () => {
+    if (!user || isLoading || courseMember.length > maxMemberNum) return;
+    const { id: userId, courseHistory } = user;
+
+    try {
+      setIsLoading(true);
+      const courseRef = doc(db, 'courses', courseId);
+      const userRef = doc(db, 'users', userId);
+
+      const updateData = {
+        courseMember: [...courseMember, userId],
+        courseAttendance: [
+          ...courseAttendance,
+          {
+            id: userId,
+            attendance: [3, 3, 3, 3, 3, 3, 3, 3],
+          },
+        ],
+      };
+      // course Update
+      await updateDoc(courseRef, updateData);
+
+      // user Update
+      await updateDoc(userRef, {
+        courseHistory: [
+          ...(courseHistory ?? []),
+          {
+            ...course,
+            updateData,
+          },
+        ],
+      });
+      alert('신청이 완료되었습니다!');
+    } catch (error) {
+      alert('신청에 실패했습니다. 관리자에게 문의해주세요.' + error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const renderButton = () => {
+    if (semester === NOW_SEMESTER && profile) {
+      return <StyledCourseCancelButton>수강 취소</StyledCourseCancelButton>;
+    } else {
+      const isDisabled = courseMember.length === maxMemberNum;
+      return (
+        <StyledCourseButton
+          isDisabled={isDisabled}
+          disabled={isDisabled}
+          onClick={e => {
+            e.stopPropagation();
+            onClickApplication();
+          }}>
+          신청하기 {courseMember.length}/{maxMemberNum}
+        </StyledCourseButton>
+      );
+    }
+  };
 
   return (
-    <StyledMainCourseContainer 
+    <StyledMainCourseContainer
       onClick={() => {
         history.push(`/course/detail/${course.id}`);
-      }}
-    >
+      }}>
+      {isLoading && <div>로딩중...</div>}
       <StyledLeader>
         <StyledEmojiBackground>
           <StyledEmoji>🧑‍🎤</StyledEmoji>
@@ -38,10 +122,8 @@ export const MainCourse = ({ course, profile }: { course: Course, profile?: bool
       </StyledLeader>
       <StyledCourseInfo>
         <StyledCourseTop>
-          <StyledCourseTitle isEllipsis={course.courseName.length > 14}>
-            {course.courseName}
-          </StyledCourseTitle>
-          {course.language.slice(0, 3).map((res, index) => {
+          <StyledCourseTitle isEllipsis={courseName.length > 14}>{courseName}</StyledCourseTitle>
+          {language.slice(0, 3).map((res, index) => {
             return (
               <StyledCourseLanguageImage
                 key={index}
@@ -54,30 +136,16 @@ export const MainCourse = ({ course, profile }: { course: Course, profile?: bool
         <StyledCourseBottom>
           <StyledCourseCase>
             난이도 :&nbsp;
-            <StyledCourseCaseValue>{course.difficulty}</StyledCourseCaseValue>
+            <StyledCourseCaseValue>{difficulty}</StyledCourseCaseValue>
           </StyledCourseCase>
           <StyledCaseSlash>/</StyledCaseSlash>
           <StyledCourseCase>
             투자시간 :&nbsp;
-            <StyledCourseCaseValue>{course.requireTime}학점</StyledCourseCaseValue>
+            <StyledCourseCaseValue>{requireTime}학점</StyledCourseCaseValue>
           </StyledCourseCase>
         </StyledCourseBottom>
       </StyledCourseInfo>
-      {
-        course.semester === NOW_SEMESTER ?
-        profile && <StyledCourseCancelButton>수강 취소</StyledCourseCancelButton>
-        || 
-        <StyledCourseButton
-          onClick={e => {
-            e.stopPropagation();
-            
-            console.log('부분 클릭');
-          }}>
-          신청하기 1/5
-        </StyledCourseButton>
-        : 
-        ""
-      }
+      {renderButton()}
     </StyledMainCourseContainer>
   );
 };

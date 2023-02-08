@@ -1,17 +1,20 @@
-import { QueryFunctionContext } from '@tanstack/react-query';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
 
 import { db } from '@config';
 
-export const getCourses = async ({
-  queryKey,
-}: QueryFunctionContext<[string, string]>): Promise<Course[]> => {
-  const [, semester] = queryKey;
-
+export const getCourses = async (semester: string, callBackFunc: (courses: Course[]) => void) => {
   const q = query(collection(db, 'courses'), where('semester', '==', semester));
 
-  const academySnapshot = await getDocs(q);
-  const academyList = academySnapshot.docs.map(doc => doc.data() as Course);
+  const unsubscribe = onSnapshot(q, querySnapshot => {
+    const result = [];
+    for (const doc of querySnapshot.docs) {
+      const docData = doc.data() as Course;
 
-  return academyList;
+      result.push({ ...docData, id: doc.id });
+    }
+
+    callBackFunc(result);
+  });
+
+  return unsubscribe;
 };
