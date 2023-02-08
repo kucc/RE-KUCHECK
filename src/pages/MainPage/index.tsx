@@ -1,13 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
+// import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from 'react';
+
 import { useRecoilState } from 'recoil';
 
 import { getCourses } from '@apis';
-import { QUERY_KEY } from '@constants';
 import { currentSemesterState } from '@recoil';
 
 import { MainCourseTab } from './MainCourseTab';
 import { MainSearch } from './MainSearch';
-// import { useDispatch, useSelector } from "react-redux";
 import { MainTopContainer } from './MainTopContainer';
 import { MainContainer } from './style';
 
@@ -15,12 +15,22 @@ export const MainPage = () => {
   // const dispatch = useDispatch();
   const [currentSemester] = useRecoilState(currentSemesterState);
 
-  const { data, isLoading, isError } = useQuery({
-    queryFn: getCourses,
-    queryKey: [QUERY_KEY.course, currentSemester],
-  });
+  const [data, setData] = useState<Course[] | null>(null);
 
-  if (isLoading || isError) return <div />;
+  const getData = async (currentSemester: string) => {
+    const unsubscribe = await getCourses(currentSemester, courses => setData(courses));
+    return () => {
+      unsubscribe();
+    };
+  };
+
+  useEffect(() => {
+    if (currentSemester) {
+      getData(currentSemester);
+    }
+  }, [currentSemester]);
+
+  if (!data) return <div>로딩중...</div>;
 
   return (
     <MainContainer>
