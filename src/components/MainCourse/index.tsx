@@ -26,12 +26,11 @@ import {
   StyledMainCourseContainer,
 } from './style';
 
-export const MainCourse = ({ course, profile }: { course: Course; profile?: boolean }) => {
+export const MainCourse = ({ course, profileId }: { course: Course; profileId?: string }) => {
   const history = useHistory();
   const NOW_SEMESTER = '22-2';
 
   const { user, resetUser } = useGetProfile();
-  console.log(user, course);
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -122,16 +121,17 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
   };
 
   const renderButton = () => {
-    if (profile) {
-      console.log(semester, NOW_SEMESTER);
+    if (profileId) {
       return (
-        <StyledCourseCancelButton
-          onClick={e => {
-            e.stopPropagation();
-            dropCourse();
-          }}>
-          수강 취소
-        </StyledCourseCancelButton>
+        (profileId === user?.id && (
+          <StyledCourseCancelButton
+            onClick={e => {
+              e.stopPropagation();
+              dropCourse();
+            }}>
+            수강 취소
+          </StyledCourseCancelButton>
+        )) || <></>
       );
     } else if (courseMember.includes(user?.id ?? '')) {
       return (
