@@ -31,7 +31,7 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
   const NOW_SEMESTER = '22-2';
 
   const { user, resetUser } = useGetProfile();
-
+  console.log(user, course);
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -122,7 +122,8 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
   };
 
   const renderButton = () => {
-    if (semester === NOW_SEMESTER && profile) {
+    if (profile) {
+      console.log(semester, NOW_SEMESTER);
       return (
         <StyledCourseCancelButton
           onClick={e => {
@@ -200,7 +201,7 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
           </StyledCourseCase>
         </StyledCourseBottom>
       </StyledCourseInfo>
-      {renderButton()}
+      {semester === NOW_SEMESTER && renderButton()}
     </StyledMainCourseContainer>
   );
 };
