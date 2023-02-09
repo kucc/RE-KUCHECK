@@ -154,7 +154,8 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
             e.stopPropagation();
             onClickApplication();
           }}>
-          신청하기 {courseMember.length}/{maxMemberNum}
+          {(isDisabled && <>마감&nbsp;</>) || <>신청하기&nbsp;</>}
+          {courseMember.length}/{maxMemberNum}
         </StyledCourseButton>
       );
     }
