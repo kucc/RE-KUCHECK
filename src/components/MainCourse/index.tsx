@@ -120,6 +120,35 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
     }
   };
 
+  const checkIsCourseFulled = async () => {
+    if (!user || isLoading) return;
+
+    const isError =
+      !courseMember.includes(user.id) &&
+      user.courseHistory?.some(myCourse => myCourse.id === courseId);
+
+    if (!isError) return;
+    const { id: userId, courseHistory } = user;
+
+    try {
+      setIsLoading(true);
+      const userRef = doc(db, 'users', userId);
+      const newCourseHistory = courseHistory?.filter(myCourse => myCourse.id !== courseId);
+
+      // user Update
+      await updateDoc(userRef, {
+        courseHistory: newCourseHistory ?? [],
+      });
+
+      resetUser();
+      alert('수강 인원이 초과하여 마감되었습니다.');
+    } catch (error) {
+      alert('에러가 발생하였습니다. 관리자에게 문의해주세요.' + error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const renderButton = () => {
     if (profileId) {
       return (
@@ -147,6 +176,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
       );
     } else {
       const isDisabled = courseMember.length >= maxMemberNum;
+      checkIsCourseFulled();
       return (
         <StyledCourseButton
           bgColor={isDisabled ? GRAY : RED}
