@@ -87,7 +87,7 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
     }
   };
 
-  const onCancelCourse = async () => {
+  const dropCourse = async () => {
     if (!user || isLoading) return;
     const { id: userId, courseHistory } = user;
 
@@ -114,8 +114,8 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
 
       resetUser();
       alert('강의가 취소되었습니다.');
-    } catch (e) {
-      console.log('error', e);
+    } catch (error) {
+      alert('취소에 실패했습니다. 관리자에게 문의해주세요.' + error);
     } finally {
       setIsLoading(false);
     }
@@ -127,7 +127,7 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
         <StyledCourseCancelButton
           onClick={e => {
             e.stopPropagation();
-            onCancelCourse();
+            dropCourse();
           }}>
           수강 취소
         </StyledCourseCancelButton>
