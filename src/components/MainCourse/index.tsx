@@ -30,7 +30,7 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
   const history = useHistory();
   const NOW_SEMESTER = '22-2';
 
-  const { user } = useGetProfile();
+  const { user, resetUser } = useGetProfile();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -68,7 +68,7 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
         ],
       };
       // course Update
-      await updateDoc(courseRef, updateData);
+      // await updateDoc(courseRef, updateData);
 
       // user Update
       await updateDoc(userRef, {
@@ -80,6 +80,7 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
           },
         ],
       });
+      resetUser();
       alert('신청이 완료되었습니다!');
     } catch (error) {
       alert('신청에 실패했습니다. 관리자에게 문의해주세요.' + error);
