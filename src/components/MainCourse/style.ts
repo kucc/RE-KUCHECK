@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { BLACK, GRAY, LINE_GRAY, RED, WHITE, YELLOW } from '@utility/COLORS';
+import { BLACK, LINE_GRAY, RED, WHITE, YELLOW } from '@utility/COLORS';
 
 export const StyledMainCourseContainer = styled.div`
   display: flex;
@@ -131,7 +131,7 @@ export const StyledCourseCaseValue = styled.span`
   color: ${RED};
 `;
 
-export const StyledCourseButton = styled.button<{ isDisabled?: boolean }>`
+export const StyledCourseButton = styled.button<{ bgColor?: string }>`
   width: 192px;
   height: 50px;
   font-size: 18px;
@@ -139,7 +139,7 @@ export const StyledCourseButton = styled.button<{ isDisabled?: boolean }>`
   margin-left: auto;
   border-radius: 25px;
   border: none;
-  background-color: ${props => (props.isDisabled ? GRAY : RED)};
+  background-color: ${props => props.bgColor};
   color: white;
   cursor: pointer;
   @media (max-width: 800px) {
