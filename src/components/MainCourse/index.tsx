@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import { db } from '@config';
 import { useGetProfile } from '@hooks/use-get-profile';
+import { BLACK, GRAY, RED } from '@utility/COLORS';
 
 import {
   StyledCaseSlash,
@@ -90,11 +91,23 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
   const renderButton = () => {
     if (semester === NOW_SEMESTER && profile) {
       return <StyledCourseCancelButton>수강 취소</StyledCourseCancelButton>;
+    } else if (courseMember.includes(user?.id ?? '')) {
+      return (
+        <StyledCourseButton
+          bgColor={BLACK}
+          disabled={true}
+          onClick={e => {
+            e.stopPropagation();
+            onClickApplication();
+          }}>
+          수강중 {courseMember.length}/{maxMemberNum}
+        </StyledCourseButton>
+      );
     } else {
       const isDisabled = courseMember.length === maxMemberNum;
       return (
         <StyledCourseButton
-          isDisabled={isDisabled}
+          bgColor={isDisabled ? GRAY : RED}
           disabled={isDisabled}
           onClick={e => {
             e.stopPropagation();
