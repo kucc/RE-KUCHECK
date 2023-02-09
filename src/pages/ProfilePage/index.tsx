@@ -177,7 +177,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
               <MainCourse
                 course={course}
                 key={i}
-                profile={true}
+                profileId={userId}
               />
             ))}
           </StyledMainCourseWrapper>
