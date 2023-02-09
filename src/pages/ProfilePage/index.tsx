@@ -72,13 +72,13 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   if (isLoading || isCurrentUserLoading) return <div>로딩중...</div>;
   if (isError) return <div>에러에요.</div>;
 
-  if (!currentUser) {
+  if (isCurrentUserLoading && !currentUser) {
     alert('로그인 후 이용 가능합니다.');
     history.push(PATH.login);
     return <></>;
   }
 
-  const uId = currentUser.id;
+  const uId = currentUser?.id;
 
   const email = `mailto:${data.email}`;
   const instagram = `https://www.instagram.com/${data.instaLink}`;
@@ -174,7 +174,11 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
           <StyledMainCourseWrapper>
             {courseSemester?.length === 0 && <EmptyBox />}
             {courseSemester?.map((course: Course, i: number) => (
-              <MainCourse course={course} key={i} profile={true} />
+              <MainCourse
+                course={course}
+                key={i}
+                profile={true}
+              />
             ))}
           </StyledMainCourseWrapper>
         </StyledCourseContainer>
