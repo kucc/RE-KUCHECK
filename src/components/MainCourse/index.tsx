@@ -34,8 +34,6 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
 
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(course);
-
   const {
     maxMemberNum,
     courseMember,
@@ -49,7 +47,7 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
   } = course;
 
   const onClickApplication = async () => {
-    if (!user || isLoading || courseMember.length > maxMemberNum) return;
+    if (!user || isLoading || courseMember.length >= maxMemberNum) return;
     const { id: userId, courseHistory } = user;
 
     try {
@@ -68,7 +66,7 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
         ],
       };
       // course Update
-      // await updateDoc(courseRef, updateData);
+      await updateDoc(courseRef, updateData);
 
       // user Update
       await updateDoc(userRef, {
@@ -89,9 +87,51 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
     }
   };
 
+  const onCancelCourse = async () => {
+    if (!user || isLoading) return;
+    const { id: userId, courseHistory } = user;
+
+    try {
+      setIsLoading(true);
+      const courseRef = doc(db, 'courses', courseId);
+      const userRef = doc(db, 'users', userId);
+
+      const newCourseHistory = courseHistory?.filter(myCourse => myCourse.id !== courseId);
+      const newCourseMember = courseMember.filter(memberId => memberId !== userId);
+      const newCourseAttendance = courseAttendance.filter(member => member.id !== userId);
+
+      const updateData = {
+        courseMember: newCourseMember ?? [],
+        courseAttendance: newCourseAttendance,
+      };
+      // course Update
+      await updateDoc(courseRef, updateData);
+
+      // user Update
+      await updateDoc(userRef, {
+        courseHistory: newCourseHistory ?? [],
+      });
+
+      resetUser();
+      alert('강의가 취소되었습니다.');
+    } catch (e) {
+      console.log('error', e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const renderButton = () => {
     if (semester === NOW_SEMESTER && profile) {
-      return <StyledCourseCancelButton>수강 취소</StyledCourseCancelButton>;
+      return (
+        <StyledCourseCancelButton
+          onClick={e => {
+            e.stopPropagation();
+            onCancelCourse();
+          }}>
+          수강 취소
+        </StyledCourseCancelButton>
+      );
     } else if (courseMember.includes(user?.id ?? '')) {
       return (
         <StyledCourseButton
@@ -105,7 +145,7 @@ export const MainCourse = ({ course, profile }: { course: Course; profile?: bool
         </StyledCourseButton>
       );
     } else {
-      const isDisabled = courseMember.length === maxMemberNum;
+      const isDisabled = courseMember.length >= maxMemberNum;
       return (
         <StyledCourseButton
           bgColor={isDisabled ? GRAY : RED}
