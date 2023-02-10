@@ -14,6 +14,7 @@ import { MEMBER_ROLE, PATH } from '@utility/COMMON_FUNCTION';
 import { DefaultLogo } from '..';
 import {
   StyleActive,
+  StyledActiveLine,
   StyledHeaderContainer,
   StyledHorizontalLine,
   StyledLinkButton,
@@ -93,8 +94,8 @@ export const Header = ({
             }}>
             <StyleActive active={pathname === menu.path}>
               {cloneElement(menu.icon, { fill: pathname === menu.path ? RED : BLACK })}
-              <HomeIcon fill={pathname === menu.path ? RED : BLACK} />
               <span>{menu.title}</span>
+              <StyledActiveLine active={pathname === menu.path} />
             </StyleActive>
           </StyledLinkButton>
         ))}

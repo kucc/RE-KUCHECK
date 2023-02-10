@@ -3,7 +3,7 @@ import React, { cloneElement } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, useLocation } from 'react-router';
 
-import { StyleActive, StyledLinkButton } from '@components/Header/style';
+import { StyleActive, StyledActiveLine, StyledLinkButton } from '@components/Header/style';
 
 import { CheckCircleIcon, EditIcon, HomeIcon, NoticeIcon } from '@/svg/header';
 import { BLACK, RED } from '@utility/COLORS';
@@ -56,6 +56,7 @@ export const Sidebar = ({ children }: { children: React.ReactElement }) => {
             <StyleActive active={pathname === menu.path}>
               {cloneElement(menu.icon, { fill: pathname === menu.path ? RED : BLACK })}
               <span>{menu.title}</span>
+              <StyledActiveLine active={pathname === menu.path} />
             </StyleActive>
           </StyledLinkButton>
         ))}
