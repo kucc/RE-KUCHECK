@@ -79,7 +79,7 @@ export const StyledMobileLogoContainer = styled.div`
 export const StyledHorizontalLine = styled.div`
   height: 1px;
   border-bottom: 1px solid ${LINE_GRAY};
-  margin: 8px 0 33px 0;
+  margin-bottom: 33px;
 `;
 
 export const StyledLinkButton = styled.span`
@@ -89,13 +89,14 @@ export const StyledLinkButton = styled.span`
 
 export const StyleActive = styled.span<{ active: boolean }>`
   color: ${BLACK};
+  font-family: 'sdSb';
   font-size: 18px;
   padding: 2px 5px;
+  position: relative;
   ${props =>
     props.active &&
     css`
       color: ${RED};
-      border-bottom: 3px solid ${RED};
     `}
   svg {
     width: 20px;
@@ -105,3 +106,21 @@ export const StyleActive = styled.span<{ active: boolean }>`
     font-size: 16px;
   }
 `;
+
+export const StyledActiveLine = styled.hr<{ active: boolean }>`
+${props =>
+    props.active &&
+    css`
+      height: 2px;
+      width: 100%;
+      background-color: ${RED};
+      border: 0 none;
+      border-radius: 2px;
+      `
+    ||
+    css`
+      display: none;
+    `
+  }
+  position: absolute;
+`
