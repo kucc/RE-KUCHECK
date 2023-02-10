@@ -14,7 +14,7 @@ export const StyledMainCourseContainer = styled.div`
     box-shadow: 0px 0px 10px ${LINE_GRAY};
   }
   @media (max-width: 800px) {
-    padding: 16px 18px 16px 22px;
+    padding: 16px 18px;
     border-radius: 12px;
   }
 `;
@@ -27,7 +27,7 @@ export const StyledLeader = styled.div`
   margin-right: 35px;
   @media (max-width: 800px) {
     flex-basis: 55px;
-    margin-right: 12px;
+    margin-right: 5px;
   }
 `;
 
@@ -69,7 +69,10 @@ export const StyledLeaderType = styled.span`
 `;
 
 export const StyledCourseInfo = styled.div`
-  width: 50%;
+  width: 70%;
+  @media (max-width: 800px) {
+    width: 50%;
+  }
 `;
 
 export const StyledCourseTop = styled.div`
@@ -132,7 +135,7 @@ export const StyledCourseCaseValue = styled.span`
 `;
 
 export const StyledCourseButton = styled.button<{ bgColor?: string }>`
-  width: 192px;
+  width: 170px;
   height: 50px;
   font-size: 18px;
   font-family: 'sdBo';
@@ -153,5 +156,8 @@ export const StyledCourseButton = styled.button<{ bgColor?: string }>`
 export const StyledCourseCancelButton = styled(StyledCourseButton)`
   background-color: ${WHITE};
   color: ${RED};
-  border: solid 1px ${RED};
+  border: solid 1.5px ${RED};
+  @media (max-width: 800px) {
+    border: solid 1px ${RED};
+  }
 `;
