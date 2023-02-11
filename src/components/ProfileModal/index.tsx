@@ -70,8 +70,8 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
       resetUser();
       alert('회원 탈퇴 되었습니다.');
       history.push(PATH.login);
-    } catch {
-      console.log('Error');
+    } catch (e) {
+      console.log('Error', e);
     }
   });
 
