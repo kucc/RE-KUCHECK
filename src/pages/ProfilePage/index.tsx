@@ -143,11 +143,11 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
           {modal && <ProfileModal user={data} setModal={() => setModal(false)} />}
         </StyledUserInfoContainer>
         <StyledUserDetailComment>
-          {data.detailComment?.split('\n').map(comment => (
-            <>
+          {data.detailComment?.split('\n').map((comment, i) => (
+            <div key={i}>
               {comment}
               <br />
-            </>
+            </div>
           ))}
         </StyledUserDetailComment>
         {uId === userId && (
