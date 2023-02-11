@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { FirebaseError } from 'firebase/app';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 // import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router';
@@ -77,9 +77,10 @@ function JoinForm() {
 
     try {
       const result = await createUserWithEmailAndPassword(auth, email, password);
+      const uid = result.user.uid;
       if (!result.user.email) throw new Error();
 
-      await addDoc(collection(db, 'users'), {
+      await setDoc(doc(db, 'users', uid), {
         email,
         name,
         comment,
@@ -100,9 +101,8 @@ function JoinForm() {
       } else {
         alert('알 수 없는 문제로 가입에 실패했습니다. KUCC 관리자에게 문의해주세요.');
       }
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
