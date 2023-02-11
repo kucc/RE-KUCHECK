@@ -18,15 +18,16 @@ export const getUser = async ({
   const [, id] = queryKey;
   const docRef = doc(db, 'users', id);
   const docSnap = (await getDoc(docRef)).data() as User;
-  if (docSnap.courseHistory !== undefined) {
+  const courseHistory = docSnap.courseHistory ?? [];
+  if (courseHistory.length > 0) {
     await Promise.all(
-      docSnap.courseHistory.map(async (course, i) => {
+      courseHistory.map(async (course, i) => {
         if (course.courseLeader.emoji === undefined) {
           const leader_id = course.courseLeader.id;
           const docRef2 = doc(db, 'users', leader_id);
           const docSnap2 = (await getDoc(docRef2)).data() as User;
-          // docSnap.courseHistory[i].courseLeader.emoji = docSnap2.emoji;
           course.courseLeader.emoji = docSnap2.emoji;
+          console.log(course.courseLeader.emoji);
         }
       }),
     );
