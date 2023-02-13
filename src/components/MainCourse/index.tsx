@@ -200,7 +200,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
       {isLoading && <div>로딩중...</div>}
       <StyledLeader>
         <StyledEmojiBackground>
-          <StyledEmoji>🧑‍🎤</StyledEmoji>
+          <StyledEmoji>{course.courseLeader.emoji}</StyledEmoji>
         </StyledEmojiBackground>
         <StyledLeaderName>
           {course.courseLeader.name} <StyledLeaderType>팀장</StyledLeaderType>
