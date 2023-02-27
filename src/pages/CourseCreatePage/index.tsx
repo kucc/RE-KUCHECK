@@ -54,14 +54,14 @@ export const CourseCreatePage = () => {
     requireTime: ['1학점', '2학점', '3학점'],
   };
 
-  const [requireInform, setRequireInform] = useState<any>({
+  const [requireInform, setRequireInform] = useState<{[key: string]: string}>({
     courseType: '',
     difficulty: '',
     requireTime: '',
     courseName: '',
   });
 
-  const onChangeRequireInform = (type: string, value: string | string[]) => {
+  const onChangeRequireInform = (type: string, value: string) => {
     const result = { ...requireInform };
     result[type] = value;
     setRequireInform(result);
@@ -70,7 +70,7 @@ export const CourseCreatePage = () => {
   console.log(requireInform, selectedLanguages);
 
   // 세부정보
-  const [detailInform, setDetailInform] = useState<any>({
+  const [detailInform, setDetailInform] = useState<{[key: string]: string | string[]}>({
     courseStack: [],
     courseInfo: '',
     courseGoal: '',
@@ -105,7 +105,7 @@ export const CourseCreatePage = () => {
       onClick={e => {
         onChangeRequireInform('courseType', e.key);
       }}
-      selectedKeys={requireInform['courseType']}
+      selectedKeys={[requireInform['courseType']]}
       items={course.type.map(type => ({
         label: type,
         key: type,
@@ -168,7 +168,6 @@ export const CourseCreatePage = () => {
     } else {
       setSelectedLanguages([...selectedLanguages, stack]);
     }
-    onChangeRequireInform('language', selectedLanguages);
   };
 
   const LanguageMenu = (
