@@ -169,17 +169,11 @@ export const StyledDropDownButton = styled(Button)`
   }
 `;
 
-export const StyledTypeButton = styled(StyledDropDownButton)`
-  width: 307px;
+export const StyledCategoryButton = styled(StyledDropDownButton)`
+  width: auto;
+  padding: 0 2.3rem;
   @media (max-width: 800px) {
-    width: 145px;
-  }
-`;
-
-export const StyledDifficultyButton = styled(StyledDropDownButton)`
-  width: 174px;
-  @media (max-width: 800px) {
-    width: 78px;
+    padding: 0 1rem;
   }
 `;
 
@@ -314,6 +308,9 @@ export const StyledSelect = styled.div`
     }
     .ant-select-selection-search {
       display: none;
+    }
+    .ant-select-selection-item-content {
+      color: ${BLACK};
     }
   }
 `;

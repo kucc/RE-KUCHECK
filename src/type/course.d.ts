@@ -11,7 +11,6 @@ interface Course {
   courseName: string;
   courseNotice: string;
   coursePlace: string;
-  coursePlace: string;
   courseGoal: string;
   courseInfo: string;
   courseLeader: {
