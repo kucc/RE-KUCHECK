@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Checkbox, Dropdown, Menu, Select, SelectProps } from 'antd';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router';
 import { useRecoilState } from 'recoil';
 
@@ -9,6 +9,7 @@ import { db } from '@config';
 import { LanguageList } from '@constants';
 import { useGetProfile } from '@hooks/use-get-profile';
 import { selectedLanguagesState } from '@recoil';
+import { FORM_IS_NOT_FULL } from '@utility/ALERT_MESSAGE';
 import { StyledDownArrow } from '@utility/COMMON_STYLE';
 
 import {
@@ -34,7 +35,6 @@ import {
   StyledTitle,
   StyledTitleBox,
 } from './style';
-import { FORM_IS_NOT_FULL } from '@utility/ALERT_MESSAGE';
 
 export const CourseCreatePage = () => {
   const [selectedLanguages, setSelectedLanguages] = useRecoilState(selectedLanguagesState);
@@ -240,15 +240,19 @@ export const CourseCreatePage = () => {
 
   // 정보 등록
   const handleRegisterCourse = async () => {
+    if (!currentUser) {
+      return;
+    }
     if (!validationSignUp()) {
       alert(FORM_IS_NOT_FULL);
       return;
     }
     try {
+      // course Add
       const docRef = await addDoc(collection(db, 'courses'), {
         courseAttendance: [
           {
-            attendance: [0, 0, 0, 0, 0, 0, 0, 0],
+            attendance: [3, 3, 3, 3, 3, 3, 3, 3],
             id: uId,
           },
         ],
@@ -276,11 +280,36 @@ export const CourseCreatePage = () => {
         requireTime: requireTime,
         semester: '23-1',
       });
+
+      // user Update
+      const userRef = doc(db, 'users', currentUser.id);
+      await updateDoc(userRef, {
+        courseHistory: [
+          ...(currentUser.courseHistory ?? []),
+          {
+            courseInfo: detailInform['courseInfo'],
+            courseLeader: {
+              id: uId,
+              name: currentUser?.name,
+              emoji: currentUser?.emoji,
+              comment: currentUser?.comment,
+            },
+            courseName: requireInform['courseName'],
+            courseType: courseType,
+            difficulty: requireInform['difficulty'],
+            language: selectedLanguages,
+            requireTime: requireTime,
+            semester: '23-1',
+            id: docRef.id,
+          },
+        ],
+      });
+
       alert('활동개설에 성공했습니다!');
       history.replace(`/course/detail/${docRef.id}`);
     } catch (e) {
       console.log(e);
-      alert('알 수 없는 문제로 강의개설에 실패했습니다. KUCC 관리자에게 문의해주세요.');
+      alert('알 수 없는 문제로 활동개설에 실패했습니다. KUCC 관리자에게 문의해주세요.');
       history.replace('/');
     }
   };
