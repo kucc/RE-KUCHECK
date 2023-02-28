@@ -16,6 +16,7 @@ type Language =
   | 'Python'
   | 'React'
   | 'ReactNative'
+  | 'Recoil'
   | 'Redux'
   | 'Ruby'
   | 'Scala'
