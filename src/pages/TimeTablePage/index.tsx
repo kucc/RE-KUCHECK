@@ -8,7 +8,7 @@ import { db } from '@config';
 import { StyledCommonTitle } from '@utility/COMMON_STYLE';
 
 export const TimeTablePage = () => {
-  const [cells, setCells] = useState<any>();
+  const [cells, setCells] = useState<any>(null);
 
   // load timeTable info from firebase
   const fetchTimeTable = async () => {
@@ -20,6 +20,7 @@ export const TimeTablePage = () => {
   useEffect(() => {
     fetchTimeTable();
   }, []);
+  if (cells === null) return <div>로딩중...</div>;
 
   return (
     <div>
