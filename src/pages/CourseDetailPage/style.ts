@@ -98,12 +98,25 @@ export const StyledLeaderLine = styled(StyledLineBox)`
     width: 32px;
   }
 `;
+
 export const StyledStackLine = styled(StyledLineBox)`
   width: 203px;
   @media (max-width: 800px) {
     width: 119px;
   }
 `;
+
+export const StyledSelect = styled(StyledLineBox)`
+  width: 108px;
+  border: 1px solid ${GRAY};
+  border-radius: 8px;
+  padding: 5px;
+  cursor: pointer;
+  @media (max-width: 800px) {
+    width: 56px;
+  }
+`;
+
 export const StyledSessionLine = styled(StyledLineBox)`
   width: 108px;
   cursor: pointer;

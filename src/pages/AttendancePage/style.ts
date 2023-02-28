@@ -1,7 +1,6 @@
-import { Button } from 'antd';
 import styled from 'styled-components';
 
-import { BLACK } from '@utility/COLORS';
+import { BLACK, RED } from '@utility/COLORS';
 
 export const StyledMenu = styled.div`
   font-size: 26px;
@@ -9,6 +8,22 @@ export const StyledMenu = styled.div`
   @media (max-width: 800px) {
     font-size: 16px;
     margin: 30px 0 10px 26px;
+  }
+`;
+
+export const StyledDropDown = styled.div`
+  .ant-btn {
+    &:hover,
+    &:focus {
+      color: ${RED};
+      border-color: ${RED};
+      i {
+        border-color: ${RED};
+      }
+    }
+  }
+  @media (max-width: 800px) {
+    order: 1;
   }
 `;
 
