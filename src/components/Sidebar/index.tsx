@@ -5,7 +5,7 @@ import { useHistory, useLocation } from 'react-router';
 
 import { StyleActive, StyledActiveLine, StyledLinkButton } from '@components/Header/style';
 
-import { CheckCircleIcon, EditIcon, HomeIcon, NoticeIcon } from '@/svg/header';
+import { CheckCircleIcon, EditIcon, HomeIcon, NoticeIcon, TimeTableIcon } from '@/svg/header';
 import { BLACK, RED } from '@utility/COLORS';
 import { PATH } from '@utility/COMMON_FUNCTION';
 
@@ -26,6 +26,11 @@ const MenuArray = [
     title: '출결 관리',
     path: PATH.attendance,
     icon: <CheckCircleIcon />,
+  },
+  {
+    title: '시간표',
+    path: PATH.timeTable,
+    icon: <TimeTableIcon />,
   },
   {
     title: '공지사항',
