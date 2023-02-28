@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 
 import { Checkbox, Dropdown, Menu, Select, SelectProps } from 'antd';
+import { addDoc, collection } from 'firebase/firestore';
+import { useHistory } from 'react-router';
 import { useRecoilState } from 'recoil';
 
+import { db } from '@config';
 import { LanguageList } from '@constants';
-import {
-  selectedLanguagesState,
-} from '@recoil';
+import { useGetProfile } from '@hooks/use-get-profile';
+import { selectedLanguagesState } from '@recoil';
 import { StyledDownArrow } from '@utility/COMMON_STYLE';
 
 import {
@@ -26,15 +28,21 @@ import {
   StyledMemberInput,
   StyledMenu,
   StyledPlaceholder,
+  StyledRegisterButton,
   StyledSelect,
   StyledSubTitle,
   StyledTitle,
   StyledTitleBox,
 } from './style';
+import { FORM_IS_NOT_FULL } from '@utility/ALERT_MESSAGE';
 
 export const CourseCreatePage = () => {
   const [selectedLanguages, setSelectedLanguages] = useRecoilState(selectedLanguagesState);
   const [mainLanguageImg, setMainLanguageImg] = useState('Etc');
+  const { user: currentUser } = useGetProfile();
+  const uId = currentUser?.id;
+
+  const history = useHistory();
 
   useEffect(() => {
     const onMainLanguageImg = () => {
@@ -54,32 +62,48 @@ export const CourseCreatePage = () => {
     requireTime: ['1학점', '2학점', '3학점'],
   };
 
-  const [requireInform, setRequireInform] = useState<{[key: string]: string}>({
+  const [requireInform, setRequireInform] = useState<{ [key: string]: string }>({
     courseType: '',
     difficulty: '',
     requireTime: '',
     courseName: '',
   });
 
+  const [courseType, setCourseType] = useState<number>(0);
+  const [requireTime, setRequireTime] = useState<string>('');
+
   const onChangeRequireInform = (type: string, value: string) => {
     const result = { ...requireInform };
+    if (type === 'courseType') {
+      switch (value) {
+        case '세션':
+          setCourseType(1);
+          break;
+        case '스터디':
+          setCourseType(2);
+          break;
+        case '프로젝트':
+          setCourseType(3);
+          break;
+      }
+    } else if (type === 'requireTime') {
+      setRequireTime(value.charAt(0));
+    }
     result[type] = value;
+
     setRequireInform(result);
   };
 
-  console.log(requireInform, selectedLanguages);
-
   // 세부정보
-  const [detailInform, setDetailInform] = useState<{[key: string]: string | string[]}>({
+  const [detailInform, setDetailInform] = useState<{ [key: string]: string | string[] }>({
     courseStack: [],
     courseInfo: '',
     courseGoal: '',
     maxMemberNum: '',
     courseDate: '',
     coursePlace: '',
-    courseAdmin: '',
+    courseNotice: '',
   });
-  console.log(detailInform);
 
   const onChangeDetailInform = (type: string, value: string | string[]) => {
     const result = { ...detailInform };
@@ -99,7 +123,6 @@ export const CourseCreatePage = () => {
     week8: '',
   });
 
-  console.log(curriInform);
   const TypeMenu = (
     <Menu
       onClick={e => {
@@ -171,7 +194,7 @@ export const CourseCreatePage = () => {
   };
 
   const LanguageMenu = (
-    <Menu>
+    <Menu style={{ overflowY: 'scroll', height: '400px' }}>
       {LanguageList.map(res => {
         return (
           <Menu.Item key={res}>
@@ -198,9 +221,76 @@ export const CourseCreatePage = () => {
     });
   });
 
+  const validationSignUp = () => {
+    if (
+      Object.values(requireInform).includes('') ||
+      selectedLanguages.length === 0 ||
+      !detailInform.courseInfo ||
+      !detailInform.courseGoal ||
+      !detailInform.maxMemberNum ||
+      !detailInform.courseDate ||
+      !detailInform.coursePlace ||
+      Object.values(curriInform).includes('')
+    ) {
+      return false;
+    }
+
+    return true;
+  };
+
+  // 정보 등록
+  const handleRegisterCourse = async () => {
+    if (!validationSignUp()) {
+      alert(FORM_IS_NOT_FULL);
+      return;
+    }
+    try {
+      const docRef = await addDoc(collection(db, 'courses'), {
+        courseAttendance: [
+          {
+            attendance: [0, 0, 0, 0, 0, 0, 0, 0],
+            id: uId,
+          },
+        ],
+        courseCheckAdmin: [uId],
+        courseCurriculum: Object.values(curriInform),
+        courseDate: detailInform['courseDate'],
+        courseName: requireInform['courseName'],
+        courseNotice: detailInform['courseNotice'],
+        coursePlace: detailInform['coursePlace'],
+        courseGoal: detailInform['courseGoal'],
+        courseInfo: detailInform['courseInfo'],
+        courseLeader: {
+          id: uId,
+          name: currentUser?.name,
+          emoji: currentUser?.emoji,
+          comment: currentUser?.comment,
+        },
+        courseMember: [uId],
+        courseStack: detailInform['courseStack'],
+        language: selectedLanguages,
+        // 1 : 세션, 2 : 스터디, 3: 프로젝트
+        courseType: courseType,
+        difficulty: requireInform['difficulty'],
+        maxMemberNum: Number(detailInform['maxMemberNum']),
+        requireTime: requireTime,
+        semester: '23-1',
+      });
+      alert('활동개설에 성공했습니다!');
+      history.replace(`/course/detail/${docRef.id}`);
+    } catch (e) {
+      console.log(e);
+      alert('알 수 없는 문제로 강의개설에 실패했습니다. KUCC 관리자에게 문의해주세요.');
+      history.replace('/');
+    }
+  };
+
   return (
     <>
-      <StyledMenu>활동 개설</StyledMenu>
+      <div style={{ position: 'relative' }}>
+        <StyledMenu>활동 개설</StyledMenu>
+        <StyledRegisterButton onClick={handleRegisterCourse}>등록하기</StyledRegisterButton>
+      </div>
       <StyledMainContainer>
         <StyledBox>
           <StyledTitleBox>
@@ -246,10 +336,7 @@ export const CourseCreatePage = () => {
                 <StyledLanguageImg
                   src={`${process.env.PUBLIC_URL}/img/icon/${mainLanguageImg}.svg`}
                 />
-
-                <Dropdown
-                  trigger={['click']}
-                  overlay={LanguageMenu}>
+                <Dropdown trigger={['click']} overlay={LanguageMenu}>
                   <StyledLanguage>
                     {selectedLanguages.length > 0 ? (
                       // selectedLanguages.join(', ')
@@ -320,7 +407,6 @@ export const CourseCreatePage = () => {
               <StyledSubTitle>활동 인원</StyledSubTitle>
               <StyledMemberInput
                 onChange={e => onChangeDetailInform('maxMemberNum', e.target.value)}
-                type='number'
                 placeholder='활동 인원'
               />
             </div>
@@ -353,7 +439,7 @@ export const CourseCreatePage = () => {
             <div>
               <StyledSubTitle>유의사항</StyledSubTitle>
               <StyledInput2
-                onChange={e => onChangeDetailInform('courseAdmin', e.target.value)}
+                onChange={e => onChangeDetailInform('courseNotice', e.target.value)}
                 placeholder='200자 이내로 작성해주세요.'
               />
             </div>
