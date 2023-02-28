@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { BLACK, LINE_GRAY, RED } from '@utility/COLORS';
+import { BLACK, GRAY, LINE_GRAY, RED } from '@utility/COLORS';
 
 export const StyledMenu = styled.div`
   font-size: 26px;
@@ -12,6 +12,16 @@ export const StyledMenu = styled.div`
 `;
 
 export const StyledDropDown = styled.div`
+  width: 160px;
+  border-radius: 45px;
+  border: 1.5px solid ${GRAY};
+  height: fit-content;
+  padding: 14px 30px;
+  @media (max-width: 800px) {
+    font-size: 10px;
+    width: 120px;
+    padding: 5px 10px;
+  }
   .ant-btn {
     &:hover,
     &:focus {
@@ -40,7 +50,6 @@ export const StyledButtonWrapper = styled.div`
 
 export const StyledAttendanceButton = styled.button`
   font-family: 'sdBo';
-  position: absolute;
   margin-right: 18px;
   right: 0;
   top: 0;
