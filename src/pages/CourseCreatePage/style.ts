@@ -11,7 +11,6 @@ export const StyledMainContainer = styled.div`
   margin-bottom: 31px;
   @media (max-width: 800px) {
     gap: 20px;
-    padding: 0px 18px;
     margin-bottom: 21px;
   }
 `;
@@ -337,5 +336,25 @@ export const StyledMemberInput = styled.input`
     font-size: 10px;
     width: 90px;
     height: 30px;
+  }
+`;
+
+export const StyledRegisterButton = styled.button`
+  font-family: 'sdBo';
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-radius: 25px;
+  background-color: ${RED};
+  border: none;
+  color: white;
+  width: 166px;
+  height: 50px;
+  font-size: 18px;
+  margin-right: 18px;
+  @media (max-width: 800px) {
+    font-size: 10px;
+    width: 80px;
+    height: 26px;
   }
 `;

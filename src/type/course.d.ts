@@ -27,6 +27,6 @@ interface Course {
   courseType: 1 | 2 | 3;
   difficulty: string;
   maxMemberNum: number;
-  requireTime: number;
+  requireTime: string;
   semester: string;
 }
