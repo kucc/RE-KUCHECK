@@ -16,6 +16,7 @@ export const LanguageList: Language[] = [
   'Python',
   'React',
   'ReactNative',
+  'Recoil',
   'Redux',
   'Ruby',
   'Scala',
