@@ -5,7 +5,14 @@ import { useMediaQuery } from 'react-responsive';
 import { useHistory, useLocation } from 'react-router-dom';
 
 // import { setHamburgerRequest } from '@redux/actions/_main_action';
-import { CheckCircleIcon, EditIcon, HomeIcon, LockStatesIcon, NoticeIcon } from '@/svg/header';
+import {
+  CheckCircleIcon,
+  EditIcon,
+  HomeIcon,
+  LockStatesIcon,
+  NoticeIcon,
+  TimeTableIcon,
+} from '@/svg/header';
 // import { DefaultLogo } from '..';
 import { useGetProfile } from '@hooks/use-get-profile';
 import { BLACK, RED } from '@utility/COLORS';
@@ -42,7 +49,7 @@ const MenuArray = [
   {
     title: '시간표',
     path: PATH.timeTable,
-    icon: <CheckCircleIcon />,
+    icon: <TimeTableIcon />,
   },
   {
     title: '공지사항',
