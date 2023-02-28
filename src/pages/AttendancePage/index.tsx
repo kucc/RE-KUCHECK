@@ -7,7 +7,14 @@ import { db } from '@config';
 import {
   StyledAttendanceButton,
   StyledCourseMembersWrapper,
+  StyledEmoji,
+  StyledEmojiBackground,
+  StyledLeader,
+  StyledLeaderName,
+  StyledLeaderType,
+  StyledMainCourseContainer,
   StyledMenu,
+  StyledProfileWrapper,
   StyledTitleWrapper,
   StyledUserWrapper,
   StyledWeekWrapper,
@@ -57,7 +64,21 @@ export const AttendancePage = () => {
         </StyledWeekWrapper>
         <div style={{ marginLeft: '70px', width: 'max-content' }}>보증금</div>
       </StyledTitleWrapper>
-      <StyledCourseMembersWrapper>{/* 여기에 member 컴포넌트......? */}</StyledCourseMembersWrapper>
+      <StyledCourseMembersWrapper>
+        <StyledMainCourseContainer>
+          <StyledLeader>
+            <StyledEmojiBackground>
+              <StyledEmoji>🧑</StyledEmoji>
+            </StyledEmojiBackground>
+            <StyledProfileWrapper>
+              <StyledLeaderName>
+                김유나 <StyledLeaderType>팀장</StyledLeaderType>
+              </StyledLeaderName>
+              
+            </StyledProfileWrapper>
+          </StyledLeader>
+        </StyledMainCourseContainer>
+      </StyledCourseMembersWrapper>
     </>
   );
 };

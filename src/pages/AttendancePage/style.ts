@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { BLACK, RED } from '@utility/COLORS';
+import { BLACK, LINE_GRAY, RED } from '@utility/COLORS';
 
 export const StyledMenu = styled.div`
   font-size: 26px;
@@ -97,8 +97,86 @@ export const StyledWeekWrapper = styled.div`
 `;
 
 export const StyledCourseMembersWrapper = styled.div`
-  margin: 24 20px;
+  margin: 24px 20px;
   @media (max-width: 800px) {
     margin: 14px 10px;
+  }
+`;
+
+export const StyledMainCourseContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 22px 15px;
+  border: 2px solid ${LINE_GRAY};
+  border-radius: 26px;
+  margin-top: 12px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0px 0px 10px ${LINE_GRAY};
+  }
+  @media (max-width: 800px) {
+    padding: 16px 18px;
+    border-radius: 12px;
+  }
+`;
+
+export const StyledLeader = styled.div`
+  display: flex;
+  flex-basis: 190px;
+  flex-shrink: 0;
+  text-align: center;
+  color: ${BLACK};
+  gap: 24px;
+  @media (max-width: 800px) {
+    flex-basis: 100px;
+    gap: 11px;
+  }
+`;
+
+export const StyledEmojiBackground = styled.div`
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  position: relative;
+  margin: 0 auto;
+  @media (max-width: 800px) {
+    width: 35px;
+    height: 35px;
+  }
+`;
+
+export const StyledEmoji = styled.span`
+  font-size: 48px;
+  position: absolute;
+  top: -7px;
+  left: 4px;
+  @media (max-width: 800px) {
+    font-size: 30px;
+    left: 2px;
+  }
+`;
+
+export const StyledProfileWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+export const StyledLeaderName = styled.div`
+  font-size: 22px;
+  font-family: 'sdBo';
+  margin-top: 2px;
+  @media (max-width: 800px) {
+    font-size: 14px;
+  }
+`;
+
+export const StyledLeaderType = styled.span`
+  font-family: 'sdMe';
+  font-size: 16px;
+  color: ${RED};
+  @media (max-width: 800px) {
+    font-size: 10px;
   }
 `;
