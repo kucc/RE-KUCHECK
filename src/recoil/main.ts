@@ -10,7 +10,7 @@ export const searchLanguageState = atom<null | Language>({
   default: null,
 });
 
-export const currentSemesterState = atom<string>({
+export const currentSemesterState = atom<string | null>({
   key: 'currentSemesterState',
-  default: '22-2',
+  default: null,
 });
