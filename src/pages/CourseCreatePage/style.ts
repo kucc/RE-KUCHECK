@@ -305,9 +305,6 @@ export const StyledSelect = styled.div`
         padding-left: 5px;
       }
     }
-    .ant-select-selection-search {
-      display: none;
-    }
     .ant-select-selection-item-content {
       color: ${BLACK};
     }
