@@ -2,17 +2,19 @@ interface Attendance {
   attendance: (0 | 1 | 2 | 3)[];
   id: string;
 }
-
-interface Course {
+interface CourseDeatilInfo {
+  courseInfo: string;
+  courseGoal: string;
+  maxMemberNum: number;
+  courseDate: string;
+  courseNotice: string;
+  coursePlace: string;
+}
+interface Course extends CourseDeatilInfo {
   courseAttendance: Attendance[];
   courseCheckAdmin: string[];
   courseCurriculum: string[];
-  courseDate: string;
   courseName: string;
-  courseNotice: string;
-  coursePlace: string;
-  courseGoal: string;
-  courseInfo: string;
   courseLeader: {
     id: string;
     name: string;
@@ -26,7 +28,6 @@ interface Course {
   // 1 : 세션, 2 : 스터디, 3: 프로젝트
   courseType: 1 | 2 | 3;
   difficulty: string;
-  maxMemberNum: number;
   requireTime: string;
   semester: string;
 }
