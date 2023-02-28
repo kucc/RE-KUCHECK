@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { BLACK, LINE_GRAY } from '@utility/COLORS';
+import { BLACK, GRAY, LINE_GRAY, RED } from '@utility/COLORS';
 
 export const StyledContainer = styled.div`
   display: flex;
@@ -15,22 +15,32 @@ export const StyledContainer = styled.div`
     padding-bottom: 3rem;
   }
 `;
+
 export const StyledModifyButton = styled.button`
   font-family: 'sdBo';
   border-radius: 25px;
-  background-color: ${BLACK};
   border: none;
   color: white;
-`;
-export const StyledPcModifyButton = styled(StyledModifyButton)`
   width: 170px;
   height: 50px;
   font-size: 18px;
   margin-right: 48px;
   @media (max-width: 800px) {
-    display: none;
+    width: 98px;
+    height: 29px;
+    font-size: 10px;
+    margin-right: 15px;
   }
 `;
+
+export const StyledPcModifyButton = styled(StyledModifyButton)`
+  background-color: ${BLACK};
+`;
+
+export const StyledPcModifyCompleteButton = styled(StyledModifyButton)`
+  background-color: ${RED};
+`;
+
 export const StyledPcBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -134,15 +144,18 @@ export const StyledArrow = styled.img`
     right: 20px;
   }
 `;
+
 export const StyledEmoji = styled.span`
   font-size: 50px;
 `;
+
 export const StyledName = styled.span`
   font-size: 18px;
   @media (max-width: 800px) {
     font-size: 14px;
   }
 `;
+
 export const StyledComment = styled.span`
   font-family: 'sdLi';
   font-size: 14x;
@@ -155,6 +168,7 @@ export const StyledComment = styled.span`
     font-size: 10px;
   }
 `;
+
 export const StyledDescBox = styled.span`
   display: flex;
   flex-direction: column;
@@ -166,6 +180,7 @@ export const StyledDescBox = styled.span`
     gap: 3px;
   }
 `;
+
 export const StyledBox = styled.div`
   margin-top: 5px;
   padding: 30px;
@@ -178,6 +193,7 @@ export const StyledBox = styled.div`
     border: solid 0.8px rgb(222, 222, 222);
   }
 `;
+
 export const StyledDescription = styled.div`
   display: flex;
   flex-direction: column;
@@ -189,11 +205,13 @@ export const StyledDescription = styled.div`
     font-size: 10px;
   }
 `;
+
 export const StyledCourseTitleWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 6px;
 `;
+
 export const StyledCourseTitle = styled.div`
   margin-bottom: 2px;
   font-size: 28px;
@@ -202,6 +220,7 @@ export const StyledCourseTitle = styled.div`
     font-size: 14px;
   }
 `;
+
 export const StyledStackWrapper = styled.span`
   margin-left: 5px;
   display: flex;
@@ -212,6 +231,7 @@ export const StyledStackWrapper = styled.span`
     margin: 0;
   }
 `;
+
 export const StyledStackImg = styled.img`
   width: 34px;
   height: 34px;
@@ -220,18 +240,21 @@ export const StyledStackImg = styled.img`
     height: 18px;
   }
 `;
+
 export const StyledCurriDesc = styled(StyledDescription)`
   gap: 36px;
   @media (max-width: 800px) {
     gap: 26px;
   }
 `;
+
 export const StyledDetailContainer = styled.div`
   display: flex;
   flex-direction: row;
   @media (max-width: 800px) {
   }
 `;
+
 export const StyledDetailTitleBase = styled.span`
   font-size: 16px;
   font-family: 'sfPro';
@@ -242,12 +265,14 @@ export const StyledDetailTitleBase = styled.span`
     width: 40px;
   }
 `;
+
 export const StyledCurriWeekTitle = styled(StyledDetailTitleBase)`
   margin-right: 43px;
   @media (max-width: 800px) {
     margin-right: 30px;
   }
 `;
+
 export const StyledStackTitle = styled(StyledDetailTitleBase)`
   width: 100px;
   margin-right: 21px;
@@ -257,6 +282,7 @@ export const StyledStackTitle = styled(StyledDetailTitleBase)`
     margin-right: 16px;
   }
 `;
+
 export const StyledSessionDetailTitle = styled(StyledDetailTitleBase)`
   width: 100px;
   margin-right: 18px;
@@ -265,6 +291,18 @@ export const StyledSessionDetailTitle = styled(StyledDetailTitleBase)`
     margin-right: 9px;
   }
 `;
+
+export const StyledDetailInput = styled.textarea`
+  font-size: 16px;
+  font-family: 'sfProL';
+  border-radius: 6px;
+  border: 1px solid ${GRAY};
+  @media (max-width: 800px) {
+    font-size: 10px;
+    width: 100%;
+  }
+`;
+
 export const StyledDetailDesc = styled.span`
   font-size: 16px;
   font-family: 'sfProL';
@@ -275,6 +313,7 @@ export const StyledDetailDesc = styled.span`
     width: 100%;
   }
 `;
+
 export const StyledLine2 = styled.hr`
   height: 1px;
   width: 97%;

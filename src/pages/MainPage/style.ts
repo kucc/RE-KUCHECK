@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { LINE_GRAY } from '@utility/COLORS';
 
 export const MainContainer = styled.div`
-  padding: 0px 18px;
+  padding: 40px 18px;
   @media (max-width: 800px) {
-    padding: 0px 18px;
+    padding: 20px 18px;
   }
 `;
 
