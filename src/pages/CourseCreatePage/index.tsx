@@ -37,7 +37,6 @@ import {
   StyledTitleBox,
 } from './style';
 
-
 export const CourseCreatePage = () => {
   const [selectedLanguages, setSelectedLanguages] = useRecoilState(selectedLanguagesState);
   const [mainLanguageImg, setMainLanguageImg] = useState('Etc');

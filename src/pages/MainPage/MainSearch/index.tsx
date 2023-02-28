@@ -2,7 +2,8 @@ import { Dropdown, Menu } from 'antd';
 import { useRecoilState } from 'recoil';
 
 import { LanguageList } from '@constants';
-import { currentSemesterState, searchLanguageState, searchQueryState } from '@recoil';
+import { useGetSemester } from '@hooks/use-get-semester';
+import { searchLanguageState, searchQueryState } from '@recoil';
 import { StyledDownArrow } from '@utility/COMMON_STYLE';
 
 import {
@@ -19,12 +20,12 @@ const pastSemester = ['22-1', '22-2', '23-1'];
 export const MainSearch = () => {
   const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
   const [searchLanguage, setSearchLanguage] = useRecoilState(searchLanguageState);
-  const [currentSemester, setCurrentSemester] = useRecoilState(currentSemesterState);
+  const { currentSemester, setCurrentSemester } = useGetSemester();
 
   const SemesterMenu = (
     <Menu>
       {pastSemester &&
-        pastSemester.map((semester, key) => {
+        pastSemester.map((semester: string, key) => {
           return (
             <Menu.Item key={key}>
               <a onClick={() => setCurrentSemester(semester)}>20{semester}학기</a>

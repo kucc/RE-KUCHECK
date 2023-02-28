@@ -1,10 +1,8 @@
 // import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from 'react';
 
-import { useRecoilState } from 'recoil';
-
 import { getCourses } from '@apis';
-import { currentSemesterState } from '@recoil';
+import { useGetSemester } from '@hooks/use-get-semester';
 
 import { MainCourseTab } from './MainCourseTab';
 import { MainSearch } from './MainSearch';
@@ -13,7 +11,7 @@ import { MainContainer } from './style';
 
 export const MainPage = () => {
   // const dispatch = useDispatch();
-  const [currentSemester] = useRecoilState(currentSemesterState);
+  const { currentSemester } = useGetSemester();
 
   const [data, setData] = useState<Course[] | null>(null);
 
