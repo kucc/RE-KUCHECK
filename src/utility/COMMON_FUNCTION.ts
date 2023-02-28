@@ -6,7 +6,7 @@ export const PATH = {
   courseCreate: '/course/create', // 활동 개설
   courseDetail: '/course/detail/:id', // 세션 소개
   attendance: '/attendance', // 출결 관리
-  timeTable: '/new/timetable', // 동방 시간표
+  timeTable: '/timetable', // 동방 시간표
   profile: '/profile/:id', // 내 정보
   notice: '/notice', // 공지사항
   admin: '/admin', // 관리자

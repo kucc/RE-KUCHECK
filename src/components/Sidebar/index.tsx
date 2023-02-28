@@ -28,6 +28,11 @@ const MenuArray = [
     icon: <CheckCircleIcon />,
   },
   {
+    title: '시간표',
+    path: PATH.timeTable,
+    icon: <CheckCircleIcon />,
+  },
+  {
     title: '공지사항',
     path: PATH.notice,
     icon: <NoticeIcon />,
