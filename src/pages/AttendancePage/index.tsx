@@ -1,3 +1,9 @@
+import { useEffect, useState } from 'react';
+
+import { doc, getDoc } from 'firebase/firestore';
+
+import { db } from '@config';
+
 import {
   StyledAttendanceButton,
   StyledCourseMembersWrapper,
@@ -8,6 +14,26 @@ import {
 } from './style';
 
 export const AttendancePage = () => {
+  const [selectedCourseId, setSelectedCourseId] = useState('XFPyWbK5jzBAQn4ippxX');
+  const [course, setCourse] = useState<Course | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchCourse = async (courseId: string) => {
+    setIsLoading(true);
+    const docRef = doc(db, 'courses', courseId);
+    const docSnap = (await getDoc(docRef)).data() as Course;
+    setCourse({ ...docSnap, id: courseId });
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    if (selectedCourseId.length) {
+      fetchCourse(selectedCourseId);
+    }
+  }, [selectedCourseId]);
+
+  if (isLoading) return <div>로딩중...</div>;
+
   return (
     <>
       <div style={{ position: 'relative' }}>
