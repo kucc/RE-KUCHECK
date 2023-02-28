@@ -106,6 +106,7 @@ export const StyledStackLine = styled(StyledLineBox)`
 `;
 export const StyledSessionLine = styled(StyledLineBox)`
   width: 108px;
+  cursor: pointer;
   @media (max-width: 800px) {
     width: 56px;
   }
