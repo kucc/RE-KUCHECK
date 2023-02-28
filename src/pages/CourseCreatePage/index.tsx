@@ -409,7 +409,7 @@ export const CourseCreatePage = () => {
                   }}
                   tokenSeparators={[',']}
                   options={options}
-                  placeholder='200자 이내로 옵션을 선택해주세요.'
+                  placeholder='옵션을 선택해주세요.'
                 />
               </StyledSelect>
             </div>
