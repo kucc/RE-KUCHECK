@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router-dom';
 
 import { db } from '@config';
@@ -28,21 +28,24 @@ import {
 
 export const MainCourse = ({ course, profileId }: { course: Course; profileId?: string }) => {
   const history = useHistory();
-  const NOW_SEMESTER = '22-2';
+  const NOW_SEMESTER = '23-1';
 
   const { user, resetUser } = useGetProfile();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
-    maxMemberNum,
-    courseMember,
-    courseAttendance,
+    courseInfo,
+    courseLeader,
     courseName,
-    language,
+    courseType,
     difficulty,
+    language,
     requireTime,
     semester,
     id: courseId,
+    maxMemberNum,
+    courseMember,
+    courseAttendance,
   } = course;
 
   const onClickApplication = async () => {
@@ -72,8 +75,15 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
         courseHistory: [
           ...(courseHistory ?? []),
           {
-            ...course,
-            updateData,
+            courseInfo,
+            courseLeader,
+            courseName,
+            courseType,
+            difficulty,
+            language,
+            requireTime,
+            semester,
+            id: courseId,
           },
         ],
       });
@@ -94,15 +104,21 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
       setIsLoading(true);
       const courseRef = doc(db, 'courses', courseId);
       const userRef = doc(db, 'users', userId);
+      const courseDoc = (await getDoc(courseRef)).data();
 
       const newCourseHistory = courseHistory?.filter(myCourse => myCourse.id !== courseId);
-      const newCourseMember = courseMember.filter(memberId => memberId !== userId);
-      const newCourseAttendance = courseAttendance.filter(member => member.id !== userId);
+      const newCourseMember = courseDoc?.courseMember.filter(
+        (memberId: string) => memberId !== userId,
+      );
+      const newCourseAttendance = courseDoc?.courseAttendance.filter(
+        (member: any) => member.id !== userId,
+      );
 
       const updateData = {
         courseMember: newCourseMember ?? [],
         courseAttendance: newCourseAttendance,
       };
+
       // course Update
       await updateDoc(courseRef, updateData);
 
