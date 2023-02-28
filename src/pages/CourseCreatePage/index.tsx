@@ -11,6 +11,7 @@ import { useGetProfile } from '@hooks/use-get-profile';
 import { selectedLanguagesState } from '@recoil';
 import { FORM_IS_NOT_FULL } from '@utility/ALERT_MESSAGE';
 import { StyledDownArrow } from '@utility/COMMON_STYLE';
+import { CURRENT_SEMESTER, defaultUserAttendance } from '@utility/CONSTANTS';
 
 import {
   StyledBodyBox,
@@ -35,6 +36,7 @@ import {
   StyledTitle,
   StyledTitleBox,
 } from './style';
+
 
 export const CourseCreatePage = () => {
   const [selectedLanguages, setSelectedLanguages] = useRecoilState(selectedLanguagesState);
@@ -252,7 +254,7 @@ export const CourseCreatePage = () => {
       const docRef = await addDoc(collection(db, 'courses'), {
         courseAttendance: [
           {
-            attendance: [3, 3, 3, 3, 3, 3, 3, 3],
+            attendance: defaultUserAttendance,
             id: uId,
           },
         ],
@@ -278,7 +280,7 @@ export const CourseCreatePage = () => {
         difficulty: requireInform['difficulty'],
         maxMemberNum: Number(detailInform['maxMemberNum']),
         requireTime: requireTime,
-        semester: '23-1',
+        semester: CURRENT_SEMESTER,
       });
 
       // user Update
@@ -299,7 +301,7 @@ export const CourseCreatePage = () => {
             difficulty: requireInform['difficulty'],
             language: selectedLanguages,
             requireTime: requireTime,
-            semester: '23-1',
+            semester: CURRENT_SEMESTER,
             id: docRef.id,
           },
         ],

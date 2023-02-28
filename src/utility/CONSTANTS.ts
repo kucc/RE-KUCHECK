@@ -1,3 +1,5 @@
+export const CURRENT_SEMESTER = '23-1';
+
 export const timeTableSelectedDefault = [
   [false, false, false, false, false, false, false, false],
   [false, false, false, false, false, false, false, false],

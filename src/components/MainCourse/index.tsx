@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { db } from '@config';
 import { useGetProfile } from '@hooks/use-get-profile';
 import { BLACK, GRAY, RED } from '@utility/COLORS';
+import { CURRENT_SEMESTER, defaultUserAttendance } from '@utility/CONSTANTS';
 
 import {
   StyledCaseSlash,
@@ -28,7 +29,6 @@ import {
 
 export const MainCourse = ({ course, profileId }: { course: Course; profileId?: string }) => {
   const history = useHistory();
-  const NOW_SEMESTER = '23-1';
 
   const { user, resetUser } = useGetProfile();
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +63,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
           ...courseAttendance,
           {
             id: userId,
-            attendance: [3, 3, 3, 3, 3, 3, 3, 3],
+            attendance: defaultUserAttendance,
           },
         ],
       };
@@ -247,7 +247,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
           </StyledCourseCase>
         </StyledCourseBottom>
       </StyledCourseInfo>
-      {semester === NOW_SEMESTER && renderButton()}
+      {semester === CURRENT_SEMESTER && renderButton()}
     </StyledMainCourseContainer>
   );
 };
