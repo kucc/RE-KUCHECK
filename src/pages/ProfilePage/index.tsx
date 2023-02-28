@@ -17,6 +17,7 @@ import {
   StyledBackArrowWrapper,
   StyledCommonPcLayout,
 } from '@utility/COMMON_STYLE';
+import { CURRENT_SEMESTER } from '@utility/CONSTANTS';
 
 import {
   StyledComment,
@@ -52,7 +53,6 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   });
 
   const history = useHistory();
-
   const [courseSemester, setCourseSemester] = useState<Course[] | null>(null);
   const [courseTab, setCourseTab] = useState<CourseTab>('now');
   const [modal, setModal] = useState(false);
@@ -60,8 +60,8 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   useEffect(() => {
     if (!data) return;
     const courseHistory = data.courseHistory ?? [];
-    const courseNow = courseHistory.filter(course => course.semester === '22-2');
-    const coursePast = courseHistory.filter(course => course.semester !== '22-2');
+    const courseNow = courseHistory.filter(course => course.semester === CURRENT_SEMESTER);
+    const coursePast = courseHistory.filter(course => course.semester !== CURRENT_SEMESTER);
     if (courseTab === 'now') {
       setCourseSemester(courseNow);
     } else if (courseTab === 'past') {
