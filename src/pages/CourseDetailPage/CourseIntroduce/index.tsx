@@ -32,6 +32,7 @@ import {
   StyledPcBox1,
   StyledPcBox2,
   StyledSessionDetailTitle,
+  StyledSessionLine,
   StyledStackImg,
   StyledStackLine,
   StyledStackTitle,
@@ -109,53 +110,59 @@ export const CourseIntroduce = ({
   return (
     <StyledCommonPcLayout>
       <StyledContainer>
-        <StyledPcBox1>
-          <div>
-            <StyledLeaderLine>
-              <StyledTitle>팀장</StyledTitle>
-              <StyledLine />
-            </StyledLeaderLine>
-            <StyledLeaderBox>
-              <StyledEmoji>{data.courseLeader.emoji}</StyledEmoji>
-              <StyledDescBox>
-                <StyledName>
-                  {data.courseLeader.name}&nbsp;<span style={{ fontFamily: 'sdLi' }}>님</span>
-                </StyledName>
-                <StyledComment>{data.courseLeader.comment}</StyledComment>
-              </StyledDescBox>
-              <StyledArrow
-                src={`${process.env.PUBLIC_URL}/img/common/arrow.svg`}
-                onClick={() => {
-                  history.push(`/profile/${data.courseLeader.id}`);
-                }}
-              />
-            </StyledLeaderBox>
-          </div>
+        {!isEditMode && (
+          <StyledPcBox1>
+            <div>
+              <StyledLeaderLine>
+                <StyledTitle>팀장</StyledTitle>
+                <StyledLine />
+              </StyledLeaderLine>
+              <StyledLeaderBox>
+                <StyledEmoji>{data.courseLeader.emoji}</StyledEmoji>
+                <StyledDescBox>
+                  <StyledName>
+                    {data.courseLeader.name}&nbsp;<span style={{ fontFamily: 'sdLi' }}>님</span>
+                  </StyledName>
+                  <StyledComment>{data.courseLeader.comment}</StyledComment>
+                </StyledDescBox>
+                <StyledArrow
+                  src={`${process.env.PUBLIC_URL}/img/common/arrow.svg`}
+                  onClick={() => {
+                    history.push(`/profile/${data.courseLeader.id}`);
+                  }}
+                />
+              </StyledLeaderBox>
+            </div>
 
-          <div>
-            <StyledStackLine>
-              <StyledTitle>사용 언어 및 기술 스택</StyledTitle>
-              <StyledLine />
-            </StyledStackLine>
-            <StyledBox style={{ padding: '20px' }}>
-              <StyledDescription>
-                {sessionStack.map((stack, i) => (
-                  <StyledDetailContainer key={i}>
-                    <StyledStackTitle>{stack.title}</StyledStackTitle>
-                    <StyledDetailDesc>
-                      {stack.desc.map((stackDetail, i) => (
-                        <StyledDetailDesc key={i}>-&nbsp;{stackDetail}</StyledDetailDesc>
-                      ))}
-                    </StyledDetailDesc>
-                  </StyledDetailContainer>
-                ))}
-              </StyledDescription>
-            </StyledBox>
-          </div>
-        </StyledPcBox1>
+            <div>
+              <StyledStackLine>
+                <StyledTitle>사용 언어 및 기술 스택</StyledTitle>
+                <StyledLine />
+              </StyledStackLine>
+              <StyledBox style={{ padding: '20px' }}>
+                <StyledDescription>
+                  {sessionStack.map((stack, i) => (
+                    <StyledDetailContainer key={i}>
+                      <StyledStackTitle>{stack.title}</StyledStackTitle>
+                      <StyledDetailDesc>
+                        {stack.desc.map((stackDetail, i) => (
+                          <StyledDetailDesc key={i}>-&nbsp;{stackDetail}</StyledDetailDesc>
+                        ))}
+                      </StyledDetailDesc>
+                    </StyledDetailContainer>
+                  ))}
+                </StyledDescription>
+              </StyledBox>
+            </div>
+          </StyledPcBox1>
+        )}
 
         <StyledPcBox2>
           <div>
+            <StyledSessionLine>
+              <StyledTitle>세션 소개</StyledTitle>
+              <StyledLine />
+            </StyledSessionLine>
             <StyledBox>
               <StyledCourseTitleWrapper>
                 <StyledCourseTitle>{data.courseName}</StyledCourseTitle>
