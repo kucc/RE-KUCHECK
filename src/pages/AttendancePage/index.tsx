@@ -78,7 +78,6 @@ export const AttendancePage = () => {
     }
     setMyCourses(newMyCourses);
   };
-  console.log(membersData);
 
   const submitUpdate = async () => {
     if (!course) return;
@@ -146,6 +145,7 @@ export const AttendancePage = () => {
       <Menu
         onClick={e => {
           let value;
+
           if (e.key === '출석') {
             value = 0;
           } else if (e.key === '지각') {
@@ -155,6 +155,7 @@ export const AttendancePage = () => {
           } else {
             value = 3;
           }
+
           checkAttendance(memberIndex, weekIndex, value);
         }}
         // selectedKeys={[attendance]}
