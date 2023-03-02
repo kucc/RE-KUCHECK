@@ -97,9 +97,6 @@ export const AttendancePage = () => {
     if (user) {
       fetchMyCourses(user);
     }
-    if (user && user.courseHistory) {
-      setSelectedCourseId(user.courseHistory[0].id);
-    }
   }, [user]);
 
   useEffect(() => {
