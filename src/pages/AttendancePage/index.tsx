@@ -29,60 +29,54 @@ import {
   StyledUserWrapper,
   StyledWeekWrapper,
 } from './style';
+import { modifyArray } from './utils';
 
-interface Attendance {
-  attendance: any;
+interface MemberData {
+  attendance: (0 | 1 | 2 | 3)[];
+  name: string;
+  emoji: string;
   id: string;
 }
 
 export const AttendancePage = () => {
   const { user } = useGetProfile();
-  console.log(user);
   const { currentSemester } = useGetSemester();
   const [selectedCourseId, setSelectedCourseId] = useState('');
   const [myCourses, setMyCourses] = useState<Course[]>([]);
   const [course, setCourse] = useState<Course | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [memberAttendance, setMemberAttendance] = useState<Attendance[] | undefined>();
-  const [membersData, setMembersData] = useState<any>();
+  const [membersData, setMembersData] = useState<MemberData[]>([]);
 
   const fetchCourse = async (courseId: string) => {
     setIsLoading(true);
     const docRef = doc(db, 'courses', courseId);
     const docSnap = (await getDoc(docRef)).data() as Course;
-    setCourse({ ...docSnap, id: courseId });
-    console.log('course', course);
-    setMemberAttendance(
-      course?.courseAttendance.map(member => ({
-        attendance: member.attendance, // 기존 attendance 정보 불러오기
-        id: member.id,
-      })),
-    );
-    console.log(memberAttendance);
-    const memberList: any = [];
-    for (const member of course?.courseMember ?? []) {
-      const memberRef = doc(db, 'users', member);
+    const newCourse = { ...docSnap, id: courseId };
+
+    const newMemberList: MemberData[] = [];
+    for await (const member of newCourse.courseAttendance) {
+      const { id, attendance } = member;
+      const memberRef = doc(db, 'users', id);
       const memberSnap = (await getDoc(memberRef)).data() as User;
-      const memberData = {
-        name: memberSnap.name,
-        emoji: memberSnap.emoji,
-        id: member,
-      };
-      memberList.push({ ...memberData });
+      const { name, emoji } = memberSnap;
+
+      newMemberList.push({ attendance, name, emoji, id });
     }
-    setMembersData(memberList);
+
+    setCourse(newCourse);
+    setMembersData(newMemberList);
     setIsLoading(false);
   };
 
-  console.log(membersData);
-
   const fetchMyCourses = async (user: User) => {
-    setMyCourses(
-      user.courseHistory
-        ? user.courseHistory.filter(course => course.semester === currentSemester)
-        : [],
-    );
+    const newMyCourses = user.courseHistory
+      ? user.courseHistory.filter(course => course.semester === currentSemester)
+      : [];
+    if (newMyCourses.length) {
+      setSelectedCourseId(newMyCourses[0].id);
+    }
+    setMyCourses(newMyCourses);
   };
 
   const submitUpdate = async () => {
@@ -115,9 +109,16 @@ export const AttendancePage = () => {
   }, [selectedCourseId]);
 
   const checkAttendance = (memberIndex: number, weekIndex: number, value: number) => {
-    const newMemberAttendance = JSON.parse(JSON.stringify(memberAttendance));
-    newMemberAttendance[memberIndex].attendance[weekIndex] = value;
-    setMemberAttendance(newMemberAttendance);
+    setMembersData(prev => {
+      const currentMemberData = prev[memberIndex];
+      const { attendance } = currentMemberData;
+      const newWeek = modifyArray(attendance, weekIndex, value);
+      const newMembersData = modifyArray(prev, memberIndex, {
+        ...currentMemberData,
+        attendance: newWeek,
+      });
+      return newMembersData;
+    });
   };
 
   const CoursesMenu = (
@@ -177,8 +178,6 @@ export const AttendancePage = () => {
   };
   const isCourseLeader = course?.courseLeader.id === user?.id;
 
-  console.log(isCourseLeader);
-
   if (isLoading) return <div>로딩중...</div>;
 
   return (
@@ -227,41 +226,40 @@ export const AttendancePage = () => {
       </StyledTitleWrapper>
 
       <StyledCourseMembersWrapper>
-        {!isLoading &&
-          membersData &&
-          membersData?.map((member: User, memberIndex: number) => (
+        {membersData.map((memberData: MemberData, memberIndex: number) => {
+          const { id, attendance, name, emoji } = memberData;
+          const isLeader = course?.courseLeader.id === memberData.id;
+          return (
             <StyledAttendanceContainer key={memberIndex}>
               <StyledMember>
-                <StyledEmojiBackground>{member.emoji}</StyledEmojiBackground>
+                <StyledEmojiBackground>{emoji}</StyledEmojiBackground>
                 <StyledProfileWrapper>
                   <StyledMemberName>
-                    {member.name}
-                    {(course?.courseLeader.id === member.id && (
-                      <StyledMemberType>팀장</StyledMemberType>
-                    )) || <StyledMemberType>팀원</StyledMemberType>}
+                    {name}
+                    {(isLeader && <StyledMemberType>팀장</StyledMemberType>) || (
+                      <StyledMemberType>팀원</StyledMemberType>
+                    )}
                   </StyledMemberName>
                   <StyledProfileLink>프로필 보러가기 {'>'}</StyledProfileLink>
                 </StyledProfileWrapper>
               </StyledMember>
               <StyledAttendanceList>
-                {memberAttendance &&
-                  memberAttendance[memberIndex].attendance.map(
-                    (week: number, weekIndex: number) => (
-                      <StyledAttendanceBox key={weekIndex}>
-                        <Dropdown
-                          trigger={['click']}
-                          overlay={AttendanceMenu(memberIndex, weekIndex)}
-                          placement='bottomLeft'>
-                          <div>
-                            <span>{drawAttendance(week)}</span>
-                          </div>
-                        </Dropdown>
-                      </StyledAttendanceBox>
-                    ),
-                  )}
+                {attendance.map((week: number, weekIndex: number) => (
+                  <StyledAttendanceBox key={weekIndex}>
+                    <Dropdown
+                      trigger={['click']}
+                      overlay={AttendanceMenu(memberIndex, weekIndex)}
+                      placement='bottomLeft'>
+                      <div>
+                        <span>{drawAttendance(week)}</span>
+                      </div>
+                    </Dropdown>
+                  </StyledAttendanceBox>
+                ))}
               </StyledAttendanceList>
             </StyledAttendanceContainer>
-          ))}
+          );
+        })}
       </StyledCourseMembersWrapper>
     </div>
   );
