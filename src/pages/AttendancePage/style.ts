@@ -17,10 +17,14 @@ export const StyledDropDown = styled.div`
   border: 1.5px solid ${GRAY};
   height: fit-content;
   padding: 14px 30px;
+  text-align: center;
+  margin-right: 20px;
+  cursor: pointer;
   @media (max-width: 800px) {
     font-size: 10px;
     width: 120px;
     padding: 5px 10px;
+    margin-right: 10px;
   }
   .ant-btn {
     &:hover,
@@ -74,7 +78,6 @@ export const StyledTitleWrapper = styled.div`
   flex-direction: row;
   margin-left: 60px;
   margin-top: 43px;
-  overflow: auto;
   div {
     width: max-content;
   }
@@ -98,10 +101,10 @@ export const StyledWeekWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 48px;
-  margin-left: 120px;
+  margin-left: 110px;
   @media (max-width: 800px) {
     gap: 21px;
-    margin-left: 45px;
+    margin-left: 35px;
   }
 `;
 
@@ -112,80 +115,123 @@ export const StyledCourseMembersWrapper = styled.div`
   }
 `;
 
-export const StyledMainCourseContainer = styled.div`
+export const StyledDiv = styled.div`
+  margin-left: 70px;
+  @media (max-width: 800px) {
+    margin-left: 30px;
+  }
+`;
+
+export const StyledAttendanceContainer = styled.div`
+  width: max-content;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 22px 15px;
+  padding: 22px 18px;
   border: 2px solid ${LINE_GRAY};
   border-radius: 26px;
   margin-top: 12px;
-  cursor: pointer;
   &:hover {
     box-shadow: 0px 0px 10px ${LINE_GRAY};
   }
   @media (max-width: 800px) {
-    padding: 16px 18px;
+    padding: 8px 10px;
     border-radius: 12px;
   }
 `;
 
-export const StyledLeader = styled.div`
+export const StyledMember = styled.div`
   display: flex;
   flex-basis: 190px;
   flex-shrink: 0;
   text-align: center;
   color: ${BLACK};
   gap: 24px;
+  align-items: center;
   @media (max-width: 800px) {
-    flex-basis: 100px;
+    flex-basis: 110px;
     gap: 11px;
   }
 `;
 
 export const StyledEmojiBackground = styled.div`
-  position: relative;
   width: 58px;
   height: 58px;
-  border-radius: 50%;
-  position: relative;
   margin: 0 auto;
+  font-size: 48px;
+  display: flex;
+  align-items: center;
   @media (max-width: 800px) {
     width: 35px;
     height: 35px;
-  }
-`;
-
-export const StyledEmoji = styled.span`
-  font-size: 48px;
-  position: absolute;
-  top: -7px;
-  left: 4px;
-  @media (max-width: 800px) {
     font-size: 30px;
-    left: 2px;
   }
 `;
 
 export const StyledProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
-`
+  gap: 6px;
+`;
 
-export const StyledLeaderName = styled.div`
+export const StyledMemberName = styled.div`
   font-size: 22px;
   font-family: 'sdBo';
   margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   @media (max-width: 800px) {
     font-size: 14px;
+    gap: 5px;
   }
 `;
 
-export const StyledLeaderType = styled.span`
+export const StyledMemberType = styled.span`
   font-family: 'sdMe';
   font-size: 16px;
   color: ${RED};
   @media (max-width: 800px) {
     font-size: 10px;
+  }
+`;
+
+export const StyledProfileLink = styled.div`
+  font-family: 'sdLi';
+  font-size: 14px;
+  text-decoration: underline;
+  text-decoration-thickness: calc(0.6px);
+  cursor: pointer;
+  @media (max-width: 800px) {
+    display: none;
+  }
+`;
+
+export const StyledAttendanceList = styled.div`
+  margin-left: 100px;
+  display: flex;
+  flex-direction: row;
+  gap: 52px;
+  @media (max-width: 800px) {
+    margin-left: 20px;
+    gap: 25px;
+  }
+`;
+
+export const StyledAttendanceBox = styled.div`
+  font-family: 'sdSb';
+  cursor: pointer;
+  font-size: 18px;
+  width: 32px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  .ant-dropdown-menu-item {
+    text-align: center;
+  }
+  @media (max-width: 800px) {
+    font-size: 10px;
+    width: 18px;
+    height: 12px;
   }
 `;

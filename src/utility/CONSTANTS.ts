@@ -147,6 +147,6 @@ export const timeTableTimeList = [
   },
 ];
 
-export const word = { absent: '결석', attend: '출석', late: '지각', null: '-' };
+export const word = { attend: '출석', late: '지각', absent: '결석', null: '-' };
 
 export const defaultUserAttendance = [3, 3, 3, 3, 3, 3, 3, 3];
