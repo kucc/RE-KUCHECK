@@ -78,6 +78,7 @@ export const AttendancePage = () => {
     }
     setMyCourses(newMyCourses);
   };
+  console.log(membersData);
 
   const submitUpdate = async () => {
     if (!course) return;
@@ -85,7 +86,10 @@ export const AttendancePage = () => {
     const courseRef = doc(db, 'courses', course.id);
 
     await updateDoc(courseRef, {
-      // courseAttendance :
+      courseAttendance: membersData.map(memberData => {
+        const { id, attendance } = memberData;
+        return { id, attendance };
+      }),
     });
 
     alert('수정했습니다!');
@@ -224,7 +228,7 @@ export const AttendancePage = () => {
 
       <StyledCourseMembersWrapper>
         {membersData.map((memberData: MemberData, memberIndex: number) => {
-          const { id, attendance, name, emoji } = memberData;
+          const { attendance, name, emoji } = memberData;
           const isLeader = course?.courseLeader.id === memberData.id;
           return (
             <StyledAttendanceContainer key={memberIndex}>
