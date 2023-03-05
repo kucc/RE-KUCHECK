@@ -34,13 +34,14 @@ import {
   StyledUserWrapper,
   StyledWeekWrapper,
 } from './style';
-import { modifyArray } from './utils';
+import { calculateDeposit, modifyArray } from './utils';
 
 interface MemberData {
   attendance: (0 | 1 | 2 | 3 | 4)[];
   name: string;
   emoji: string;
   id: string;
+  deposit: number;
 }
 
 export const AttendancePage = () => {
@@ -66,8 +67,8 @@ export const AttendancePage = () => {
       const memberRef = doc(db, 'users', id);
       const memberSnap = (await getDoc(memberRef)).data() as User;
       const { name, emoji } = memberSnap;
-
-      newMemberList.push({ attendance, name, emoji, id });
+      const deposit = calculateDeposit(attendance);
+      newMemberList.push({ attendance, name, emoji, id, deposit });
     }
 
     setCourse(newCourse);
@@ -118,9 +119,11 @@ export const AttendancePage = () => {
       const currentMemberData = prev[memberIndex];
       const { attendance } = currentMemberData;
       const newWeek = modifyArray(attendance, weekIndex, value);
+      const updatedDeposit = calculateDeposit(newWeek);
       const newMembersData = modifyArray(prev, memberIndex, {
         ...currentMemberData,
         attendance: newWeek,
+        deposit: updatedDeposit,
       });
       return newMembersData;
     });
@@ -156,7 +159,7 @@ export const AttendancePage = () => {
             value = 1;
           } else if (e.key === '결석') {
             value = 2;
-          } else if(e.key === '유고결석') {
+          } else if (e.key === '유고결석') {
             value = 4;
           } else {
             value = 3;
@@ -182,7 +185,7 @@ export const AttendancePage = () => {
     } else if (value === 3) {
       return <>-</>;
     } else if (value === 4) {
-      return <>유고결석</>
+      return <>유고결석</>;
     }
   };
   const isCourseLeader = course?.courseLeader.id === user?.id;
@@ -212,7 +215,7 @@ export const AttendancePage = () => {
                   </StyledAttendanceButton>
                 ) : (
                   <StyledAttendanceButton onClick={() => setIsEditMode(prev => !prev)}>
-                    수정하기
+                    수정완료
                   </StyledAttendanceButton>
                 ))}
               <StyledDropDown>
@@ -247,7 +250,7 @@ export const AttendancePage = () => {
 
           <StyledCourseMembersWrapper>
             {membersData.map((memberData: MemberData, memberIndex: number) => {
-              const { id, attendance, name, emoji } = memberData;
+              const { id, attendance, name, emoji, deposit } = memberData;
               const isLeader = course?.courseLeader.id === memberData.id;
               return (
                 <StyledAttendanceContainer key={memberIndex}>
@@ -276,7 +279,7 @@ export const AttendancePage = () => {
                         </Dropdown>
                       </StyledAttendanceBox>
                     ))}
-                    <StyledDepositBox>1000</StyledDepositBox>
+                    <StyledDepositBox>{deposit}</StyledDepositBox>
                   </StyledAttendanceList>
                 </StyledAttendanceContainer>
               );
