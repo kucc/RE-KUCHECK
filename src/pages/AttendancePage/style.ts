@@ -109,13 +109,14 @@ export const StyledWeekWrapper = styled.div`
 `;
 
 export const StyledCourseMembersWrapper = styled.div`
+  width: max-content;
   margin: 24px 20px;
   @media (max-width: 800px) {
     margin: 14px 10px;
   }
 `;
 
-export const StyledDiv = styled.div`
+export const StyledDeposit = styled.div`
   margin-left: 70px;
   @media (max-width: 800px) {
     margin-left: 30px;
@@ -226,6 +227,7 @@ export const StyledAttendanceBox = styled.div`
   height: 22px;
   display: flex;
   justify-content: center;
+  align-items: center;
   .ant-dropdown-menu-item {
     text-align: center;
   }
@@ -235,3 +237,11 @@ export const StyledAttendanceBox = styled.div`
     height: 12px;
   }
 `;
+
+export const StyledDepositBox = styled(StyledAttendanceBox)`
+  cursor: auto;
+  margin: 0 25px;
+  @media (max-width: 800px) {
+    margin: 0 15px;
+  }
+`
