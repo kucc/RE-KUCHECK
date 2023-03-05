@@ -100,7 +100,10 @@ export const AttendancePage = () => {
     const courseRef = doc(db, 'courses', course.id);
 
     await updateDoc(courseRef, {
-      // courseAttendance :
+      courseAttendance: membersData.map(memberData => {
+        const { id, attendance } = memberData;
+        return { id, attendance };
+      }),
     });
 
     alert('수정했습니다!');
@@ -216,12 +219,7 @@ export const AttendancePage = () => {
             <StyledButtonWrapper>
               {isCourseLeader &&
                 (isEditMode ? (
-                  <StyledAttendanceButton
-                    onClick={() => {
-                      alert(ATTENDANCE_SUCCESS);
-                      submitUpdate;
-                    }}
-                    style={{ backgroundColor: RED }}>
+                  <StyledAttendanceButton onClick={submitUpdate} style={{ backgroundColor: RED }}>
                     완료
                   </StyledAttendanceButton>
                 ) : (
