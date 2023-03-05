@@ -3,6 +3,10 @@ import { useEffect, useState } from 'react';
 import { Dropdown, Menu } from 'antd';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
+import { DefaultLogo } from '@components/DefaultLogo';
+import { EmptyBox } from '@components/EmptyBox';
+import { StyledEmptyBoxContainer, StyledEmptyBoxText } from '@components/EmptyBox/style';
+
 import { db } from '@config';
 import { useGetProfile } from '@hooks/use-get-profile';
 import { useGetSemester } from '@hooks/use-get-semester';
@@ -16,7 +20,8 @@ import {
   StyledAttendanceContainer,
   StyledAttendanceList,
   StyledCourseMembersWrapper,
-  StyledDiv,
+  StyledDeposit,
+  StyledDepositBox,
   StyledDropDown,
   StyledEmojiBackground,
   StyledMember,
@@ -32,7 +37,7 @@ import {
 import { modifyArray } from './utils';
 
 interface MemberData {
-  attendance: (0 | 1 | 2 | 3)[];
+  attendance: (0 | 1 | 2 | 3 | 4)[];
   name: string;
   emoji: string;
   id: string;
@@ -47,6 +52,7 @@ export const AttendancePage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [membersData, setMembersData] = useState<MemberData[]>([]);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const fetchCourse = async (courseId: string) => {
     setIsLoading(true);
@@ -75,6 +81,8 @@ export const AttendancePage = () => {
       : [];
     if (newMyCourses.length) {
       setSelectedCourseId(newMyCourses[0].id);
+    } else {
+      setIsEmpty(true);
     }
     setMyCourses(newMyCourses);
   };
@@ -96,9 +104,6 @@ export const AttendancePage = () => {
   useEffect(() => {
     if (user) {
       fetchMyCourses(user);
-    }
-    if (user && user.courseHistory) {
-      setSelectedCourseId(user.courseHistory[0].id);
     }
   }, [user]);
 
@@ -151,6 +156,8 @@ export const AttendancePage = () => {
             value = 1;
           } else if (e.key === '결석') {
             value = 2;
+          } else if(e.key === '유고결석') {
+            value = 4;
           } else {
             value = 3;
           }
@@ -174,6 +181,8 @@ export const AttendancePage = () => {
       return <>결석</>;
     } else if (value === 3) {
       return <>-</>;
+    } else if (value === 4) {
+      return <>유고결석</>
     }
   };
   const isCourseLeader = course?.courseLeader.id === user?.id;
@@ -182,85 +191,99 @@ export const AttendancePage = () => {
 
   return (
     <div style={{ overflow: 'auto' }}>
-      <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between' }}>
-        <StyledMenu>출결관리</StyledMenu>
-        <div style={{ display: 'flex' }}>
-          {isCourseLeader &&
-            (isEditMode ? (
-              <StyledAttendanceButton onClick={submitUpdate} style={{ backgroundColor: RED }}>
-                완료
-              </StyledAttendanceButton>
-            ) : (
-              <StyledAttendanceButton onClick={() => setIsEditMode(prev => !prev)}>
-                수정하기
-              </StyledAttendanceButton>
-            ))}
-          <StyledDropDown>
-            <Dropdown trigger={['click']} overlay={CoursesMenu} placement='bottomLeft'>
-              <div>
-                <StyledDownArrow width='5' />
-                <span style={{ marginLeft: 20 }}>{course?.courseName}</span>
-              </div>
-            </Dropdown>
-          </StyledDropDown>
-        </div>
-      </div>
-      <StyledTitleWrapper>
-        <StyledUserWrapper>
-          <div>이모지</div>
-          <div>이름 / 역할</div>
-        </StyledUserWrapper>
-        <StyledWeekWrapper>
-          <div>1주차</div>
-          <div>2주차</div>
-          <div>3주차</div>
-          <div>4주차</div>
-          <div>5주차</div>
-          <div>6주차</div>
-          <div>7주차</div>
-          <div>8주차</div>
-        </StyledWeekWrapper>
-        <StyledDiv>
-          <div>보증금</div>
-        </StyledDiv>
-      </StyledTitleWrapper>
-
-      <StyledCourseMembersWrapper>
-        {membersData.map((memberData: MemberData, memberIndex: number) => {
-          const { id, attendance, name, emoji } = memberData;
-          const isLeader = course?.courseLeader.id === memberData.id;
-          return (
-            <StyledAttendanceContainer key={memberIndex}>
-              <StyledMember>
-                <StyledEmojiBackground>{emoji}</StyledEmojiBackground>
-                <StyledProfileWrapper>
-                  <StyledMemberName>
-                    {name}
-                    {(isLeader && <StyledMemberType>팀장</StyledMemberType>) || (
-                      <StyledMemberType>팀원</StyledMemberType>
-                    )}
-                  </StyledMemberName>
-                  <StyledProfileLink>프로필 보러가기 {'>'}</StyledProfileLink>
-                </StyledProfileWrapper>
-              </StyledMember>
-              <StyledAttendanceList>
-                {attendance.map((week: number, weekIndex: number) => (
-                  <StyledAttendanceBox key={weekIndex}>
-                    <Dropdown
-                      trigger={['click']}
-                      overlay={AttendanceMenu(memberIndex, weekIndex)}
-                      placement='bottomLeft'>
-                      <div>
-                        <span>{drawAttendance(week)}</span>
-                      </div>
-                    </Dropdown>
-                  </StyledAttendanceBox>
+      {isEmpty && (
+        <>
+          <StyledMenu>출결관리</StyledMenu>
+          <StyledEmptyBoxContainer>
+            <DefaultLogo width={100} height={100} logoName='type-3-4' />
+            <StyledEmptyBoxText>정보가 없습니다.</StyledEmptyBoxText>
+          </StyledEmptyBoxContainer>
+        </>
+      )}
+      {!isEmpty && (
+        <>
+          <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between' }}>
+            <StyledMenu>출결관리</StyledMenu>
+            <div style={{ display: 'flex' }}>
+              {isCourseLeader &&
+                (isEditMode ? (
+                  <StyledAttendanceButton onClick={submitUpdate} style={{ backgroundColor: RED }}>
+                    완료
+                  </StyledAttendanceButton>
+                ) : (
+                  <StyledAttendanceButton onClick={() => setIsEditMode(prev => !prev)}>
+                    수정하기
+                  </StyledAttendanceButton>
                 ))}
-              </StyledAttendanceList>
-            </StyledAttendanceContainer>
-          );
-        })}
-      </StyledCourseMembersWrapper>
+              <StyledDropDown>
+                <Dropdown trigger={['click']} overlay={CoursesMenu} placement='bottomLeft'>
+                  <div>
+                    <StyledDownArrow width='5' />
+                    <span style={{ marginLeft: 20 }}>{course?.courseName}</span>
+                  </div>
+                </Dropdown>
+              </StyledDropDown>
+            </div>
+          </div>
+          <StyledTitleWrapper>
+            <StyledUserWrapper>
+              <div>이모지</div>
+              <div>이름 / 역할</div>
+            </StyledUserWrapper>
+            <StyledWeekWrapper>
+              <div>1주차</div>
+              <div>2주차</div>
+              <div>3주차</div>
+              <div>4주차</div>
+              <div>5주차</div>
+              <div>6주차</div>
+              <div>7주차</div>
+              <div>8주차</div>
+            </StyledWeekWrapper>
+            <StyledDeposit>
+              <div>보증금</div>
+            </StyledDeposit>
+          </StyledTitleWrapper>
+
+          <StyledCourseMembersWrapper>
+            {membersData.map((memberData: MemberData, memberIndex: number) => {
+              const { id, attendance, name, emoji } = memberData;
+              const isLeader = course?.courseLeader.id === memberData.id;
+              return (
+                <StyledAttendanceContainer key={memberIndex}>
+                  <StyledMember>
+                    <StyledEmojiBackground>{emoji}</StyledEmojiBackground>
+                    <StyledProfileWrapper>
+                      <StyledMemberName>
+                        {name}
+                        {(isLeader && <StyledMemberType>팀장</StyledMemberType>) || (
+                          <StyledMemberType>팀원</StyledMemberType>
+                        )}
+                      </StyledMemberName>
+                      <StyledProfileLink>프로필 보러가기 {'>'}</StyledProfileLink>
+                    </StyledProfileWrapper>
+                  </StyledMember>
+                  <StyledAttendanceList>
+                    {attendance.map((week: number, weekIndex: number) => (
+                      <StyledAttendanceBox key={weekIndex}>
+                        <Dropdown
+                          trigger={['click']}
+                          overlay={AttendanceMenu(memberIndex, weekIndex)}
+                          placement='bottomLeft'>
+                          <div>
+                            <span>{drawAttendance(week)}</span>
+                          </div>
+                        </Dropdown>
+                      </StyledAttendanceBox>
+                    ))}
+                    <StyledDepositBox>1000</StyledDepositBox>
+                  </StyledAttendanceList>
+                </StyledAttendanceContainer>
+              );
+            })}
+          </StyledCourseMembersWrapper>
+        </>
+      )}
     </div>
   );
 };
