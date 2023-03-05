@@ -10,6 +10,7 @@ import { StyledEmptyBoxContainer, StyledEmptyBoxText } from '@components/EmptyBo
 import { db } from '@config';
 import { useGetProfile } from '@hooks/use-get-profile';
 import { useGetSemester } from '@hooks/use-get-semester';
+import { ATTENDANCE_SUCCESS } from '@utility/ALERT_MESSAGE';
 import { RED } from '@utility/COLORS';
 import { StyledDownArrow } from '@utility/COMMON_STYLE';
 import { word } from '@utility/CONSTANTS';
@@ -19,11 +20,13 @@ import {
   StyledAttendanceButton,
   StyledAttendanceContainer,
   StyledAttendanceList,
+  StyledButtonWrapper,
   StyledCourseMembersWrapper,
   StyledDeposit,
   StyledDepositBox,
   StyledDropDown,
   StyledEmojiBackground,
+  StyledLayout,
   StyledMember,
   StyledMemberName,
   StyledMemberType,
@@ -31,6 +34,7 @@ import {
   StyledProfileLink,
   StyledProfileWrapper,
   StyledTitleWrapper,
+  StyledTopWrapper,
   StyledUserWrapper,
   StyledWeekWrapper,
 } from './style';
@@ -193,7 +197,7 @@ export const AttendancePage = () => {
   if (isLoading) return <div>로딩중...</div>;
 
   return (
-    <div style={{ overflow: 'auto' }}>
+    <StyledLayout>
       {isEmpty && (
         <>
           <StyledMenu>출결관리</StyledMenu>
@@ -205,29 +209,34 @@ export const AttendancePage = () => {
       )}
       {!isEmpty && (
         <>
-          <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between' }}>
+          <StyledTopWrapper>
             <StyledMenu>출결관리</StyledMenu>
-            <div style={{ display: 'flex' }}>
+            <StyledButtonWrapper>
               {isCourseLeader &&
                 (isEditMode ? (
-                  <StyledAttendanceButton onClick={submitUpdate} style={{ backgroundColor: RED }}>
+                  <StyledAttendanceButton
+                    onClick={() => {
+                      alert(ATTENDANCE_SUCCESS);
+                      submitUpdate;
+                    }}
+                    style={{ backgroundColor: RED }}>
                     완료
                   </StyledAttendanceButton>
                 ) : (
                   <StyledAttendanceButton onClick={() => setIsEditMode(prev => !prev)}>
-                    수정완료
+                    수정하기
                   </StyledAttendanceButton>
                 ))}
               <StyledDropDown>
                 <Dropdown trigger={['click']} overlay={CoursesMenu} placement='bottomLeft'>
                   <div>
                     <StyledDownArrow width='5' />
-                    <span style={{ marginLeft: 20 }}>{course?.courseName}</span>
+                    <span>{course?.courseName}</span>
                   </div>
                 </Dropdown>
               </StyledDropDown>
-            </div>
-          </div>
+            </StyledButtonWrapper>
+          </StyledTopWrapper>
           <StyledTitleWrapper>
             <StyledUserWrapper>
               <div>이모지</div>
@@ -287,6 +296,6 @@ export const AttendancePage = () => {
           </StyledCourseMembersWrapper>
         </>
       )}
-    </div>
+    </StyledLayout>
   );
 };
