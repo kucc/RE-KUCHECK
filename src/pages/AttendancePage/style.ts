@@ -2,12 +2,36 @@ import styled from 'styled-components';
 
 import { BLACK, GRAY, LINE_GRAY, RED } from '@utility/COLORS';
 
+export const StyledLayout = styled.div`
+  overflow: auto;
+  margin: 0 20px;
+  @media (max-width: 800px) {
+    margin: 0 10px;
+  }
+`;
+export const StyledTopWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const StyledMenu = styled.div`
   font-size: 26px;
-  margin: 35px 0 25px 49px;
+  margin: 35px 0 25px 29px;
   @media (max-width: 800px) {
     font-size: 16px;
-    margin: 30px 0 10px 26px;
+    margin: 30px 0 10px 16px;
+  }
+`;
+
+export const StyledButtonWrapper = styled.div`
+  display: flex;
+  gap: 16px;
+  @media (max-width: 800px) {
+    position: fixed;
+    right: 10px;
+    gap: 8px;
+    margin-top: 20px;
   }
 `;
 
@@ -18,13 +42,21 @@ export const StyledDropDown = styled.div`
   height: fit-content;
   padding: 14px 30px;
   text-align: center;
-  margin-right: 20px;
   cursor: pointer;
+  margin-right: 10px;
   @media (max-width: 800px) {
+    margin: 0;
     font-size: 10px;
-    width: 120px;
+    width: 100px;
     padding: 5px 10px;
-    margin-right: 10px;
+  }
+  .ant-dropdown-trigger {
+    span {
+      margin-left: 20px;
+      @media (max-width: 800px) {
+        margin-left: 10px;
+      }
+    }
   }
   .ant-btn {
     &:hover,
@@ -41,20 +73,8 @@ export const StyledDropDown = styled.div`
   }
 `;
 
-export const StyledButtonWrapper = styled.div`
-  position: absolute;
-  margin-right: 18px;
-  display: flex;
-  position: absolute;
-  margin-right: 18px;
-  flex-direction: row;
-  gap: 16px;
-  width: 400px;
-`;
-
 export const StyledAttendanceButton = styled.button`
   font-family: 'sdBo';
-  margin-right: 18px;
   right: 0;
   top: 0;
   border-radius: 25px;
@@ -76,14 +96,14 @@ export const StyledTitleWrapper = styled.div`
   font-size: 16px;
   display: flex;
   flex-direction: row;
-  margin-left: 60px;
+  margin-left: 40px;
   margin-top: 43px;
   div {
     width: max-content;
   }
   @media (max-width: 800px) {
     font-size: 10px;
-    margin-left: 30px;
+    margin-left: 20px;
     margin-top: 30px;
   }
 `;
@@ -110,9 +130,9 @@ export const StyledWeekWrapper = styled.div`
 
 export const StyledCourseMembersWrapper = styled.div`
   width: max-content;
-  margin: 24px 20px;
+  margin: 24px 0px;
   @media (max-width: 800px) {
-    margin: 14px 10px;
+    margin: 14px 0px;
   }
 `;
 
@@ -244,4 +264,4 @@ export const StyledDepositBox = styled(StyledAttendanceBox)`
   @media (max-width: 800px) {
     margin: 0 15px;
   }
-`
+`;
