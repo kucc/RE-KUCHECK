@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Dropdown, Menu } from 'antd';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { useHistory } from 'react-router';
 
 import { DefaultLogo } from '@components/DefaultLogo';
 import { EmptyBox } from '@components/EmptyBox';
@@ -50,6 +51,7 @@ interface MemberData {
 
 export const AttendancePage = () => {
   const { user } = useGetProfile();
+  const history = useHistory();
   const { currentSemester } = useGetSemester();
   const [selectedCourseId, setSelectedCourseId] = useState('');
   const [myCourses, setMyCourses] = useState<Course[]>([]);
@@ -272,7 +274,9 @@ export const AttendancePage = () => {
                           <StyledMemberType>팀원</StyledMemberType>
                         )}
                       </StyledMemberName>
-                      <StyledProfileLink>프로필 보러가기 {'>'}</StyledProfileLink>
+                      <StyledProfileLink onClick={() => history.replace(`/profile/${id}`)}>
+                        프로필 보러가기 {'>'}
+                      </StyledProfileLink>
                     </StyledProfileWrapper>
                   </StyledMember>
                   <StyledAttendanceList>
