@@ -106,7 +106,7 @@ export const AttendancePage = () => {
       }),
     });
 
-    alert('수정했습니다!');
+    alert(ATTENDANCE_SUCCESS);
     setIsLoading(false);
     location.reload();
   };
@@ -279,18 +279,24 @@ export const AttendancePage = () => {
                   </StyledMember>
                   <StyledAttendanceList>
                     {attendance.map((week: number, weekIndex: number) => (
-                      <StyledAttendanceBox key={weekIndex}>
-                        <Dropdown
-                          trigger={['click']}
-                          overlay={AttendanceMenu(memberIndex, weekIndex)}
-                          placement='bottomLeft'>
+                      <StyledAttendanceBox key={weekIndex} editMode={isEditMode}>
+                        {isEditMode ? (
+                          <Dropdown
+                            trigger={['click']}
+                            overlay={AttendanceMenu(memberIndex, weekIndex)}
+                            placement='bottomLeft'>
+                            <div>
+                              <span>{drawAttendance(week)}</span>
+                            </div>
+                          </Dropdown>
+                        ) : (
                           <div>
                             <span>{drawAttendance(week)}</span>
                           </div>
-                        </Dropdown>
+                        )}
                       </StyledAttendanceBox>
                     ))}
-                    <StyledDepositBox>{deposit}</StyledDepositBox>
+                    <StyledDepositBox editMode={isEditMode}>{deposit}</StyledDepositBox>
                   </StyledAttendanceList>
                 </StyledAttendanceContainer>
               );
