@@ -9,12 +9,14 @@ import { useHistory } from 'react-router-dom';
 import { db } from '@config';
 import { useGetProfile } from '@hooks/use-get-profile';
 import { RandomEmoji } from '@utility/COMMON_FUNCTION';
+import { PATH } from '@utility/COMMON_FUNCTION';
 
 import { AlertModal } from '..';
 import {
   StyledButton,
   StyledButtonWrapper,
   StyledCancelButton,
+  StyledCommentInput,
   StyledEmoji,
   StyledForm,
   StyledInput,
@@ -26,7 +28,6 @@ import {
   StyledWithdrawalButton,
   StyledWrapper,
 } from './style';
-import { PATH } from '@utility/COMMON_FUNCTION';
 
 export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) => {
   const [emoji, setEmoji] = useState(user.emoji);
@@ -126,48 +127,53 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
           </StyledForm>
           <StyledForm>
             <StyledTitleText>코멘트 수정</StyledTitleText>
-            <StyledInput
+            <StyledCommentInput
               defaultValue={user.comment}
               spellCheck={false}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onChange={(e: any) => {
                 setComment(e.target.value);
-              }}></StyledInput>
+              }}
+            />
           </StyledForm>
           <StyledForm>
             <StyledTitleText>세부 코멘트 수정</StyledTitleText>
-            <StyledInput
+            <StyledCommentInput
               defaultValue={user.detailComment}
               spellCheck={false}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onChange={(e: any) => {
                 setDetailComment(e.target.value);
-              }}></StyledInput>
+              }}
+            />
           </StyledForm>
           <StyledForm>
             <StyledTitleText>github 링크 수정 (https://까지 넣어주세요!)</StyledTitleText>
             <StyledInput
               defaultValue={user.link}
               spellCheck={false}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onChange={(e: any) => {
                 setGithub(e.target.value);
-              }}></StyledInput>
+              }}
+            />
           </StyledForm>
           <StyledForm>
             <StyledTitleText>인스타그램 링크 수정</StyledTitleText>
             <StyledInput
               defaultValue={user.instaLink}
               spellCheck={false}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onChange={(e: any) => {
                 setInstagram(e.target.value);
-              }}></StyledInput>
+              }}
+            />
           </StyledForm>
           <StyledForm>
             <StyledTitleText>이메일 링크 수정</StyledTitleText>
             <StyledInput
               defaultValue={user.email}
               spellCheck={false}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onChange={(e: any) => {
                 setEmail(e.target.value);
-              }}></StyledInput>
+              }}
+            />
           </StyledForm>
         </StyledWrapper>
         <StyledWithdrawalButton
@@ -181,7 +187,9 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
             isPromptModalOpened={() => {
               setPromptModal(false);
             }}
-            setDeleteUser={() => {deleteUserData.mutate()}}
+            setDeleteUser={() => {
+              deleteUserData.mutate();
+            }}
           />
         )}
         <StyledButtonWrapper>
