@@ -7,6 +7,8 @@ export const FAILURE = 'FAILURE'; // 실패
 export const SUCCESS_APPLICATION = '등록에 성공하였습니다!';
 export const SUCCESS_APPLIED_COURSE = '신청이 완료되었습니다.';
 export const ATTENDANCE_SUCCESS = '출결 수정이 완료되었습니다!';
+export const PROFILE_EDIT_SUCCESS = '프로필 정보 수정이 완료되었습니다!';
+
 
 // error message
 export const INVALID_PASSWORD = '유효하지 않은 패스워드입니다.';
