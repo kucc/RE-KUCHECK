@@ -241,7 +241,7 @@ export const StyledAttendanceList = styled.div`
 
 export const StyledAttendanceBox = styled.div`
   font-family: 'sdSb';
-  cursor: pointer;
+  cursor: ${({ editMode }: { editMode: boolean }) => (editMode === true ? 'pointer' : 'auto')};
   font-size: 18px;
   width: 32px;
   height: 22px;
