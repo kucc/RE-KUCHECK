@@ -265,3 +265,7 @@ export const StyledDepositBox = styled(StyledAttendanceBox)`
     margin: 0 15px;
   }
 `;
+
+export const StyledAttendanceState = styled.span`
+  color: ${({ state }: { state: number }) => (state === 0 || state === 3 ? `${BLACK}` : `${RED}`)};
+`;
