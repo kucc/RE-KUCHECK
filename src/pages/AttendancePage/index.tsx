@@ -21,6 +21,7 @@ import {
   StyledAttendanceButton,
   StyledAttendanceContainer,
   StyledAttendanceList,
+  StyledAttendanceState,
   StyledButtonWrapper,
   StyledCourseMembersWrapper,
   StyledDeposit,
@@ -286,12 +287,16 @@ export const AttendancePage = () => {
                             overlay={AttendanceMenu(memberIndex, weekIndex)}
                             placement='bottomLeft'>
                             <div>
-                              <span>{drawAttendance(week)}</span>
+                              <StyledAttendanceState state={week}>
+                                {drawAttendance(week)}
+                              </StyledAttendanceState>
                             </div>
                           </Dropdown>
                         ) : (
                           <div>
-                            <span>{drawAttendance(week)}</span>
+                            <StyledAttendanceState state={week}>
+                              {drawAttendance(week)}
+                            </StyledAttendanceState>
                           </div>
                         )}
                       </StyledAttendanceBox>
