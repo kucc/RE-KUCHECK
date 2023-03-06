@@ -66,6 +66,27 @@ export const StyledInput = styled.input`
     }
     font-family: 'tmoneyRe';
 `
+
+export const StyledCommentInput = styled.textarea`
+  resize: none;
+  padding: 5px 10px;
+  border: 1px solid #dddddd;
+  border-radius: 2px;
+  max-height: 80px;
+  width: 95%;
+  overflow: hidden;
+  :focus {
+    outline: none !important;
+    border-color: ${RED};
+    box-shadow: 0 0 5px ${RED};
+    transition: 0.3s;
+  }
+  :hover {
+    background-color: rgba(245, 245, 245, 0.8);
+  }
+  font-family: 'tmoneyRe';
+`
+
 export const StyledButtonWrapper = styled.div`
   display: flex;
   gap: 5px;
