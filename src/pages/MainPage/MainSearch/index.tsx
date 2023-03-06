@@ -64,6 +64,7 @@ export const MainSearch = () => {
       </StyledSearchContainer>
       <StyledDropDown>
         <Dropdown
+          overlayStyle={{ overflowY: 'scroll' }}
           dropdownRender={menu => <div style={{ height: 500, width: 200 }}>{menu}</div>}
           trigger={['click']}
           overlay={LanguageMenu}>
