@@ -19,22 +19,27 @@ export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) 
 
   useEffect(() => {
     let searchArray = mainCourseData;
+    if (courseTab !== 0) {
+      searchArray = searchArray.filter(res => res.courseType === courseTab);
+    }
     if (searchQuery) {
       // 문자열 검색
       const regex = new RegExp(searchQuery, 'gi');
-      searchArray = mainCourseData.filter(
-        res => res.courseName.match(regex) || res.courseLeader.name.match(regex),
+      searchArray = searchArray.filter(
+        res =>
+          res.courseName.match(regex) ||
+          res.courseLeader.name.match(regex) ||
+          res.courseStack.find(element => element.match(regex)),
       );
     }
     if (searchLanguage) {
       // 사용언어
-      const regex = new RegExp(searchLanguage, 'gi');
-      searchArray = mainCourseData.filter(res =>
-        res.language.find(element => element.match(regex)),
+      searchArray = searchArray.filter(res =>
+        res.language.find(element => element === searchLanguage),
       );
     }
     setCourseList(searchArray);
-  }, [mainCourseData, searchQuery, searchLanguage]);
+  }, [mainCourseData, searchQuery, searchLanguage, courseTab]);
 
   return (
     <StyledCourseContainer>
