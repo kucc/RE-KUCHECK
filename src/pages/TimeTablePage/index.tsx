@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { doc, getDoc } from 'firebase/firestore';
 
+import { Loading } from '@components/Loading';
 import { TimeTable } from '@components/Timetable';
 
 import { db } from '@config';
@@ -20,7 +21,7 @@ export const TimeTablePage = () => {
   useEffect(() => {
     fetchTimeTable();
   }, []);
-  if (cells === null) return <div>로딩중...</div>;
+  if (cells === null) return <Loading />;
 
   return (
     <div>

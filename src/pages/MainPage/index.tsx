@@ -1,6 +1,8 @@
 // import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from 'react';
 
+import { Loading } from '@components';
+
 import { getCourses } from '@apis';
 import { useGetSemester } from '@hooks/use-get-semester';
 
@@ -28,7 +30,7 @@ export const MainPage = () => {
     }
   }, [currentSemester]);
 
-  if (!data) return <div>로딩중...</div>;
+  if (!data) return <Loading />;
 
   return (
     <MainContainer>

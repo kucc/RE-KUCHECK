@@ -48,7 +48,7 @@ export const CourseCreatePage = () => {
   useEffect(() => {
     const onMainLanguageImg = () => {
       if (selectedLanguages.length > 0) {
-        setMainLanguageImg(selectedLanguages[0]);
+        setMainLanguageImg(selectedLanguages[selectedLanguages.length - 1]);
       } else {
         setMainLanguageImg('Etc');
       }
@@ -213,7 +213,27 @@ export const CourseCreatePage = () => {
 
   // 세부 스택
   const options: SelectProps['options'] = [];
-  const courseStack = ['Git', 'NextJS', 'Express', 'Typescript', 'Pandas', 'Pytorch', 'Numpy'];
+  const courseStack = [
+    'Git',
+    'Typescript',
+    'React',
+    'ReactNative',
+    'NextJS',
+    'Node.js',
+    'NestJS',
+    'Django',
+    'Spring',
+    'Firebase',
+    'Flutter',
+    'Swift',
+    'Pandas',
+    'Pytorch',
+    'Numpy',
+    'Database',
+    'MachineLearning',
+    'Algorithm',
+    'Linux',
+  ];
 
   courseStack.map(stack => {
     options.push({
@@ -357,7 +377,7 @@ export const CourseCreatePage = () => {
 
             <div>
               <StyledTitleBox style={{ margin: '0px' }}>
-                <StyledSubTitle>주요 기술 스택 & 사용 언어</StyledSubTitle>
+                <StyledSubTitle>사용 언어</StyledSubTitle>
                 <StyledComment>
                   Tip. 중요한 순서대로 입력해주시면, 이해하기 훨씬 좋습니다.
                 </StyledComment>
@@ -375,7 +395,9 @@ export const CourseCreatePage = () => {
                       ))
                     ) : (
                       <>
-                        <StyledPlaceholder>옵션을 선택해주세요.</StyledPlaceholder>
+                        <StyledPlaceholder>
+                          찾으시는 언어가 없거나, 미정이면 ETC를 선택해주세요.
+                        </StyledPlaceholder>
                       </>
                     )}
                   </StyledLanguage>
@@ -436,6 +458,8 @@ export const CourseCreatePage = () => {
             <div>
               <StyledSubTitle>활동 인원</StyledSubTitle>
               <StyledMemberInput
+                type='number'
+                min={1}
                 onChange={e => onChangeDetailInform('maxMemberNum', e.target.value)}
                 placeholder='활동 인원'
               />

@@ -14,6 +14,7 @@ type Language =
   | 'MachineLearning'
   | 'Node'
   | 'Python'
+  | 'R'
   | 'React'
   | 'ReactNative'
   | 'Recoil'

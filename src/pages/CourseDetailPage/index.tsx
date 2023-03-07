@@ -5,6 +5,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { RouteComponentProps } from 'react-router';
 import { useHistory } from 'react-router-dom';
 
+import { Loading } from '@components';
 import { MainContainer } from '@pages/MainPage/style';
 
 import { getCourse } from '@apis';
@@ -95,7 +96,7 @@ export const CourseDetailPage = ({ match }: RouteComponentProps<{ id: string }>)
     location.reload();
   };
 
-  if (isLoading) return <div>로딩중...</div>;
+  if (isLoading) return <Loading />;
   if (isError) return <div>에러에요.</div>;
 
   const isCourseLeader = data.courseLeader.id === user?.id;

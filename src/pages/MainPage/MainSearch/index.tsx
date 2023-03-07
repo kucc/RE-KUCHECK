@@ -25,7 +25,7 @@ export const MainSearch = () => {
   const SemesterMenu = (
     <Menu>
       {pastSemester &&
-        pastSemester.map((semester: string, key) => {
+        pastSemester.reverse().map((semester: string, key) => {
           return (
             <Menu.Item key={key}>
               <a onClick={() => setCurrentSemester(semester)}>20{semester}학기</a>
@@ -37,10 +37,19 @@ export const MainSearch = () => {
 
   const LanguageMenu = (
     <Menu>
-      {LanguageList.map(res => {
+      {(['전체', ...LanguageList] as (Language | '전체')[]).map(res => {
         return (
           <Menu.Item key={res}>
-            <a onClick={() => setSearchLanguage(res)}>{res}</a>
+            <div
+              onClick={() => {
+                if (res === '전체') {
+                  setSearchLanguage(null);
+                  return;
+                }
+                setSearchLanguage(res);
+              }}>
+              {res}
+            </div>
           </Menu.Item>
         );
       })}
