@@ -1,14 +1,9 @@
 import { useHistory } from 'react-router-dom';
 
 import { AuthDescription } from '@components';
-import {
-  StyledAuthContainer,
-  StyledAuthMainImg,
-  StyledCenterContainer,
-} from '@pages/LoginPage/style';
+import { StyledAuthContainer, StyledCenterContainer } from '@pages/LoginPage/style';
 
 import { useGetProfile } from '@hooks/use-get-profile';
-import { PATH } from '@utility/COMMON_FUNCTION';
 
 import JoinForm from './JoinForm';
 
@@ -25,7 +20,6 @@ export const JoinPage = () => {
       <StyledAuthContainer isLogin={false}>
         <AuthDescription />
         <JoinForm />
-        <StyledAuthMainImg alt='KUCC' onClick={() => history.push(PATH.main)} />
       </StyledAuthContainer>
     </StyledCenterContainer>
   );

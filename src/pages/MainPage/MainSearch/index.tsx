@@ -15,23 +15,20 @@ import {
   StyledSearchInput,
 } from './style';
 
-const pastSemester = ['22-1', '22-2', '23-1'];
-
 export const MainSearch = () => {
   const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
   const [searchLanguage, setSearchLanguage] = useRecoilState(searchLanguageState);
-  const { currentSemester, setCurrentSemester } = useGetSemester();
+  const { currentSemester, setCurrentSemester, pastSemsters } = useGetSemester();
 
   const SemesterMenu = (
     <Menu>
-      {pastSemester &&
-        pastSemester.reverse().map((semester: string, key) => {
-          return (
-            <Menu.Item key={key}>
-              <a onClick={() => setCurrentSemester(semester)}>20{semester}학기</a>
-            </Menu.Item>
-          );
-        })}
+      {pastSemsters.map((semester: string, key) => {
+        return (
+          <Menu.Item key={key}>
+            <a onClick={() => setCurrentSemester(semester)}>20{semester}학기</a>
+          </Menu.Item>
+        );
+      })}
     </Menu>
   );
 
