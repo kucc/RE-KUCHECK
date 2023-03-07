@@ -6,6 +6,7 @@ export * from './EmptyBox';
 export * from './Footer';
 export * from './Header';
 export * from './Inputs';
+export * from './Loading';
 export * from './MainCourse';
 export * from './ProfileModal';
 export * from './Sidebar';
