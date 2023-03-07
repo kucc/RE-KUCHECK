@@ -45,6 +45,7 @@ export const StyledHorizontalLine = styled.div`
 export const StyledTitleBox = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 14px;
   margin-left: 65px;
   margin-bottom: 7.5px;
@@ -84,8 +85,7 @@ export const StyledLine = styled.hr`
 
 export const StyledComment = styled.div`
   font-family: 'sdLi';
-  font-size: 18px;
-  margin-top: 3px;
+  font-size: 14px;
   @media (max-width: 800px) {
     height: 10px;
     font-size: 10px;
@@ -208,11 +208,11 @@ export const StyledInput = styled.textarea`
 `;
 
 export const StyledPlaceholder = styled.span`
-  font-size: 18px;
+  font-size: 12px;
   font-family: 'sdLi';
   color: ${GRAY};
   @media (max-width: 800px) {
-    font-size: 10px;
+    font-size: 8px;
   }
 `;
 
