@@ -7,11 +7,13 @@ import {
   StyledBarMenu3,
   StyledBody,
   StyledCommonTitle,
-  StyledContentBox,
   StyledSubTitle,
 } from "./style";
 
 export const NoticePage = () => {
+
+  const [select, setSelect] = useState<string[]>([]);
+
   const noticeList = [
     {
       no: "03",
@@ -36,55 +38,7 @@ export const NoticePage = () => {
       id: "id1",
     },
   ];
-
-  const [activeIndex, setActiveIndex] = useState();
-  // const ListItem = ({
-  //   title,
-  //   list,
-  //   active,
-  //   activeIndex,
-  //   setActiveIndex,
-  //   idx,
-  // }) => {
-
-  //   const history = useHistory();
-  //   const [clickedIdx, setClickedIdx] = useState();
-
-  //   const handleClick = () => {
-  //     setActiveIndex(idx);
-  //     setClickedIdx(null);
-  //     history.push('/${title')
-  //   }
-
-  //   return (
-  //     <Li>
-
-  //     </Li>
-  //   )
-  // }
-
-  const handleClick = (index) => {
-    setActiveIndex(index);
-  };
-
-  const ListItem = ({ res, active, idx }) => {
-    return (
-      // <li>
-      <div className={active}>
-        <div onClick={() => handleClick(idx)}>
-          <div>
-            <div />
-          </div>
-          <div>{res.title}</div>
-        </div>
-        <StyledContentBox isShow={idx === activeIndex}>
-          {res.content}
-        </StyledContentBox>
-      </div>
-      // </li>
-    );
-  };
-
+  
   return (
     <div>
       <StyledBody>
@@ -100,28 +54,24 @@ export const NoticePage = () => {
         <StyledBar></StyledBar>
 
         <div>
-          {noticeList.map((res, idx) => {
-            const active = idx === activeIndex ? "active" : "";
-
+          {noticeList.map((res, i) => {
+            
             return (
               <>
-                <ListItem
-                  res={res}
-                  idx={idx}
-                  active={active}
-                  activeIndex={activeIndex}
-                  setActiveIndex={setActiveIndex}
-                />
-                {/* <div key={res.id}>
-                  <CollapseBox>
-                  <span>{res.no}</span>
-                  <span>{res.title}</span>
-                  <StyledBoxDate>{res.date}</StyledBoxDate>
-                  {activeIndex ? <AiOutlineMinus /> : <AiOutlinePlus />}
-                  </CollapseBox>
-                  {activeIndex && <p>{res.content}</p>}
-                  <StyledSubBar></StyledSubBar>
-                </div> */}
+              <div
+                key={i}
+                onClick={() => {
+                  !select.includes(res.id)
+                  ? setSelect((select) => [...select, res.id])
+                  : setSelect(select.filter((id) => id !== res.id));
+                }}
+              >{res.title}</div>
+                {
+                  select.includes(res.id) ?
+                  res.content
+                  :
+                  ''
+                }
               </>
             );
           })}
