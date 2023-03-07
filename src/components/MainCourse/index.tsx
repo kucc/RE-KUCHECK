@@ -167,6 +167,18 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
   };
 
   const renderButton = () => {
+    if (!user) {
+      return (
+        <StyledCourseButton
+          bgColor={BLACK}
+          onClick={e => {
+            e.stopPropagation();
+            history.push('/login');
+          }}>
+          로그인 후 확인
+        </StyledCourseButton>
+      );
+    }
     if (profileId) {
       return (
         (profileId === user?.id && (
