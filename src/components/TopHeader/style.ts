@@ -93,6 +93,7 @@ export const StyledDropContent = styled.div<{ isLoginOpen: boolean }>`
   display: ${props => (props.isLoginOpen ? 'flex' : 'none')};
   flex-direction: column;
   position: absolute;
+  right: 30px;
   background-color: #f1f1f1;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
