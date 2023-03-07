@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { RouteComponentProps } from 'react-router';
 import { useHistory } from 'react-router-dom';
 
-import { EmptyBox, MainCourse } from '@components';
+import { EmptyBox, Loading, MainCourse } from '@components';
 import { ProfileModal } from '@components/ProfileModal';
 import { MainContainer } from '@pages/MainPage/style';
 
@@ -69,7 +69,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
     }
   }, [data, courseTab]);
 
-  if (isLoading || isCurrentUserLoading) return <div>로딩중...</div>;
+  if (isLoading || isCurrentUserLoading) return <Loading />;
   if (isError) return <div>에러에요.</div>;
 
   if (isCurrentUserLoading && !currentUser) {
@@ -174,11 +174,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
           <StyledMainCourseWrapper>
             {courseSemester?.length === 0 && <EmptyBox />}
             {courseSemester?.map((course: Course, i: number) => (
-              <MainCourse
-                course={course}
-                key={i}
-                profileId={userId}
-              />
+              <MainCourse course={course} key={i} profileId={userId} />
             ))}
           </StyledMainCourseWrapper>
         </StyledCourseContainer>
