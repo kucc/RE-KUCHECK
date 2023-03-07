@@ -4,9 +4,7 @@ import { Dropdown, Menu } from 'antd';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router';
 
-import { DefaultLogo } from '@components/DefaultLogo';
-import { EmptyBox } from '@components/EmptyBox';
-import { StyledEmptyBoxContainer, StyledEmptyBoxText } from '@components/EmptyBox/style';
+import { EmptyBox, Loading } from '@components';
 
 import { db } from '@config';
 import { useGetProfile } from '@hooks/use-get-profile';
@@ -200,19 +198,11 @@ export const AttendancePage = () => {
   };
   const isCourseLeader = course?.courseLeader.id === user?.id;
 
-  if (isLoading) return <div>로딩중...</div>;
+  if (isLoading) return <Loading />;
 
   return (
     <StyledLayout>
-      {isEmpty && (
-        <>
-          <StyledMenu>출결관리</StyledMenu>
-          <StyledEmptyBoxContainer>
-            <DefaultLogo width={100} height={100} logoName='type-3-4' />
-            <StyledEmptyBoxText>정보가 없습니다.</StyledEmptyBoxText>
-          </StyledEmptyBoxContainer>
-        </>
-      )}
+      {isEmpty && <EmptyBox />}
       {!isEmpty && (
         <>
           <StyledTopWrapper>
