@@ -8,6 +8,7 @@ import { useGetProfile } from '@hooks/use-get-profile';
 import { BLACK, GRAY, RED } from '@utility/COLORS';
 import { CURRENT_SEMESTER, defaultUserAttendance } from '@utility/CONSTANTS';
 
+import { Loading } from '..';
 import {
   StyledCaseSlash,
   StyledCourseBottom,
@@ -213,7 +214,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
       onClick={() => {
         history.push(`/course/detail/${course.id}`);
       }}>
-      {isLoading && <div>로딩중...</div>}
+      {isLoading && <Loading />}
       <StyledLeader>
         <StyledEmojiBackground>
           <StyledEmoji>{course.courseLeader.emoji}</StyledEmoji>
