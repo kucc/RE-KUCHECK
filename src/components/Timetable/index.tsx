@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
-import { useMediaQuery } from 'react-responsive';
+import { useHistory } from 'react-router';
 import TableDragSelect from 'react-table-drag-select';
 import 'react-table-drag-select/style.css';
 
+import { useWindowSize } from '@hooks/use-window-size';
 import { timeTableSelectedDefault, timeTableTimeList } from '@utility';
 
-import { CustomTd, StyledTableContainer } from './style';
+import { ColorTd, CustomTd, StyledTableContainer } from './style';
 
 export const TimeTable = ({
   cells,
@@ -19,22 +20,15 @@ export const TimeTable = ({
   selectedData?: any;
   selectedColor?: string;
 }) => {
+  const history = useHistory();
   const [selected, setSelected] = useState<boolean[][]>(timeTableSelectedDefault);
-  const isMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+  const { height } = useWindowSize();
 
   const renderText = (specificTime: any, key: number) => {
-    if (isMobile) {
-      if (specificTime[key].value.length < 7) {
-        return specificTime[key].value;
-      } else {
-        return specificTime[key].value.slice(0, 7) + '..';
-      }
+    if (specificTime[key].value.length < 9) {
+      return specificTime[key].value;
     } else {
-      if (specificTime[key].value.length < 9) {
-        return specificTime[key].value;
-      } else {
-        return specificTime[key].value.slice(0, 9) + '...';
-      }
+      return specificTime[key].value.slice(0, 9) + '...';
     }
   };
 
@@ -42,16 +36,26 @@ export const TimeTable = ({
     return selected[index].slice(1).map((time, key) => {
       // timeHour : 9, timeMin: 00 => cells.time_9_00
       const specificTime = eval('cells.time_' + timeHour + '_' + timeMin);
+      console.log(specificTime[key]);
       if (specificTime[key].value) {
         // if time exist on Database
         return (
-          <CustomTd style={{ backgroundColor: specificTime[key].color }} disabled key={key}>
-            {renderText(specificTime, key)}
-          </CustomTd>
+          <ColorTd
+            style={{
+              backgroundColor: specificTime[key].color,
+              color: 'white',
+              cursor: 'pointer',
+            }}
+            disabled
+            key={key}>
+            <div onClick={() => history.push(`/course/detail/${specificTime[key].courseId}`)}>
+              {renderText(specificTime, key)}
+            </div>
+          </ColorTd>
         );
       } else if (!editable) {
         // editable : false => disable 활성
-        return <CustomTd style={{ backgroundColor: 'rgb(211, 211, 211)' }} disabled key={key} />;
+        return <ColorTd style={{ backgroundColor: 'rgb(211, 211, 211)' }} disabled key={key} />;
       } else {
         return <td key={key} />;
       }
@@ -60,9 +64,18 @@ export const TimeTable = ({
 
   const renderTr = () => {
     return timeTableTimeList.map((time, index) => (
-      <tr key={index}>
-        <CustomTd disabled>
-          {isMobile ? `${time.Hour}:${time.Minute}` : `${time.Hour} : ${time.Minute}`}
+      <tr key={index} style={{ position: 'relative' }}>
+        <CustomTd
+          disabled
+          style={{
+            position: 'sticky',
+            backgroundColor: 'white',
+            textAlign: 'center',
+            bottom: 0,
+            left: -3,
+            color: 'black',
+          }}>
+          <div>{`${time.Hour} : ${time.Minute}`}</div>
         </CustomTd>
         {renderTd(index + 1, time.Hour, time.Minute)}
       </tr>
@@ -70,27 +83,53 @@ export const TimeTable = ({
   };
 
   return (
-    <StyledTableContainer selectedColor={selectedColor ?? ''}>
-      {cells && (
-        <TableDragSelect
-          value={selected}
-          onChange={(selected: boolean[][]) => {
-            setSelected(selected);
-            selectedData && selectedData(selected);
-          }}>
-          <tr style={{ fontFamily: 'NexonBo', fontSize: '18px' }}>
-            <CustomTd disabled />
-            <CustomTd disabled>일</CustomTd>
-            <CustomTd disabled>월</CustomTd>
-            <CustomTd disabled>화</CustomTd>
-            <CustomTd disabled>수</CustomTd>
-            <CustomTd disabled>목</CustomTd>
-            <CustomTd disabled>금</CustomTd>
-            <CustomTd disabled>토</CustomTd>
-          </tr>
-          {renderTr()}
-        </TableDragSelect>
-      )}
-    </StyledTableContainer>
+    <div style={{ overflow: 'auto', height: height - 84 + 32 }}>
+      <StyledTableContainer selectedColor={selectedColor ?? ''}>
+        {cells && (
+          <TableDragSelect
+            value={selected}
+            onChange={(selected: boolean[][]) => {
+              setSelected(selected);
+              selectedData && selectedData(selected);
+            }}>
+            <tr
+              style={{
+                fontFamily: 'NexonBo',
+                fontSize: '18px',
+                position: 'sticky',
+                top: -5,
+                zIndex: 1,
+                backgroundColor: 'white',
+              }}>
+              <CustomTd disabled style={{ color: 'black' }}>
+                {' '}
+              </CustomTd>
+              <CustomTd disabled style={{ color: 'black' }}>
+                일
+              </CustomTd>
+              <CustomTd disabled style={{ color: 'black' }}>
+                월
+              </CustomTd>
+              <CustomTd disabled style={{ color: 'black' }}>
+                화
+              </CustomTd>
+              <CustomTd disabled style={{ color: 'black' }}>
+                수
+              </CustomTd>
+              <CustomTd disabled style={{ color: 'black' }}>
+                목
+              </CustomTd>
+              <CustomTd disabled style={{ color: 'black' }}>
+                금
+              </CustomTd>
+              <CustomTd disabled style={{ color: 'black' }}>
+                토
+              </CustomTd>
+            </tr>
+            {renderTr()}
+          </TableDragSelect>
+        )}
+      </StyledTableContainer>
+    </div>
   );
 };
