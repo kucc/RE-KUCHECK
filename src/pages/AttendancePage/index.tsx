@@ -5,9 +5,10 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router';
 
 import { EmptyBox, Loading } from '@components';
+import { StyledHighLightText } from '@pages/MainPage/MainTopContainer/style';
 
 import { db } from '@config';
-import { useGetProfile, useGetSemester, useRedirectToMain } from '@hooks';
+import { useGetCurrentTerm, useGetProfile, useGetSemester, useRedirectToMain } from '@hooks';
 import { ATTENDANCE_SUCCESS, RED, StyledDownArrow, word } from '@utility';
 
 import {
@@ -29,6 +30,7 @@ import {
   StyledMenu,
   StyledProfileLink,
   StyledProfileWrapper,
+  StyledTermText,
   StyledTitleWrapper,
   StyledTopWrapper,
   StyledUserWrapper,
@@ -55,6 +57,8 @@ export const AttendancePage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [membersData, setMembersData] = useState<MemberData[]>([]);
   const [isEmpty, setIsEmpty] = useState(false);
+
+  const { resultText } = useGetCurrentTerm();
 
   useRedirectToMain();
 
@@ -204,7 +208,12 @@ export const AttendancePage = () => {
       {!isEmpty && (
         <>
           <StyledTopWrapper>
-            <StyledMenu>출결관리</StyledMenu>
+            <StyledMenu>
+              <div>출결관리</div>
+              <StyledTermText>
+                지금은 <StyledHighLightText>{resultText}</StyledHighLightText>입니다.
+              </StyledTermText>
+            </StyledMenu>
             <StyledButtonWrapper>
               {isCourseLeader &&
                 (isEditMode ? (

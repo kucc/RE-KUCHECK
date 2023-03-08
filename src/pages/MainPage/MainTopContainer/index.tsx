@@ -1,5 +1,7 @@
 import { useMediaQuery } from 'react-responsive';
 
+import { useGetCurrentTerm } from '@hooks';
+
 import {
   StyledContentText,
   StyledHighLightText,
@@ -14,6 +16,8 @@ import {
 export const MainTopContainer = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 800px)' });
 
+  const { resultText } = useGetCurrentTerm();
+
   return (
     <StyledTopContainer>
       <StyledLogo alt='logo' />
@@ -25,7 +29,8 @@ export const MainTopContainer = () => {
             <img src='/img/common/PcSpeechBubble.svg' alt='1' />
           )}
           <StyledSpeechText>
-            지금은 <StyledHighLightText>휴식 기간</StyledHighLightText>입니다. 다음 학기에 뵈어요!
+            지금은 <StyledHighLightText>{resultText}</StyledHighLightText>입니다.{' '}
+            {resultText === '휴식 기간' ? '다음 학기에 뵈어요!' : '항상 화이팅 하세요!'}
           </StyledSpeechText>
         </StyledSpeechBody>
       </StyledSpeechBubbleContainer>

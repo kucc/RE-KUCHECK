@@ -15,8 +15,18 @@ export const StyledTopWrapper = styled.div`
   justify-content: space-between;
 `;
 
+export const StyledTermText = styled.div`
+  font-size: 12px;
+  @media (max-width: 800px) {
+    font-size: 10px;
+  }
+`;
+
 export const StyledMenu = styled.div`
   font-size: 26px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: 'tmoneyBo';
   color: ${BLACK};
   padding: 50px 0 25px 29px;
