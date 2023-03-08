@@ -8,9 +8,7 @@ import { useHistory } from 'react-router-dom';
 
 import { db } from '@config';
 import { useGetProfile } from '@hooks/use-get-profile';
-import { PROFILE_EDIT_SUCCESS } from '@utility/ALERT_MESSAGE';
-import { RandomEmoji } from '@utility/COMMON_FUNCTION';
-import { PATH } from '@utility/COMMON_FUNCTION';
+import { PATH, PROFILE_EDIT_SUCCESS, RandomEmoji } from '@utility';
 
 import { AlertModal } from '..';
 import {

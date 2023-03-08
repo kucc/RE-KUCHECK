@@ -1,4 +1,4 @@
-{  
+{
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "esModuleInterop": true,
@@ -29,6 +29,7 @@
       "@apis/*": ["./src/apis/*"],
       "@config": ["./src/config"],
       "@config/*": ["./src/config/*"],
+      "@hooks": ["./src/hooks"],
       "@hooks/*": ["./src/hooks/*"],
       "@recoil": ["./src/recoil"],
       "@recoil/*": ["./src/recoil/*"],
