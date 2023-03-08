@@ -28,7 +28,7 @@ export const NoticePage = () => {
 
   const [select, setSelect] = useState<number[]>([]);
   const noticeData: Notice[] = [];
-  const [newNoticeList, setNewNoticeList] = useState<Notice[]>([]);
+  const [noticeList, setNoticeList] = useState<Notice[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export const NoticePage = () => {
         const { title, content } = notice.data();
         noticeData.unshift({ title, content, id: noticeData.length + 1 });
       }
-      setNewNoticeList(noticeData);
+      setNoticeList(noticeData);
       setIsLoading(false);
     };
     getNotices();
@@ -59,7 +59,7 @@ export const NoticePage = () => {
         <StyledBar />
 
         <div>
-          {newNoticeList.map((res: Notice, i: number) => {
+          {noticeList.map((res: Notice, i: number) => {
             return (
               <>
                 <StyledTitleWrapper
@@ -69,7 +69,7 @@ export const NoticePage = () => {
                       ? setSelect(select => [...select, res.id])
                       : setSelect(select.filter(id => id !== res.id));
                   }}>
-                  <span>{String(i + 1).padStart(2, '0')}</span>
+                  <span>{String(res.id).padStart(2, '0')}</span>
                   <div>{res.title}</div>
                   <StyledBoxDate>23.03</StyledBoxDate>
                 </StyledTitleWrapper>
