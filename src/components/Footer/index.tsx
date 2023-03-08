@@ -51,10 +51,12 @@ export const Footer = () => {
             </StyledContent>
           </StyledRow>
           <StyledHorizontalLine />
-          <StyledFooterLogo />
-          <StyledCopyRight>
-            Copyright <span>ⓒ KUCC</span> All Rights Reserved.
-          </StyledCopyRight>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+            <StyledFooterLogo />
+            <StyledCopyRight>
+              Copyright <span>ⓒ KUCC</span> All Rights Reserved.
+            </StyledCopyRight>
+          </div>
         </StyledFooterMargin>
       </StyledFooter>
     </StyledFooterContainer>

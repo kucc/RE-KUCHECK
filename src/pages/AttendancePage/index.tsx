@@ -5,14 +5,11 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router';
 
 import { EmptyBox, Loading } from '@components';
+import { StyledHighLightText } from '@pages/MainPage/MainTopContainer/style';
 
 import { db } from '@config';
-import { useGetProfile } from '@hooks/use-get-profile';
-import { useGetSemester } from '@hooks/use-get-semester';
-import { ATTENDANCE_SUCCESS } from '@utility/ALERT_MESSAGE';
-import { RED } from '@utility/COLORS';
-import { StyledDownArrow } from '@utility/COMMON_STYLE';
-import { word } from '@utility/CONSTANTS';
+import { useGetCurrentTerm, useGetProfile, useGetSemester, useRedirectToMain } from '@hooks';
+import { ATTENDANCE_SUCCESS, RED, StyledDownArrow, word } from '@utility';
 
 import {
   StyledAttendanceBox,
@@ -33,6 +30,7 @@ import {
   StyledMenu,
   StyledProfileLink,
   StyledProfileWrapper,
+  StyledTermText,
   StyledTitleWrapper,
   StyledTopWrapper,
   StyledUserWrapper,
@@ -59,6 +57,10 @@ export const AttendancePage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [membersData, setMembersData] = useState<MemberData[]>([]);
   const [isEmpty, setIsEmpty] = useState(false);
+
+  const { resultText } = useGetCurrentTerm();
+
+  useRedirectToMain();
 
   const fetchCourse = async (courseId: string) => {
     setIsLoading(true);
@@ -206,7 +208,12 @@ export const AttendancePage = () => {
       {!isEmpty && (
         <>
           <StyledTopWrapper>
-            <StyledMenu>출결관리</StyledMenu>
+            <StyledMenu>
+              <div>출결관리</div>
+              <StyledTermText>
+                지금은 <StyledHighLightText>{resultText}</StyledHighLightText>입니다.
+              </StyledTermText>
+            </StyledMenu>
             <StyledButtonWrapper>
               {isCourseLeader &&
                 (isEditMode ? (
