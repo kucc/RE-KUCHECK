@@ -63,8 +63,6 @@ export const CourseDetailPage = ({ match }: RouteComponentProps<{ id: string }>)
 
   const [courseTimetable, setCourseTimetable] = useState<any>({});
 
-  console.log('courseTimetable', courseTimetable);
-
   useEffect(() => {
     if (data) {
       setCourseDetailInform({
