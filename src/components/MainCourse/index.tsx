@@ -237,7 +237,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
       </StyledLeader>
       <StyledCourseInfo>
         <StyledCourseTop>
-          <StyledCourseTitle isEllipsis={courseName.length > 14}>{courseName}</StyledCourseTitle>
+          <StyledCourseTitle isEllipsis={courseName.length > 25}>{courseName}</StyledCourseTitle>
           {language.slice(0, 3).map((res, index) => {
             return (
               <StyledCourseLanguageImage
