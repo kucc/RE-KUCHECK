@@ -140,7 +140,7 @@ export const AttendancePage = () => {
   };
 
   const CoursesMenu = (
-    <Menu style={{ overflowY: 'scroll', height: '400px' }}>
+    <Menu style={{ overflowY: 'auto', height: '150px' }}>
       {myCourses &&
         myCourses.map(course => {
           return (
@@ -298,7 +298,9 @@ export const AttendancePage = () => {
                         )}
                       </StyledAttendanceBox>
                     ))}
-                    <StyledDepositBox editMode={isEditMode}>{deposit}</StyledDepositBox>
+                    <StyledDepositBox editMode={isEditMode}>
+                      {course?.courseType === (2 || 3) ? '' : deposit}
+                    </StyledDepositBox>
                   </StyledAttendanceList>
                 </StyledAttendanceContainer>
               );
