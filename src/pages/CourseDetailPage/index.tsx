@@ -17,6 +17,7 @@ import { StyledBackArrow, StyledBackArrowWrapper } from '@utility/COMMON_STYLE';
 import { CourseIntroduce } from './CourseIntroduce';
 import { CourseTimetable } from './CourseTimetable';
 import {
+  StyledEditButtonWrapper,
   StyledPcModifyButton,
   StyledPcModifyCompleteButton,
   StyledSelect,
@@ -119,18 +120,18 @@ export const CourseDetailPage = ({ match }: RouteComponentProps<{ id: string }>)
             </StyledPcModifyCompleteButton>
           ))}
       </div>
-      <div style={{ display: 'flex', marginLeft: 40 }}>
+      <StyledEditButtonWrapper>
         {isEditMode && (
           <>
-            <StyledSelect onClick={() => setMode('introduce')}>
+            <StyledSelect selected={mode === 'introduce'} onClick={() => setMode('introduce')}>
               <StyledTitle>세션 수정</StyledTitle>
             </StyledSelect>
-            <StyledSelect onClick={() => setMode('timetable')}>
+            <StyledSelect onClick={() => setMode('timetable')} selected={mode === 'timetable'}>
               <StyledTitle>시간표 수정</StyledTitle>
             </StyledSelect>
           </>
         )}
-      </div>
+      </StyledEditButtonWrapper>
       {mode === 'introduce' ? (
         <CourseIntroduce
           data={data}

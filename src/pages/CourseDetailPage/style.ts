@@ -106,14 +106,27 @@ export const StyledStackLine = styled(StyledLineBox)`
   }
 `;
 
+export const StyledEditButtonWrapper = styled.div`
+  display: flex;
+  margin-left: 40px;
+  padding: 15px 0;
+  @media (max-width: 800px) {
+    margin: 0;
+    padding-bottom: 0;
+    margin-top: 10px;
+  }
+`;
+
 export const StyledSelect = styled(StyledLineBox)`
   width: 108px;
+  color: ${({ selected }: { selected: boolean }) => (selected ? RED : BLACK)};
   border: 1px solid ${GRAY};
   border-radius: 8px;
-  padding: 5px;
+  padding: 10px;
   cursor: pointer;
   @media (max-width: 800px) {
     width: 56px;
+    padding: 5px;
   }
 `;
 
@@ -313,10 +326,14 @@ export const StyledDetailInput = styled.textarea`
   font-size: 16px;
   font-family: 'sfProL';
   border-radius: 6px;
+  padding: 5px 15px;
   border: 1px solid ${GRAY};
+  width: 100%;
+  height: 60px;
+  resize: none;
   @media (max-width: 800px) {
     font-size: 10px;
-    width: 100%;
+    padding: 5px 8px;
   }
 `;
 
