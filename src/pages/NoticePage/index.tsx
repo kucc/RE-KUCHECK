@@ -69,7 +69,7 @@ export const NoticePage = () => {
                       ? setSelect(select => [...select, res.id])
                       : setSelect(select.filter(id => id !== res.id));
                   }}>
-                  <span>{String(res.id).padStart(2, '0')}</span>
+                  <span>{String(i + 1).padStart(2, '0')}</span>
                   <div>{res.title}</div>
                   <StyledBoxDate>23.03</StyledBoxDate>
                 </StyledTitleWrapper>
