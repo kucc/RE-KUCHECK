@@ -16,11 +16,13 @@ export const StyledMainContainer = styled.div`
 `;
 
 export const StyledMenu = styled.div`
+  font-family: 'tmoneyBo';
   font-size: 26px;
-  margin: 35px 0 25px 49px;
+  color: ${BLACK};
+  padding: 50px 0 25px 49px;
   @media (max-width: 800px) {
     font-size: 16px;
-    margin: 30px 0 10px 26px;
+    padding: 30px 0 10px 26px;
   }
 `;
 

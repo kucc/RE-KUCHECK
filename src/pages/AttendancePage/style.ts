@@ -17,10 +17,12 @@ export const StyledTopWrapper = styled.div`
 
 export const StyledMenu = styled.div`
   font-size: 26px;
-  margin: 35px 0 25px 29px;
+  font-family: 'tmoneyBo';
+  color: ${BLACK};
+  padding: 50px 0 25px 29px;
   @media (max-width: 800px) {
     font-size: 16px;
-    margin: 30px 0 10px 16px;
+    padding: 30px 0 10px 16px;
   }
 `;
 
