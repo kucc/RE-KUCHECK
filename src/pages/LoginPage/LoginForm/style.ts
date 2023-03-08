@@ -6,6 +6,9 @@ import { BLACK } from '@utility/COLORS';
 export const StyledForm = styled.div`
   width: 100%;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   a,
   button {
     display: block;
