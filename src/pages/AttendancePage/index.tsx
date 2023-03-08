@@ -7,12 +7,8 @@ import { useHistory } from 'react-router';
 import { EmptyBox, Loading } from '@components';
 
 import { db } from '@config';
-import { useGetProfile } from '@hooks/use-get-profile';
-import { useGetSemester } from '@hooks/use-get-semester';
-import { ATTENDANCE_SUCCESS } from '@utility/ALERT_MESSAGE';
-import { RED } from '@utility/COLORS';
-import { StyledDownArrow } from '@utility/COMMON_STYLE';
-import { word } from '@utility/CONSTANTS';
+import { useGetProfile, useGetSemester, useRedirectToMain } from '@hooks';
+import { ATTENDANCE_SUCCESS, RED, StyledDownArrow, word } from '@utility';
 
 import {
   StyledAttendanceBox,
@@ -59,6 +55,8 @@ export const AttendancePage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [membersData, setMembersData] = useState<MemberData[]>([]);
   const [isEmpty, setIsEmpty] = useState(false);
+
+  useRedirectToMain();
 
   const fetchCourse = async (courseId: string) => {
     setIsLoading(true);

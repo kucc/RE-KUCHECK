@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
 
 import { Checkbox, Dropdown, Menu, Select, SelectProps } from 'antd';
-import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router';
 import { useRecoilState } from 'recoil';
 
 import { db } from '@config';
 import { LanguageList } from '@constants';
-import { useGetProfile } from '@hooks/use-get-profile';
+import { useGetProfile, useRedirectToMain } from '@hooks';
 import { selectedLanguagesState } from '@recoil';
-import { FORM_IS_NOT_FULL } from '@utility/ALERT_MESSAGE';
-import { StyledDownArrow } from '@utility/COMMON_STYLE';
-import { CURRENT_SEMESTER, defaultUserAttendance } from '@utility/CONSTANTS';
+import {
+  CURRENT_SEMESTER,
+  FORM_IS_NOT_FULL,
+  StyledDownArrow,
+  defaultUserAttendance,
+} from '@utility';
 
 import {
   StyledBodyBox,
@@ -43,7 +46,29 @@ export const CourseCreatePage = () => {
   const { user: currentUser } = useGetProfile();
   const uId = currentUser?.id;
 
+  const { user } = useGetProfile();
+
   const history = useHistory();
+
+  useRedirectToMain();
+
+  useEffect(() => {
+    fetchRegisterTerm();
+  }, []);
+
+  const fetchRegisterTerm = async () => {
+    const docRef = doc(db, 'common', 'commonInfo');
+    const docSnap = (await getDoc(docRef)).data();
+    if (docSnap) {
+      const {
+        registerTerm: { start, end },
+      } = docSnap;
+      if (new Date() < start.toDate() || new Date() > end.toDate()) {
+        alert('수강 신청 기간이 아닙니다!');
+        history.replace('/');
+      }
+    }
+  };
 
   useEffect(() => {
     const onMainLanguageImg = () => {
