@@ -33,6 +33,7 @@ import {
   StyledSocialLink,
   StyledTab,
   StyledTabLine,
+  StyledTabRightLine,
   StyledTabText,
   StyledUserContainer,
   StyledUserDetailComment,
@@ -164,7 +165,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
               <StyledTabText active={courseTab === 'now'}>현재 활동</StyledTabText>
               {courseTab === 'now' ? <StyledTabLine /> : ''}
             </StyledTab>
-            |
+            <StyledTabRightLine />
             <StyledTab onClick={onClickCourseTab('past')}>
               <StyledTabText active={courseTab === 'past'}>지난 활동</StyledTabText>
               {courseTab === 'past' ? <StyledTabLine /> : ''}

@@ -31,6 +31,8 @@ export const StyledTopHeader = styled.div`
 `;
 
 export const StyledMainLogo = styled.img`
+  position: absolute;
+  left: 0;
   width: 103px;
   height: 103px;
   cursor: pointer;
@@ -100,13 +102,18 @@ export const StyledDropContent = styled.div<{ isLoginOpen: boolean }>`
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-
+  border-radius: 8px;
+  gap: 5px;
+  margin-top: 5px;
+  @media (max-width: 800px) {
+    right: 20px;
+    min-width: 110px;
+  }
   button {
     background-color: white;
     border: 0.5px solid rgba(0, 0, 0, 0.6);
     border-radius: 8px;
     padding: 5px;
-    margin-top: 5px;
     font-family: 'sdMe';
   }
 `;

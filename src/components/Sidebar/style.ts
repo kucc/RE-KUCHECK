@@ -9,7 +9,6 @@ export const StyledSidebarContainer = styled.div`
 
 export const StyledSidebar = styled.div`
   padding-top: 40px;
-  padding-right: 20px;
   min-width: 120px;
   display: flex;
   flex-direction: column;
@@ -17,6 +16,5 @@ export const StyledSidebar = styled.div`
 `;
 
 export const StyledMainContent = styled.div`
-  /* width: fit-content; */
   flex-grow: 1;
 `;

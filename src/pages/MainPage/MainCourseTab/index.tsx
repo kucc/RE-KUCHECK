@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 import { EmptyBox, MainCourse } from '@components';
 
 import { searchLanguageState, searchQueryState } from '@recoil';
-import { StyledCourseTab, StyledTab, StyledTabText } from '@utility/COMMON_STYLE';
+import { StyledCourseTab, StyledTab, StyledTabLine, StyledTabRightLine, StyledTabText } from '@utility/COMMON_STYLE';
 
 import { StyledCourseContainer } from './style';
 
@@ -46,15 +46,23 @@ export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) 
       <StyledCourseTab>
         <StyledTab onClick={() => setCourseTab(0)}>
           <StyledTabText active={courseTab === 0}>전체</StyledTabText>
+          <StyledTabRightLine />
+          {courseTab === 0 && <StyledTabLine />}
         </StyledTab>
         <StyledTab onClick={() => setCourseTab(1)}>
           <StyledTabText active={courseTab === 1}>세션</StyledTabText>
+          <StyledTabRightLine />
+          {courseTab === 1 && <StyledTabLine />}
         </StyledTab>
         <StyledTab onClick={() => setCourseTab(2)}>
           <StyledTabText active={courseTab === 2}>스터디</StyledTabText>
+          <StyledTabRightLine />
+          {courseTab === 2 && <StyledTabLine />}
         </StyledTab>
         <StyledTab onClick={() => setCourseTab(3)}>
           <StyledTabText active={courseTab === 3}>프로젝트</StyledTabText>
+          <StyledTabRightLine />
+          {courseTab === 3 && <StyledTabLine />}
         </StyledTab>
       </StyledCourseTab>
       {courseList.length === 0 && <EmptyBox />}

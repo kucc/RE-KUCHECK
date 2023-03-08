@@ -161,11 +161,22 @@ export const StyledCourseContainer = styled.div`
 export const StyledCourseTab = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 15px;
+  gap: 20px;
   color: ${LINE_GRAY};
   margin-left: 18px;
   @media (max-width: 800px) {
-    gap: 15px;
+    gap: 12px;
+  }
+`;
+
+export const StyledTabRightLine = styled.hr`
+  height: 25px;
+  width: 1.5px;
+  background-color: ${LINE_GRAY};
+  border: 0;
+  @media (max-width: 800px) {
+    width: 0.7px;
+    height: 15px;
   }
 `;
 
@@ -224,7 +235,6 @@ export const StyledMainCourseWrapper = styled.div`
 export const StyledMainCourse = styled(StyledTextBox)`
   height: auto;
   cursor: pointer;
-  /* padding: 18px 0px 26px 37px; */
   padding: 18px 28px 26px 37px;
   display: flex;
   flex-direction: row;
@@ -239,7 +249,6 @@ export const StyledCourseProfile = styled.span`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* width: 65px; */
   width: 90px;
   gap: 5px;
   @media (max-width: 800px) {
@@ -325,6 +334,7 @@ export const StyledStackWrapper = styled.span`
     margin: 0;
   }
 `;
+
 export const StyledStackImg = styled.img`
   width: 27px;
   height: 27px;

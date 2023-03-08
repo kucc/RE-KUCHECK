@@ -30,7 +30,7 @@ export const StyledUnIncludeHeaderMain = styled.main`
 `;
 
 export const StyledCourseTab = styled.div`
-  padding: 12px 0;
+  padding: 12px 0 2px;
   margin-bottom: 24px;
   border-bottom: 1px solid ${LINE_GRAY};
   @media (max-width: 800px) {
@@ -42,14 +42,11 @@ export const StyledCourseTab = styled.div`
 export const StyledTab = styled.button`
   padding: 0 36px;
   border: none;
+  position: relative;
   background-color: white;
   cursor: pointer;
-  border-right: 1px solid ${LINE_GRAY};
-  &:last-child {
-    border: none;
-  }
   @media (max-width: 800px) {
-    padding: 0 20px;
+    padding: 0 15px;
   }
 `;
 
@@ -62,17 +59,42 @@ export const StyledTabText = styled.span<{ active?: boolean }>`
     props.active &&
     css`
       color: ${BLACK};
-      border-bottom: 3px solid ${BLACK};
     `}
   @media (max-width: 800px) {
     font-size: 12px;
-    padding: 8px 0;
+    padding: 8px 5px;
   }
 `;
 export const StyledOldMain = styled.div`
   padding-top: 80px;
   @media (max-width: 800px) {
     padding-top: 65px;
+  }
+`;
+export const StyledTabLine = styled.hr`
+  height: 4px;
+  margin-top: 11px;
+  background-color: ${BLACK};
+  border: 0;
+  border-radius: 3px;
+  @media (max-width: 800px) {
+    height: 2px;
+    margin-top: 9px;
+  }
+`;
+
+export const StyledTabRightLine = styled.hr`
+  height: 25px;
+  width: 1px;
+  background-color: ${LINE_GRAY};
+  position: absolute;
+  border: 0;
+  right: 0;
+  top: 0;
+  @media (max-width: 800px) {
+    margin-top: 3px;
+    width: 0.7px;
+    height: 15px;
   }
 `;
 
