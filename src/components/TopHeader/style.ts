@@ -4,12 +4,15 @@ import styled from 'styled-components';
 import { BLACK, RED } from '@utility';
 
 export const StyledTopHeaderContainer = styled.div`
-  width: 100%;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   height: 84px;
   border-top: 8px solid ${RED};
   background-color: white;
   box-shadow: 0px 0px 10px #ebebeb;
   z-index: 2;
+  max-width: none;
+
   @media (max-width: 800px) {
     height: 54px;
     border-top: 3px solid ${RED};
@@ -19,6 +22,8 @@ export const StyledTopHeaderContainer = styled.div`
 
 export const StyledTopHeader = styled.div`
   display: flex;
+  width: 90%;
+  max-width: 1280px;
   height: 100%;
   align-items: center;
   margin: 0 auto;
@@ -88,8 +93,18 @@ export const StyledDropContent = styled.div<{ isLoginOpen: boolean }>`
   display: ${props => (props.isLoginOpen ? 'flex' : 'none')};
   flex-direction: column;
   position: absolute;
+  right: 30px;
   background-color: #f1f1f1;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+
+  button {
+    background-color: white;
+    border: 0.5px solid rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
+    padding: 5px;
+    margin-top: 5px;
+    font-family: 'sdMe';
+  }
 `;

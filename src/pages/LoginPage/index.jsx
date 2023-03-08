@@ -6,11 +6,7 @@ import { useGetProfile } from '@hooks';
 import { PATH } from '@utility/COMMON_FUNCTION';
 
 import { LoginForm } from './LoginForm';
-import {
-  StyledAuthContainer,
-  StyledAuthMainImg,
-  StyledCenterContainer,
-} from './style';
+import { StyledAuthContainer, StyledCenterContainer } from './style';
 
 export const LoginPage = () => {
   const { user, isLoading } = useGetProfile();
@@ -28,7 +24,6 @@ export const LoginPage = () => {
       <StyledAuthContainer isLogin={isLogin}>
         <AuthDescription isLogin={isLogin} />
         <LoginForm />
-        <StyledAuthMainImg alt='KUCC' onClick={() => history.push(PATH.main)} />
       </StyledAuthContainer>
     </StyledCenterContainer>
   );

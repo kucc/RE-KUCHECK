@@ -1,214 +1,184 @@
-import { useState } from 'react';
-import EmailIcon from '../../svg/profile/email.svg';
-import GithubIcon from '../../svg/profile/github.svg';
-import InstagramIcon from '../../svg/profile/instagram.svg';
-import { 
-  StyledCommonLayout,
-  StyledCourseTitle,
-  StyledCourseDetail,
-  StyledCourseDetail2
-  } from '@utility/COMMON_STYLE';
+import { useEffect, useState } from 'react';
 
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { RouteComponentProps } from 'react-router';
+import { useHistory } from 'react-router-dom';
+
+import { EmptyBox, Loading, MainCourse } from '@components';
+import { ProfileModal } from '@components/ProfileModal';
+import { MainContainer } from '@pages/MainPage/style';
+
+import { getUser } from '@apis';
+import { QUERY_KEY } from '@constants';
+import { useGetProfile } from '@hooks/use-get-profile';
+import { PATH } from '@utility/COMMON_FUNCTION';
 import {
-  StyledUserInfoContainer,
-  StyledUserEmoji,
-  StyledUserContainer,
-  StyledName,
-  StyledUserRole,
+  StyledBackArrow,
+  StyledBackArrowWrapper,
+  StyledCommonPcLayout,
+} from '@utility/COMMON_STYLE';
+import { CURRENT_SEMESTER } from '@utility/CONSTANTS';
+
+import {
   StyledComment,
-  StyledSocialContainer,
-  StyledSocialBox,
-  StyledSocialLink,
-  StyledPcModifyButton,
-  StyledMobileModifyButton,
-  StyledUserDetailComment,
   StyledCourseContainer,
   StyledCourseTab,
-  StyledTab,
-  StyledTabText,
-  StyledTabLine,
   StyledLine,
   StyledMainCourseWrapper,
-  StyledMainCourse,
-  StyledCourseProfile,
-  StyledCourseProfileImg,
-  StyledCourseProfileCircle,
-  StyledCourseProfileEmoji,
-  StyledCourseProfileName,
-  StyledCourseInfo,
-  StyledStackWrapper,
-  StyledStackImg,
-  StyledRegisterButton,
-} from './style'
+  StyledMobileModifyButton,
+  StyledName,
+  StyledPcModifyButton,
+  StyledSocialBox,
+  StyledSocialContainer,
+  StyledSocialLink,
+  StyledTab,
+  StyledTabLine,
+  StyledTabText,
+  StyledUserContainer,
+  StyledUserDetailComment,
+  StyledUserEmoji,
+  StyledUserInfoContainer,
+  StyledUserRole,
+} from './style';
 
-import JsImg from '../../svg/stack/js.svg';
+type CourseTab = 'past' | 'now';
 
-import { profileInfo } from './data';
-// import { getMainCourseRequest } from '@redux/actions/_course_action';
+export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
+  const userId = match.params.id;
+  const { user: currentUser, isLoading: isCurrentUserLoading } = useGetProfile();
 
-// import { getToken } from '@/api';
+  const { isLoading, isError, data } = useQuery({
+    queryFn: getUser,
+    queryKey: [QUERY_KEY.user, userId],
+  });
 
-export const ProfilePage = () => {
-  // const history = useHistory();
-  // const dispatch = useDispatch();
+  const history = useHistory();
+  const [courseSemester, setCourseSemester] = useState<Course[] | null>(null);
+  const [courseTab, setCourseTab] = useState<CourseTab>('now');
+  const [modal, setModal] = useState(false);
 
-  // const mainCourseData = useSelector(state => state.course.mainCourse.data);
+  useEffect(() => {
+    if (!data) return;
+    const courseHistory = data.courseHistory ?? [];
+    const courseNow = courseHistory.filter(course => course.semester === CURRENT_SEMESTER);
+    const coursePast = courseHistory.filter(course => course.semester !== CURRENT_SEMESTER);
+    if (courseTab === 'now') {
+      setCourseSemester(courseNow);
+    } else if (courseTab === 'past') {
+      setCourseSemester(coursePast);
+    }
+  }, [data, courseTab]);
 
-  // const member = useSelector(state => state.member.currentMember);
-  // const selectUserId = useSelector(state => state.member.profileId);
-  // const {
-  //   status: profileStatus,
-  //   data: profileInfo,
-  //   error: profileError,
-  // } = useSelector(state => ({
-  //   status: state.member.profileInfo.status,
-  //   data: state.member.profileInfo.data,
-  //   error: state.member.profileInfo.error,
-  // }));
+  if (isLoading || isCurrentUserLoading) return <Loading />;
+  if (isError) return <div>에러에요.</div>;
 
-  const [courseTab, setCourseTab] = useState('now');
-  const [isMyProfile, setIsMyProfile] = useState(false);
-  const [register, setRegister] = useState([false, false, false]);
-  const clickRegisterButton = (i:number) => {
-    const newRegister = [...register];
-    newRegister[i] = !newRegister[i];
-    setRegister(newRegister);
+  if (isCurrentUserLoading && !currentUser) {
+    alert('로그인 후 이용 가능합니다.');
+    history.push(PATH.login);
+    return <></>;
   }
-  const MEMBER_ROLE = {
-    MANAGER: '운영진',
+
+  const uId = currentUser?.id;
+
+  const email = `mailto:${data.email}`;
+  const instagram = `https://www.instagram.com/${data.instaLink}`;
+  let github_id = '';
+  if (data.link !== undefined) {
+    const github_id_index = data.link.lastIndexOf('/');
+    github_id = data.link.slice(github_id_index + 1);
   }
-  const email = `mailto:${profileInfo.email}`;
-  const github = `https://github.com/${profileInfo.github_id}`;
-  const instagram = `https://www.instagram.com/${profileInfo.instagram_id}`;
-  
-  // useEffect(() => {
-  //   // 임의 코스 데이터
-  //   dispatch(getMainCourseRequest('21-2'));
 
-  //   const token = getToken();
-
-  //   if (!token && !selectUserId) {
-  //     alert('로그인 후 이용 가능합니다.');
-
-  //     history.push(PATH.login);
-  //   }
-
-  //   if (member?.id === selectUserId || (member?.id && selectUserId === null)) {
-  //     dispatch(getProfileRequest(member.id));
-
-  //     setIsMyProfile(true);
-  //   }
-  // }, [dispatch, history, member?.id, selectUserId]);
-
-  // const profileInfo = {};
+  const onClickCourseTab = (course: CourseTab) => () => {
+    setCourseTab(course);
+  };
 
   return (
-    <StyledCommonLayout>
-      <StyledUserInfoContainer>
-        <StyledUserEmoji>{profileInfo.emoji}</StyledUserEmoji>
-        <StyledUserContainer>
-          <StyledName>
-            {profileInfo.name}
-            {profileInfo.role === MEMBER_ROLE.MANAGER && <StyledUserRole>운영진</StyledUserRole>}
-          </StyledName>
-          <StyledComment>{profileInfo.comment}</StyledComment>
-          <StyledSocialContainer>
-            <StyledSocialBox>
-              <img src={EmailIcon} />
-              <StyledSocialLink href={email} target='_blank'>
-                {profileInfo.email}
-              </StyledSocialLink>
-            </StyledSocialBox>
-            <StyledSocialBox>
-              <img src={GithubIcon} />
-              <StyledSocialLink href={github} target='_blank'>
-                {profileInfo.github_id}
-              </StyledSocialLink>
-            </StyledSocialBox>
-            <StyledSocialBox>
-              <img src={InstagramIcon} />
-              <StyledSocialLink href={instagram} target='_blank'>
-                @{profileInfo.instagram_id}
-              </StyledSocialLink>
-            </StyledSocialBox>
-          </StyledSocialContainer>
-        </StyledUserContainer>
-        <StyledPcModifyButton>수정하기</StyledPcModifyButton>
-      </StyledUserInfoContainer>
-      <StyledUserDetailComment>{profileInfo.detail_comment.split('\n').map((comment) => (
-        <>
-          {comment}
-          <br />
-        </>
-      ))}
-      </StyledUserDetailComment>
-      {/* {isMyProfile && <StyledMobileModifyButton>수정하기</StyledMobileModifyButton>} */}
-      <StyledMobileModifyButton>수정하기</StyledMobileModifyButton>
-      <StyledCourseContainer>
-        <StyledCourseTab>
-          <StyledTab onClick={() => setCourseTab('now')}>
-            <StyledTabText active={courseTab === 'now'}>현재 활동</StyledTabText>
-            {courseTab === 'now' ? 
-              <StyledTabLine /> : ""
-            }
-          </StyledTab>
-          |
-          <StyledTab onClick={() => setCourseTab('past')}>
-            <StyledTabText active={courseTab === 'past'}>지난 활동</StyledTabText>
-            {courseTab === 'past' ? 
-              <StyledTabLine /> : ""
-            }
-          </StyledTab>
-        </StyledCourseTab>
-        <StyledLine />
-        <StyledMainCourseWrapper>
-          {[0, 1, 2].map((v, i) => (
-            <StyledMainCourse key={i}>
-            <StyledCourseProfile>
-              <StyledCourseProfileImg>
-                <StyledCourseProfileCircle />
-                <StyledCourseProfileEmoji>👨‍🚀</StyledCourseProfileEmoji>
-              </StyledCourseProfileImg>
-              <StyledCourseProfileName>
-                정인아&nbsp;
-                <span>팀장</span>
-              </StyledCourseProfileName>
-            </StyledCourseProfile>
+    <MainContainer>
+      <StyledBackArrowWrapper
+        onClick={() => {
+          history.goBack();
+        }}>
+        <StyledBackArrow src={`${process.env.PUBLIC_URL}/img/common/backArrow.svg`} />
+      </StyledBackArrowWrapper>
+      <StyledCommonPcLayout>
+        <StyledUserInfoContainer>
+          <StyledUserEmoji>{data.emoji}</StyledUserEmoji>
+          <StyledUserContainer>
+            <StyledName>
+              {data.name}
+              <StyledUserRole>{data.role}</StyledUserRole>
+            </StyledName>
+            <StyledComment>{data.comment}</StyledComment>
+            <StyledSocialContainer>
+              <StyledSocialBox>
+                <img src={`${process.env.PUBLIC_URL}/img/social/email.svg`} />
+                <StyledSocialLink href={email} target='_blank'>
+                  {data.email}
+                </StyledSocialLink>
+              </StyledSocialBox>
+              <StyledSocialBox>
+                <img src={`${process.env.PUBLIC_URL}/img/social/github.svg`} />
+                <StyledSocialLink href={data.link} target='_blank'>
+                  {/* {data.link} */}
+                  {github_id}
+                </StyledSocialLink>
+              </StyledSocialBox>
+              <StyledSocialBox>
+                <img src={`${process.env.PUBLIC_URL}/img/social/instagram.svg`} />
+                <StyledSocialLink href={instagram} target='_blank'>
+                  @{data.instaLink}
+                </StyledSocialLink>
+              </StyledSocialBox>
+            </StyledSocialContainer>
+          </StyledUserContainer>
+          {uId === userId && (
+            <StyledPcModifyButton
+              onClick={() => {
+                setModal(true);
+              }}>
+              수정하기
+            </StyledPcModifyButton>
+          )}
 
-            <StyledCourseInfo>
-                <StyledStackWrapper>
-                  {[0, 1, 2].map((a, i) => (
-                    <StyledStackImg key={i} src={JsImg} />
-                  ))}
-                </StyledStackWrapper>
-              <div style={{marginLeft: '1.5px'}}>
-                <StyledCourseTitle>바닐라 자바스크립트 세션</StyledCourseTitle>
-                <StyledCourseDetail>난이도:&nbsp;<StyledCourseDetail2>easy</StyledCourseDetail2>&ensp;/&ensp;투자시간:&nbsp;<StyledCourseDetail2>1학점</StyledCourseDetail2></StyledCourseDetail>
-              </div>
-            </StyledCourseInfo>
-            {
-              register[i] === false ?
-              <StyledRegisterButton onClick={()=>{
-                clickRegisterButton(i);
-              }}>신청하기&nbsp;0/5</StyledRegisterButton>
-              :
-              <StyledRegisterButton onClick={()=>{
-                clickRegisterButton(i);
-              }}>수강 취소</StyledRegisterButton>
-            }
-          </StyledMainCourse>
+          {modal && <ProfileModal user={data} setModal={() => setModal(false)} />}
+        </StyledUserInfoContainer>
+        <StyledUserDetailComment>
+          {data.detailComment?.split('\n').map((comment, i) => (
+            <div key={i}>
+              {comment}
+              <br />
+            </div>
           ))}
-          
-
-        </StyledMainCourseWrapper>
-        {/* {mainCourseData.length === 0 && <EmptyBox />}
-        {mainCourseData.length > 0 &&
-          mainCourseData.map(res => {
-            return <MainCourse course={res} key={res.id} />;
-          })} */}
-      </StyledCourseContainer>
-    </StyledCommonLayout>
+        </StyledUserDetailComment>
+        {uId === userId && (
+          <StyledMobileModifyButton
+            onClick={() => {
+              setModal(true);
+            }}>
+            수정하기
+          </StyledMobileModifyButton>
+        )}
+        <StyledCourseContainer>
+          <StyledCourseTab>
+            <StyledTab onClick={onClickCourseTab('now')}>
+              <StyledTabText active={courseTab === 'now'}>현재 활동</StyledTabText>
+              {courseTab === 'now' ? <StyledTabLine /> : ''}
+            </StyledTab>
+            |
+            <StyledTab onClick={onClickCourseTab('past')}>
+              <StyledTabText active={courseTab === 'past'}>지난 활동</StyledTabText>
+              {courseTab === 'past' ? <StyledTabLine /> : ''}
+            </StyledTab>
+          </StyledCourseTab>
+          <StyledLine />
+          <StyledMainCourseWrapper>
+            {courseSemester?.length === 0 && <EmptyBox />}
+            {courseSemester?.map((course: Course, i: number) => (
+              <MainCourse course={course} key={i} profileId={userId} />
+            ))}
+          </StyledMainCourseWrapper>
+        </StyledCourseContainer>
+      </StyledCommonPcLayout>
+    </MainContainer>
   );
 };

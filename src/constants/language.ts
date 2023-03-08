@@ -1,0 +1,15 @@
+export const LanguageList: Language[] = [
+  'C',
+  'Cpp',
+  'Csharp',
+  'Go',
+  'Java',
+  'Javascript',
+  'Kotlin',
+  'Python',
+  'Swift',
+  'R',
+  'Ruby',
+  'Scala',
+  'Etc',
+];

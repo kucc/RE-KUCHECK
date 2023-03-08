@@ -1,3 +1,4 @@
+export * from './AlertModal';
 export * from './AuthDescription';
 export * from './Buttons';
 export * from './DefaultLogo';
@@ -5,5 +6,9 @@ export * from './EmptyBox';
 export * from './Footer';
 export * from './Header';
 export * from './Inputs';
+export * from './Loading';
 export * from './MainCourse';
+export * from './ProfileModal';
+export * from './Sidebar';
+export * from './Timetable';
 export * from './TopHeader';

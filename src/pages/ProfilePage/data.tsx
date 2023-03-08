@@ -19,3 +19,33 @@ interface profileInfo {
   comment: string,
   detail_comment: string,
 }
+
+export const mainCourseData = [
+  {
+    leader: '정인아',
+    leaderEmoji: '👨‍🎤',
+    title: '바닐라 자바스크립트 세션',
+    level: 'easy',
+    credit: '1학점',
+    total: '5',
+    registerd: '0', 
+  },
+  {
+    leader: '정인아',
+    leaderEmoji: '👨‍🎤',
+    title: '바닐라 자바스크립트 세션',
+    level: 'easy',
+    credit: '2학점',
+    total: '5',
+    registerd: '0', 
+  },
+  {
+    leader: '정인아',
+    leaderEmoji: '👨‍🎤',
+    title: '바닐라 자바스크립트 세션',
+    level: 'easy',
+    credit: '3학점',
+    total: '5',
+    registerd: '0', 
+  }
+]

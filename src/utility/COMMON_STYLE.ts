@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { BASE_COLOR, BLACK, GRAY, LINE_GRAY, RED } from './COLORS';
+import { BLACK, GRAY, LINE_GRAY, RED } from './COLORS';
 
 export const StyledMainContainer = styled.div`
   width: 1280px;
@@ -104,24 +104,7 @@ export const StyledVerticalLine = styled.div<{ length?: number }>`
   margin-left: 5%;
 `;
 
-export const StyledSelectItem = styled.div`
-  border-radius: 24px;
-  text-align: center;
-  margin: 0px 10%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 13px;
-  @media (max-width: 800px) {
-    margin: 0px 7%;
-    font-size: 9px;
-    font-family: 'sdBo';
-    padding: 0px 5px;
-  }
-`;
-
-export const StyledArrow = styled.i<{ thin?: number; width?: number }>`
+export const StyledArrow = styled.i<{ thin?: number; width?: number | string }>`
   display: inline-block;
   border: solid ${BLACK};
   border-width: ${(props: any) =>
@@ -150,76 +133,6 @@ export const StyledDownArrow = styled(StyledArrow)`
   -webkit-transform: rotate(45deg);
 `;
 
-export const StyledTextArea = styled(TextArea)`
-  background-color: rgb(245, 245, 245);
-  border-radius: 15px;
-  border: none;
-  box-shadow: inset rgba(0, 0, 0, 0.15) 0px 3px 1.5px;
-  padding-left: 30px;
-  padding-top: 14px;
-  padding-bottom: 14px;
-  outline: none;
-  &:focus {
-    outline: none;
-  }
-  @media (max-width: 800px) {
-    font-size: 12px;
-  }
-`;
-
-export const StyledInputNumber = styled(InputNumber)`
-  background-color: rgb(245, 245, 245);
-  border-radius: 15px;
-  border: none;
-  box-shadow: inset rgba(0, 0, 0, 0.15) 0px 3px 1.5px;
-  width: 300px;
-  padding-left: 19px;
-  padding-top: 14px;
-  padding-bottom: 14px;
-  outline: none;
-  &:focus {
-    outline: none;
-  }
-  @media (max-width: 800px) {
-    width: 100%;
-    font-size: 12px;
-  }
-`;
-
-export const StyledSelect = styled(Select)<{ width?: number }>`
-  .ant-select-selector {
-    border-radius: 20px !important;
-    height: 61px !important;
-  }
-  .ant-select-selection-item {
-    padding-left: 35px !important;
-    padding-top: 15px !important;
-  }
-  border-radius: 20px;
-  width: ${(props: any) => `${props.width}px` || '150px'};
-`;
-
-export const StyledTagSelect = styled(Select)`
-  .ant-select-selector {
-    border-radius: 20px !important;
-    min-height: 61px !important;
-    background-color: ${BASE_COLOR} !important;
-    box-shadow: inset 0px 3px 1.5px lightgrey !important;
-  }
-  .ant-select-selection-item {
-    margin-left: 10px;
-    border-radius: 10px !important;
-    background-color: white !important;
-  }
-  .ant-select-selection-item-content {
-    padding: 5px;
-  }
-  .ant-select-selection-item-remove {
-    padding-top: 3px;
-  }
-  border-radius: 20px;
-`;
-
 export const StyledLaguageImg = styled.img`
   width: 70px;
   height: 70px;
@@ -234,31 +147,55 @@ export const StyledCommonTitle = styled.div`
   color: ${BLACK};
   padding-left: 49px;
   padding-top: 50px;
-  padding-top: 50px;
 `;
 
-export const StyledCommonLayout = styled.div`
-  padding: 78px 18px 0px;
-  @media (max-width: 1279px) {
-    padding: 78px 18px 0px;
+export const StyledCommonPcLayout = styled.div`
+  padding: 0px 48px 0px;
+  @media (max-width: 800px) {
+    padding: 0;
   }
 `;
 
 export const StyledCourseTitle = styled.div`
-  margin-bottom: 2px;
   font-family: 'sdBo';
   font-size: 28px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 14px;
   }
 `;
 export const StyledCourseDetail = styled.div`
   font-family: 'sdSb';
   font-size: 18px;
-  @media (max-width: 1279px) {
+  @media (max-width: 800px) {
     font-size: 9px;
   }
 `;
+
 export const StyledCourseDetail2 = styled.span`
   color: ${RED};
+`;
+
+export const StyledBackArrowWrapper = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: solid 1px ${GRAY};
+  box-shadow: 0px 5px 5px ${GRAY};
+  position: relative;
+  cursor: pointer;
+  @media (max-width: 1279px) {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
+export const StyledBackArrow = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10.5px;
+  @media (max-width: 1279px) {
+    width: 7px;
+  }
 `;
