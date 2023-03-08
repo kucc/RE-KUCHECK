@@ -30,7 +30,6 @@ export const useGetCurrentTerm = () => {
     const commonInfoData = (await getDoc(commonInfoRef)).data();
     const weekInfoData = (await getDoc(weekInfoRef)).data();
 
-    console.log(commonInfoData, weekInfoData);
     if (commonInfoData && weekInfoData) {
       const { registerTerm, activeTerm, enrollmentTerm } = commonInfoData as any;
       const {

@@ -16,14 +16,23 @@ export const StyledMainContainer = styled.div`
 `;
 
 export const StyledMenu = styled.div`
-  font-family: 'tmoneyBo';
   font-size: 26px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'tmoneyBo';
   color: ${BLACK};
   padding: 50px 0 25px 49px;
   @media (max-width: 800px) {
     font-size: 16px;
     padding: 30px 0 10px 26px;
   }
+`;
+
+export const StyledTopWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const StyledBox = styled.div`
@@ -51,6 +60,7 @@ export const StyledTitleBox = styled.div`
   gap: 14px;
   margin-left: 65px;
   margin-bottom: 7.5px;
+  margin-bottom: 15px;
   @media (max-width: 800px) {
     gap: 12px;
     margin-left: 20px;
@@ -59,7 +69,7 @@ export const StyledTitleBox = styled.div`
 `;
 
 export const StyledTitle = styled.div`
-  height: 50px;
+  height: 45px;
   width: 102px;
   display: flex;
   flex-direction: column;
@@ -88,7 +98,9 @@ export const StyledLine = styled.hr`
 export const StyledComment = styled.div`
   font-family: 'sdLi';
   font-size: 14px;
+  margin-top: 5px;
   @media (max-width: 800px) {
+    margin: 0;
     height: 10px;
     font-size: 10px;
   }
@@ -114,9 +126,15 @@ export const StyledSubTitle = styled.div`
     margin-left: 15px;
     font-size: 12px;
     margin-bottom: 10px;
-    max-width: 85px;
+    max-width: 80px;
   }
 `;
+
+export const StyledSubTitle2 = styled(StyledSubTitle)`
+  @media (max-width: 800px) {
+    max-width: 50px;
+  }
+`
 
 export const StyledDropDown = styled.div`
   .ant-btn {
@@ -340,9 +358,6 @@ export const StyledMemberInput = styled.input`
 
 export const StyledRegisterButton = styled.button`
   font-family: 'sdBo';
-  position: absolute;
-  right: 0;
-  top: 0;
   border-radius: 25px;
   background-color: ${RED};
   border: none;

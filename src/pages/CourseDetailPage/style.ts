@@ -265,7 +265,9 @@ export const StyledCurriDesc = styled(StyledDescription)`
 export const StyledDetailContainer = styled.div`
   display: flex;
   flex-direction: row;
+  gap: 18px;
   @media (max-width: 800px) {
+    gap: 16px;
   }
 `;
 
@@ -282,8 +284,9 @@ export const StyledDetailTitleBase = styled.span`
 
 export const StyledCurriWeekTitle = styled(StyledDetailTitleBase)`
   margin-right: 43px;
+  width: 60px;
   @media (max-width: 800px) {
-    margin-right: 30px;
+    margin: 0;
   }
 `;
 
@@ -301,7 +304,7 @@ export const StyledSessionDetailTitle = styled(StyledDetailTitleBase)`
   width: 100px;
   margin-right: 18px;
   @media (max-width: 800px) {
-    width: 55px;
+    width: 60px;
     margin-right: 9px;
   }
 `;
@@ -321,10 +324,13 @@ export const StyledDetailDesc = styled.span`
   font-size: 16px;
   font-family: 'sfProL';
   display: flex;
+  width: 100%;
   flex-direction: column;
+  line-height: 24px;
   @media (max-width: 800px) {
     font-size: 10px;
-    width: 100%;
+    width: 90%;
+    line-height: 12px;
   }
 `;
 

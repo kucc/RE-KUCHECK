@@ -36,8 +36,10 @@ import {
   StyledRegisterButton,
   StyledSelect,
   StyledSubTitle,
+  StyledSubTitle2,
   StyledTitle,
   StyledTitleBox,
+  StyledTopWrapper,
 } from './style';
 
 export const CourseCreatePage = () => {
@@ -45,8 +47,6 @@ export const CourseCreatePage = () => {
   const [mainLanguageImg, setMainLanguageImg] = useState('Etc');
   const { user: currentUser } = useGetProfile();
   const uId = currentUser?.id;
-
-  const { user } = useGetProfile();
 
   const history = useHistory();
 
@@ -362,10 +362,12 @@ export const CourseCreatePage = () => {
 
   return (
     <>
-      <div style={{ position: 'relative' }}>
-        <StyledMenu>활동 개설</StyledMenu>
+      <StyledTopWrapper>
+        <StyledMenu>
+          <div>활동개설</div>
+        </StyledMenu>
         <StyledRegisterButton onClick={handleRegisterCourse}>등록하기</StyledRegisterButton>
-      </div>
+      </StyledTopWrapper>
       <StyledMainContainer>
         <StyledBox>
           <StyledTitleBox>
@@ -373,7 +375,9 @@ export const CourseCreatePage = () => {
               <div>필수 정보</div>
               <StyledLine />
             </StyledTitle>
-            <StyledComment>필수 정보는 수정이 불가하니 신중히 입력해주세요!</StyledComment>
+            <StyledComment style={{ marginTop: '0' }}>
+              필수 정보는 수정이 불가하니 신중히 입력해주세요!
+            </StyledComment>
           </StyledTitleBox>
           <StyledHorizontalLine />
           <StyledBodyBox>
@@ -401,8 +405,8 @@ export const CourseCreatePage = () => {
             </div>
 
             <div>
-              <StyledTitleBox style={{ margin: '0px' }}>
-                <StyledSubTitle>사용 언어</StyledSubTitle>
+              <StyledTitleBox style={{ marginLeft: '0' }}>
+                <StyledSubTitle style={{ marginBottom: '0' }}>사용 언어</StyledSubTitle>
                 <StyledComment>
                   Tip. 중요한 순서대로 입력해주시면, 이해하기 훨씬 좋습니다.
                 </StyledComment>
@@ -442,8 +446,8 @@ export const CourseCreatePage = () => {
           <StyledHorizontalLine />
           <StyledBodyBox>
             <div>
-              <StyledTitleBox style={{ margin: '0px' }}>
-                <StyledSubTitle>세부 기술 스택</StyledSubTitle>
+              <StyledTitleBox style={{ marginLeft: '0' }}>
+                <StyledSubTitle style={{ marginBottom: '0' }}>세부 기술 스택</StyledSubTitle>
                 <StyledComment>Tip. 직접 입력하여 추가할 수도 있습니다.</StyledComment>
               </StyledTitleBox>
               <StyledSelect>
@@ -490,8 +494,8 @@ export const CourseCreatePage = () => {
               />
             </div>
             <div>
-              <StyledTitleBox style={{ margin: '0px' }}>
-                <StyledSubTitle>진행 요일</StyledSubTitle>
+              <StyledTitleBox style={{ marginLeft: '0' }}>
+                <StyledSubTitle style={{ marginBottom: '0' }}>진행 요일</StyledSubTitle>
                 <StyledComment>
                   Tip. 아직 정해지지 않은 경우, &apos;미정&apos;이라고 작성해주세요.
                 </StyledComment>
@@ -503,8 +507,8 @@ export const CourseCreatePage = () => {
             </div>
 
             <div>
-              <StyledTitleBox style={{ margin: '0px' }}>
-                <StyledSubTitle>진행 장소 및 방법</StyledSubTitle>
+              <StyledTitleBox style={{ marginLeft: '0' }}>
+                <StyledSubTitle2 style={{ marginBottom: '0' }}>진행 장소 및 방법</StyledSubTitle2>
                 <StyledComment>
                   Tip. 동방에서 진행하실 경우, 시간표를 별도로 등록해주세요!
                 </StyledComment>
