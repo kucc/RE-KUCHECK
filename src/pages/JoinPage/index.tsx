@@ -15,6 +15,7 @@ export const JoinPage = () => {
   if (user) {
     history.replace('/');
   }
+  0;
   return (
     <StyledCenterContainer>
       <StyledAuthContainer isLogin={false}>
