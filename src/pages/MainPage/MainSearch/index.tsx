@@ -18,6 +18,7 @@ import {
 export const MainSearch = () => {
   const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
   const [searchLanguage, setSearchLanguage] = useRecoilState(searchLanguageState);
+
   const { currentSemester, setCurrentSemester, pastSemsters } = useGetSemester();
 
   const SemesterMenu = (
