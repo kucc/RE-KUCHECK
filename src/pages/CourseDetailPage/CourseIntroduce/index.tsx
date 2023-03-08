@@ -139,10 +139,12 @@ export const CourseIntroduce = ({
                 <StyledTitle>사용 언어 및 기술 스택</StyledTitle>
                 <StyledLine />
               </StyledStackLine>
-              <StyledBox style={{ padding: '20px' }}>
+              <StyledBox style={{ padding: '15px' }}>
                 <StyledDescription>
                   {sessionStack.map((stack, i) => (
-                    <StyledDetailContainer key={i}>
+                    <StyledDetailContainer
+                      style={{ gap: '0', justifyContent: 'space-between' }}
+                      key={i}>
                       <StyledStackTitle>{stack.title}</StyledStackTitle>
                       <StyledDetailDesc>
                         {stack.desc.map((stackDetail, i) => (
@@ -203,7 +205,16 @@ export const CourseIntroduce = ({
                           }
                         />
                       ) : (
-                        <StyledDetailDesc style={{ width: '100%' }}>{desc}</StyledDetailDesc>
+                        <StyledDetailDesc style={{ width: '100%' }}>
+                          {typeof desc === 'string'
+                            ? desc.split('\n').map((comment: string, i: number) => (
+                                <div key={i}>
+                                  {comment}
+                                  <br />
+                                </div>
+                              ))
+                            : desc}
+                        </StyledDetailDesc>
                       )}
                     </StyledDetailContainer>
                   );
