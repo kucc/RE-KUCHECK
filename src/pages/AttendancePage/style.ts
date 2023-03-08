@@ -31,6 +31,8 @@ export const StyledMenu = styled.div`
   color: ${BLACK};
   padding: 50px 0 25px 29px;
   @media (max-width: 800px) {
+    flex-direction: column;
+    align-items: start;
     font-size: 16px;
     padding: 30px 0 10px 16px;
   }
