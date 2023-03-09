@@ -34,11 +34,8 @@ export const TimeTable = ({
 
   const renderTd = (index: number, timeHour: number, timeMin: string) => {
     return selected[index].slice(1).map((time, key) => {
-      // timeHour : 9, timeMin: 00 => cells.time_9_00
-      const specificTime = eval('cells.time_' + timeHour + '_' + timeMin);
-      console.log(specificTime[key]);
+      const specificTime = cells[`time_${timeHour}_${timeMin}`];
       if (specificTime[key].value) {
-        // if time exist on Database
         return (
           <ColorTd
             style={{
@@ -54,9 +51,9 @@ export const TimeTable = ({
           </ColorTd>
         );
       } else if (!editable) {
-        // editable : false => disable 활성
         return <ColorTd style={{ backgroundColor: 'rgb(211, 211, 211)' }} disabled key={key} />;
       } else {
+        console.log('here1');
         return <td key={key} />;
       }
     });
@@ -87,6 +84,7 @@ export const TimeTable = ({
       <StyledTableContainer selectedColor={selectedColor ?? ''}>
         {cells && (
           <TableDragSelect
+            key={new Date()}
             value={selected}
             onChange={(selected: boolean[][]) => {
               setSelected(selected);

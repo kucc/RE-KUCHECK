@@ -61,11 +61,11 @@ export const CourseIntroduce = ({
 
   const sessionStack = [
     {
-      title: '주요 기술 스택',
+      title: '사용 언어',
       desc: data.language,
     },
     {
-      title: '세부 기술 스택',
+      title: '기술 스택',
       desc: data.courseStack,
     },
   ];

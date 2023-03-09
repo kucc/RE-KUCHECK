@@ -447,7 +447,7 @@ export const CourseCreatePage = () => {
           <StyledBodyBox>
             <div>
               <StyledTitleBox style={{ marginLeft: '0' }}>
-                <StyledSubTitle style={{ marginBottom: '0' }}>세부 기술 스택</StyledSubTitle>
+                <StyledSubTitle style={{ marginBottom: '0' }}>기술 스택</StyledSubTitle>
                 <StyledComment>Tip. 직접 입력하여 추가할 수도 있습니다.</StyledComment>
               </StyledTitleBox>
               <StyledSelect>
