@@ -213,7 +213,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
           onClick={e => {
             e.stopPropagation();
           }}>
-          {<>마감&nbsp;</>}
+          {<>인원 마감&nbsp;</>}
           {courseMember.length}/{maxMemberNum}
         </StyledCourseButton>
       );
