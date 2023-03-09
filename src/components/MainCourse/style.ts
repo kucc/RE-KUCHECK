@@ -137,7 +137,7 @@ export const StyledCourseCaseValue = styled.span`
 export const StyledCourseButton = styled.button<{ bgColor?: string }>`
   width: 170px;
   height: 50px;
-  font-size: 18px;
+  font-size: 16px;
   font-family: 'sdBo';
   margin-left: auto;
   border-radius: 25px;

@@ -24,6 +24,10 @@ const checkBetweenDate = (date1: Date, date2: Date) => {
 export const useGetCurrentTerm = () => {
   const [resultText, setResultText] = useState<string>('');
 
+  const [isEnrollmentTerm, setIsEnrollmentTerm] = useState(false);
+
+  console.log('isEnrollmentTerm', isEnrollmentTerm);
+
   const fetchTerm = async () => {
     const commonInfoRef = doc(db, 'common', 'commonInfo');
     const weekInfoRef = doc(db, 'common', 'weekInfo');
@@ -42,6 +46,10 @@ export const useGetCurrentTerm = () => {
         seventhWeek,
         eighthWeek,
       } = weekInfoData as any;
+
+      if (checkBetweenDate(enrollmentTerm.start, enrollmentTerm.end)) {
+        setIsEnrollmentTerm(true);
+      }
 
       if (checkBetweenDate(registerTerm.start, registerTerm.end)) {
         setResultText('등록 기간');
@@ -77,5 +85,6 @@ export const useGetCurrentTerm = () => {
 
   return {
     resultText,
+    isEnrollmentTerm,
   };
 };

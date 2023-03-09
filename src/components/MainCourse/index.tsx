@@ -4,6 +4,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router-dom';
 
 import { db } from '@config';
+import { useGetCurrentTerm } from '@hooks';
 import { useGetProfile } from '@hooks/use-get-profile';
 import { BLACK, GRAY, RED } from '@utility/COLORS';
 import { CURRENT_SEMESTER, defaultUserAttendance } from '@utility/CONSTANTS';
@@ -30,6 +31,8 @@ import {
 
 export const MainCourse = ({ course, profileId }: { course: Course; profileId?: string }) => {
   const history = useHistory();
+
+  const { isEnrollmentTerm } = useGetCurrentTerm();
 
   const { user, resetUser } = useGetProfile();
   const [isLoading, setIsLoading] = useState(false);
@@ -178,8 +181,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
           로그인 후 확인
         </StyledCourseButton>
       );
-    }
-    if (profileId) {
+    } else if (profileId) {
       return (
         (profileId === user?.id && (
           <StyledCourseCancelButton
@@ -203,18 +205,34 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
           수강중 {courseMember.length}/{maxMemberNum}
         </StyledCourseButton>
       );
-    } else {
-      const isDisabled = courseMember.length >= maxMemberNum;
-      checkIsCourseFulled();
+    } else if (courseMember.length >= maxMemberNum) {
       return (
         <StyledCourseButton
-          bgColor={isDisabled ? GRAY : RED}
-          disabled={isDisabled}
+          bgColor={GRAY}
+          disabled={true}
           onClick={e => {
             e.stopPropagation();
+          }}>
+          {<>마감&nbsp;</>}
+          {courseMember.length}/{maxMemberNum}
+        </StyledCourseButton>
+      );
+    } else if (!isEnrollmentTerm) {
+      return (
+        <StyledCourseButton bgColor={GRAY} disabled={true}>
+          기간 마감
+        </StyledCourseButton>
+      );
+    } else {
+      return (
+        <StyledCourseButton
+          bgColor={RED}
+          onClick={e => {
+            e.stopPropagation();
+            checkIsCourseFulled();
             onClickApplication();
           }}>
-          {(isDisabled && <>마감&nbsp;</>) || <>신청하기&nbsp;</>}
+          {<>신청하기&nbsp;</>}
           {courseMember.length}/{maxMemberNum}
         </StyledCourseButton>
       );
