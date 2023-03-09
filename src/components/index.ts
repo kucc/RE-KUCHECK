@@ -1,6 +1,7 @@
 export * from './AlertModal';
 export * from './AuthDescription';
 export * from './Buttons';
+export * from './CancelModal';
 export * from './DefaultLogo';
 export * from './EmptyBox';
 export * from './Footer';

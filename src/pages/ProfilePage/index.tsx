@@ -52,6 +52,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
     queryFn: getUser,
     queryKey: [QUERY_KEY.user, userId],
   });
+  console.log(currentUser);
 
   const history = useHistory();
   const [courseSemester, setCourseSemester] = useState<Course[] | null>(null);

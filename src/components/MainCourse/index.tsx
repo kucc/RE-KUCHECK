@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router-dom';
+
+import { CancelModal } from '@components';
 
 import { db } from '@config';
 import { useGetCurrentTerm } from '@hooks';
 import { useGetProfile } from '@hooks/use-get-profile';
-import { BLACK, GRAY, RED } from '@utility/COLORS';
-import { CURRENT_SEMESTER, defaultUserAttendance } from '@utility/CONSTANTS';
+import { BLACK, CURRENT_SEMESTER, GRAY, RED, defaultUserAttendance } from '@utility';
 
 import { Loading } from '..';
 import {
@@ -36,6 +37,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
 
   const { user, resetUser } = useGetProfile();
   const [isLoading, setIsLoading] = useState(false);
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
 
   const {
     courseInfo,
@@ -108,28 +110,45 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
       setIsLoading(true);
       const courseRef = doc(db, 'courses', courseId);
       const userRef = doc(db, 'users', userId);
-      const courseDoc = (await getDoc(courseRef)).data();
+      const courseDoc = (await getDoc(courseRef)).data() as Course;
+      // 세션장이면
+      if (courseDoc.courseLeader.id === userId) {
+        // 유저 history에서 삭제
+        console.log(courseDoc.courseMember);
+        for await (const id of courseDoc.courseMember) {
+          const targetUserRef = doc(db, 'users', id);
+          const targetUserDoc = (await getDoc(targetUserRef)).data() as User;
+          const newCourseHistory =
+            targetUserDoc.courseHistory?.filter(course => course.id !== courseId) ?? [];
 
-      const newCourseHistory = courseHistory?.filter(myCourse => myCourse.id !== courseId);
-      const newCourseMember = courseDoc?.courseMember.filter(
-        (memberId: string) => memberId !== userId,
-      );
-      const newCourseAttendance = courseDoc?.courseAttendance.filter(
-        (member: any) => member.id !== userId,
-      );
+          await updateDoc(targetUserRef, {
+            courseHistory: newCourseHistory,
+          });
+        }
+        console.log('delete!');
+        await deleteDoc(doc(db, 'courses', courseId));
+      } else {
+        const newCourseHistory = courseHistory?.filter(myCourse => myCourse.id !== courseId);
+        const newCourseMember = courseDoc?.courseMember.filter(
+          (memberId: string) => memberId !== userId,
+        );
+        const newCourseAttendance = courseDoc?.courseAttendance.filter(
+          (member: any) => member.id !== userId,
+        );
 
-      const updateData = {
-        courseMember: newCourseMember ?? [],
-        courseAttendance: newCourseAttendance,
-      };
+        const updateData = {
+          courseMember: newCourseMember ?? [],
+          courseAttendance: newCourseAttendance,
+        };
 
-      // course Update
-      await updateDoc(courseRef, updateData);
+        // course Update
+        await updateDoc(courseRef, updateData);
 
-      // user Update
-      await updateDoc(userRef, {
-        courseHistory: newCourseHistory ?? [],
-      });
+        // user Update
+        await updateDoc(userRef, {
+          courseHistory: newCourseHistory ?? [],
+        });
+      }
 
       resetUser();
       alert('강의가 취소되었습니다.');
@@ -187,7 +206,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
           <StyledCourseCancelButton
             onClick={e => {
               e.stopPropagation();
-              dropCourse();
+              setIsCancelModalVisible(true);
             }}>
             수강 취소
           </StyledCourseCancelButton>
@@ -240,45 +259,50 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
   };
 
   return (
-    <StyledMainCourseContainer
-      onClick={() => {
-        history.push(`/course/detail/${course.id}`);
-      }}>
-      {isLoading && <Loading />}
-      <StyledLeader>
-        <StyledEmojiBackground>
-          <StyledEmoji>{course.courseLeader.emoji}</StyledEmoji>
-        </StyledEmojiBackground>
-        <StyledLeaderName>
-          {course.courseLeader.name} <StyledLeaderType>팀장</StyledLeaderType>
-        </StyledLeaderName>
-      </StyledLeader>
-      <StyledCourseInfo>
-        <StyledCourseTop>
-          <StyledCourseTitle isEllipsis={courseName.length > 25}>{courseName}</StyledCourseTitle>
-          {language.slice(0, 3).map((res, index) => {
-            return (
-              <StyledCourseLanguageImage
-                key={index}
-                src={`/img/icon/${res}.svg`}
-                alt='언어 이미지'
-              />
-            );
-          })}
-        </StyledCourseTop>
-        <StyledCourseBottom>
-          <StyledCourseCase>
-            난이도 :&nbsp;
-            <StyledCourseCaseValue>{difficulty}</StyledCourseCaseValue>
-          </StyledCourseCase>
-          <StyledCaseSlash>/</StyledCaseSlash>
-          <StyledCourseCase>
-            투자시간 :&nbsp;
-            <StyledCourseCaseValue>{requireTime}학점</StyledCourseCaseValue>
-          </StyledCourseCase>
-        </StyledCourseBottom>
-      </StyledCourseInfo>
-      {semester === CURRENT_SEMESTER && renderButton()}
-    </StyledMainCourseContainer>
+    <>
+      <StyledMainCourseContainer
+        onClick={() => {
+          history.push(`/course/detail/${course.id}`);
+        }}>
+        {isLoading && <Loading />}
+        <StyledLeader>
+          <StyledEmojiBackground>
+            <StyledEmoji>{course.courseLeader.emoji}</StyledEmoji>
+          </StyledEmojiBackground>
+          <StyledLeaderName>
+            {course.courseLeader.name} <StyledLeaderType>팀장</StyledLeaderType>
+          </StyledLeaderName>
+        </StyledLeader>
+        <StyledCourseInfo>
+          <StyledCourseTop>
+            <StyledCourseTitle isEllipsis={courseName.length > 25}>{courseName}</StyledCourseTitle>
+            {language.slice(0, 3).map((res, index) => {
+              return (
+                <StyledCourseLanguageImage
+                  key={index}
+                  src={`/img/icon/${res}.svg`}
+                  alt='언어 이미지'
+                />
+              );
+            })}
+          </StyledCourseTop>
+          <StyledCourseBottom>
+            <StyledCourseCase>
+              난이도 :&nbsp;
+              <StyledCourseCaseValue>{difficulty}</StyledCourseCaseValue>
+            </StyledCourseCase>
+            <StyledCaseSlash>/</StyledCaseSlash>
+            <StyledCourseCase>
+              투자시간 :&nbsp;
+              <StyledCourseCaseValue>{requireTime}학점</StyledCourseCaseValue>
+            </StyledCourseCase>
+          </StyledCourseBottom>
+        </StyledCourseInfo>
+        {semester === CURRENT_SEMESTER && renderButton()}
+      </StyledMainCourseContainer>
+      {isCancelModalVisible && (
+        <CancelModal isPromptModalOpened={setIsCancelModalVisible} onCancel={dropCourse} />
+      )}
+    </>
   );
 };
