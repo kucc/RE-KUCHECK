@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { BLACK, RED } from '@utility';
 
 export const StyledTopHeaderContainer = styled.div`
-  width: 100vw;
   margin-left: calc(50% - 50vw);
   height: 84px;
   border-top: 8px solid ${RED};
