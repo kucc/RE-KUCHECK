@@ -50,8 +50,9 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
         instaLink: instagram,
         email: email,
       });
+
       // const leaderData = { emoji: emoji, comment: comment, id: user.id, name: user.name };
-      // const leadingCourses = user.courseHistory?.filter(course => 
+      // const leadingCourses = user.courseHistory?.filter(course =>
       //       course.courseLeader.id == user.id) ?? [];
 
       // for await (const course of leadingCourses) {
