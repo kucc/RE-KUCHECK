@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteUser, getAuth, signOut } from 'firebase/auth';
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import Modal from 'react-modal';
 import { useHistory } from 'react-router-dom';
 
@@ -50,18 +50,31 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
         instaLink: instagram,
         email: email,
       });
-      // const leaderData = { emoji: emoji, comment: comment, id: user.id, name: user.name };
-      // const leadingCourses = user.courseHistory?.filter(course => 
-      //       course.courseLeader.id == user.id) ?? [];
 
-      // for await (const course of leadingCourses) {
-      //   const courseRef = doc(db, 'courses', course.id);
-      //   await updateDoc(courseRef, {
-      //     courseLeader: {
-      //       ...leaderData,
-      //     },
-      //   });
-      // }
+      const leaderData = { emoji: emoji, comment: comment, id: user.id, name: user.name };
+      
+      const leadingCourses = user.courseHistory?.filter(course => 
+        course.courseLeader.id === user.id) ?? [];
+
+        for await (const course of leadingCourses) {
+          const courseRef = doc(db, 'courses', course.id);
+
+          // 1. course의 courseLeader 정보 업데이트 [O]
+          await updateDoc(courseRef, {
+            courseLeader: {
+              ...leaderData,
+            },
+          });
+
+          // 2. courseMember 의 각 member - courseHistory - courseLeader 정보 업데이트
+          // const courseData = (await getDoc(courseRef)).data() as Course;
+          // for await (const memberId of courseData.courseMember) {
+          //   const memberRef = doc(db, 'users', memberId);
+            
+          // }
+        
+        }
+
       alert(PROFILE_EDIT_SUCCESS);
     },
 
