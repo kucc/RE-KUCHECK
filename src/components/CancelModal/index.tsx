@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import {
   StyledAlert,
   StyledAlertComment,
-  StyledButton,
+  StyledCancelButton,
   StyledButtonWrapper,
   StyledConfirmButton,
   StyledWrapper,
@@ -38,7 +38,7 @@ export const CancelModal = ({
           transform: 'translate(-50%, -50%)',
           backgroundColor: 'white',
           width: '300px',
-          height: '200px',
+          height: '180px',
           zIndex: '100',
           borderRadius: '10px',
         },
@@ -50,7 +50,7 @@ export const CancelModal = ({
           만약 세션장일 경우 세션이 사라지게 됩니다.
         </StyledAlertComment>
         <StyledButtonWrapper>
-          <StyledButton onClick={() => isPromptModalOpened(false)}>취소</StyledButton>
+          <StyledCancelButton onClick={() => isPromptModalOpened(false)}>취소</StyledCancelButton>
           <StyledConfirmButton onClick={onCancel}>확인</StyledConfirmButton>
         </StyledButtonWrapper>
       </StyledWrapper>

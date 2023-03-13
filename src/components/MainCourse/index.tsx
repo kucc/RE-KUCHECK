@@ -8,7 +8,21 @@ import { CancelModal } from '@components';
 import { db } from '@config';
 import { useGetCurrentTerm } from '@hooks';
 import { useGetProfile } from '@hooks/use-get-profile';
-import { BLACK, CURRENT_SEMESTER, GRAY, RED, defaultUserAttendance } from '@utility';
+import {
+  BLACK,
+  COMMON_ALERT,
+  COURSE_MEMBER_ALREADY_FULLED,
+  CURRENT_SEMESTER,
+  ERROR_ALERT,
+  FAILED_TO_APPLY_COURSE,
+  FALIED_TO_DROP_COURSE,
+  GRAY,
+  RED,
+  SUCCESS_APPLIED_COURSE,
+  SUCCESS_DELETE_COURSE,
+  SUCCESS_DROP_COURSE,
+  defaultUserAttendance,
+} from '@utility';
 
 import { Loading } from '..';
 import {
@@ -94,9 +108,9 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
         ],
       });
       resetUser();
-      alert('신청이 완료되었습니다!');
+      alert(SUCCESS_APPLIED_COURSE);
     } catch (error) {
-      alert('신청에 실패했습니다. 관리자에게 문의해주세요.' + error);
+      alert(`${FAILED_TO_APPLY_COURSE} ${COMMON_ALERT} ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -125,6 +139,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
           });
         }
         await deleteDoc(doc(db, 'courses', courseId));
+        alert(SUCCESS_DELETE_COURSE);
       } else {
         const newCourseHistory = courseHistory?.filter(myCourse => myCourse.id !== courseId);
         const newCourseMember = courseDoc?.courseMember.filter(
@@ -146,12 +161,12 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
         await updateDoc(userRef, {
           courseHistory: newCourseHistory ?? [],
         });
+        alert(SUCCESS_DROP_COURSE);
       }
 
       resetUser();
-      alert('강의가 취소되었습니다.');
     } catch (error) {
-      alert('취소에 실패했습니다. 관리자에게 문의해주세요.' + error);
+      alert(`${FALIED_TO_DROP_COURSE} ${COMMON_ALERT} ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -178,9 +193,9 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
       });
 
       resetUser();
-      alert('수강 인원이 초과하여 마감되었습니다.');
+      alert(COURSE_MEMBER_ALREADY_FULLED);
     } catch (error) {
-      alert('에러가 발생하였습니다. 관리자에게 문의해주세요.' + error);
+      alert(`${ERROR_ALERT} ${COMMON_ALERT} ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -273,7 +288,11 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
         </StyledLeader>
         <StyledCourseInfo>
           <StyledCourseTop>
-            <StyledCourseTitle isEllipsis={courseName.length > 25}>{courseName}</StyledCourseTitle>
+            <StyledCourseTitle
+              isEllipsisPC={courseName.length > 25}
+              isEllipsisMobile={courseName.length > 10}>
+              {courseName}
+            </StyledCourseTitle>
             {language.slice(0, 3).map((res, index) => {
               return (
                 <StyledCourseLanguageImage

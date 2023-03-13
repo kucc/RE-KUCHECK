@@ -4,15 +4,18 @@ import { GRAY, RED } from '@utility/COLORS';
 
 export const StyledWrapper = styled.div`
   display: flex;
-  font-family: 'popBo';
+  font-family: 'tmoneyRe';
   flex-direction: column;
   z-index: 101;
+  gap: 15px;
 `;
 
 export const StyledAlert = styled.div`
   font-size: 18px;
   text-align: center;
   padding: 7px;
+  font-weight: bold;
+  font-family: 'tmoneyBo';
 `;
 
 export const StyledAlertComment = styled.div`
@@ -20,6 +23,7 @@ export const StyledAlertComment = styled.div`
   font-size: 13px;
   font-weight: bold;
   padding-bottom: 3px;
+  line-height: 25px;
 `;
 
 export const StyledStick = styled.div`
@@ -64,20 +68,22 @@ export const StyledButtonWrapper = styled.div`
   justify-content: space-between;
   margin-left: 50px;
   margin-right: 50px;
-  margin-top: 50px;
+  margin-top: 15px;
 `;
 
 export const StyledButton = styled.button`
   border: none;
   display: inline-block;
   color: white;
-  padding: 16px 32px;
+  padding: 10px 30px;
   border-radius: 18px;
-  font-family: sans-serif;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   text-decoration: none;
   font-weight: 600;
   transition: 0.25s;
+`;
+
+export const StyledCancelButton = styled(StyledButton)`
   background-color: ${GRAY};
 `;
 

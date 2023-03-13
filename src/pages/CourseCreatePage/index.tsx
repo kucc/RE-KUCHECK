@@ -3,15 +3,17 @@ import { useEffect, useState } from 'react';
 import { Checkbox, Dropdown, Menu, Select, SelectProps } from 'antd';
 import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router';
-import { useRecoilState } from 'recoil';
 
 import { db } from '@config';
 import { LanguageList } from '@constants';
 import { useGetProfile, useRedirectToMain } from '@hooks';
-import { selectedLanguagesState } from '@recoil';
 import {
+  COMMON_ALERT,
   CURRENT_SEMESTER,
+  ERROR_ALERT,
   FORM_IS_NOT_FULL,
+  NOT_REGISTER_TERM,
+  SUCCESS_REGISTER_COURSE,
   StyledDownArrow,
   defaultUserAttendance,
 } from '@utility';
@@ -43,7 +45,7 @@ import {
 } from './style';
 
 export const CourseCreatePage = () => {
-  const [selectedLanguages, setSelectedLanguages] = useRecoilState(selectedLanguagesState);
+  const [selectedLanguages, setSelectedLanguages] = useState<[] | Language[]>([]);
   const [mainLanguageImg, setMainLanguageImg] = useState('Etc');
   const { user: currentUser } = useGetProfile();
   const uId = currentUser?.id;
@@ -64,7 +66,7 @@ export const CourseCreatePage = () => {
         registerTerm: { start, end },
       } = docSnap;
       if (new Date() < start.toDate() || new Date() > end.toDate()) {
-        alert('수강 신청 기간이 아닙니다!');
+        alert(NOT_REGISTER_TERM);
         history.replace('/');
       }
     }
@@ -351,10 +353,10 @@ export const CourseCreatePage = () => {
         ],
       });
 
-      alert('활동개설에 성공했습니다!');
+      alert(SUCCESS_REGISTER_COURSE);
       history.replace(`/course/detail/${docRef.id}`);
-    } catch (e) {
-      alert('알 수 없는 문제로 활동개설에 실패했습니다. KUCC 관리자에게 문의해주세요.');
+    } catch (error) {
+      alert(`${ERROR_ALERT} ${COMMON_ALERT} ${error}`);
       history.replace('/');
     }
   };

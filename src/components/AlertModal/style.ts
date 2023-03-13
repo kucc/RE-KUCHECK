@@ -1,18 +1,20 @@
 import styled from 'styled-components';
 
-import { RED, LINE_GRAY, GRAY, BLACK, WHITE } from '@utility/COLORS';
+import { RED, GRAY, BLACK } from '@utility/COLORS';
 
 export const StyledWrapper = styled.div`
   display: flex;
-  font-family: 'popBo';
+  font-family: 'tmoneyRe';
   flex-direction: column;
   z-index: 101;
+  gap: 10px;
 `
 
 export const StyledAlert = styled.div`
   font-size: 18px;
   text-align: center;
   padding: 7px;
+  font-family: 'tmoneyBo';
 `
 
 export const StyledAlertComment = styled.div`

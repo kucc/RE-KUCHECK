@@ -82,8 +82,12 @@ export const StyledCourseTop = styled.div`
     flex-wrap: wrap-reverse;
   }
 `;
+interface CourseTitle {
+  isEllipsisPC: boolean;
+  isEllipsisMobile: boolean;
+}
 
-export const StyledCourseTitle = styled.div<{ isEllipsis: boolean }>`
+export const StyledCourseTitle = styled.div<CourseTitle>`
   font-family: 'sdBo';
   font-size: 28px;
   color: ${BLACK};
@@ -92,9 +96,16 @@ export const StyledCourseTitle = styled.div<{ isEllipsis: boolean }>`
     font-size: 14px;
     width: 100%;
     white-space: nowrap;
+    ${props =>
+      props.isEllipsisPC &&
+      css`
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      `}
   }
   ${props =>
-    props.isEllipsis &&
+    props.isEllipsisMobile &&
     css`
       text-overflow: ellipsis;
       white-space: nowrap;
