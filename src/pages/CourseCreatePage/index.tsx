@@ -14,6 +14,10 @@ import {
   FORM_IS_NOT_FULL,
   StyledDownArrow,
   defaultUserAttendance,
+  NOT_REGISTER_TERM,
+  SUCCESS_REGISTER_COURSE,
+  ERROR_ALERT,
+  COMMON_ALERT,
 } from '@utility';
 
 import {
@@ -64,7 +68,7 @@ export const CourseCreatePage = () => {
         registerTerm: { start, end },
       } = docSnap;
       if (new Date() < start.toDate() || new Date() > end.toDate()) {
-        alert('수강 신청 기간이 아닙니다!');
+        alert(NOT_REGISTER_TERM);
         history.replace('/');
       }
     }
@@ -351,11 +355,11 @@ export const CourseCreatePage = () => {
         ],
       });
 
-      alert('활동개설에 성공했습니다!');
+      alert(SUCCESS_REGISTER_COURSE);
       history.replace(`/course/detail/${docRef.id}`);
-    } catch (e) {
-      console.log(e);
-      alert('알 수 없는 문제로 활동개설에 실패했습니다. KUCC 관리자에게 문의해주세요.');
+    } catch (error) {
+      console.log(error);
+      alert(`${ERROR_ALERT} ${COMMON_ALERT} ${error}`);
       history.replace('/');
     }
   };
