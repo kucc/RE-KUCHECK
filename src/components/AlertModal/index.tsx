@@ -44,7 +44,7 @@ export const AlertModal = ({ isPromptModalOpened, setDeleteUser }: { isPromptMod
         },
       }}>
       <StyledWrapper>
-        <StyledAlert>Delete User</StyledAlert>
+        <StyledAlert>계정 탈퇴</StyledAlert>
         <StyledAlertComment>정말 탈퇴하시겠습니까?</StyledAlertComment>
         <div style={{ display: 'flex', position: 'relative' }}>
           <StyledStick />
