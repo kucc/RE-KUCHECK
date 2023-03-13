@@ -16,6 +16,7 @@ export const Portal = ({ children, isBackgroundBlack = true, onClickBackground }
   useEffect(() => {
     ref.current = document.querySelector<HTMLElement>('#portal');
     document.body.style.overflow = 'hidden';
+
     return () => {
       document.body.style.overflow = 'visible';
     };
