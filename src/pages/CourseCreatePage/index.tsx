@@ -3,12 +3,9 @@ import { useEffect, useState } from 'react';
 import { Checkbox, Dropdown, Menu, Select, SelectProps } from 'antd';
 import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router';
-import { useRecoilState } from 'recoil';
-
 import { db } from '@config';
 import { LanguageList } from '@constants';
 import { useGetProfile, useRedirectToMain } from '@hooks';
-import { selectedLanguagesState } from '@recoil';
 import {
   CURRENT_SEMESTER,
   FORM_IS_NOT_FULL,
@@ -47,7 +44,7 @@ import {
 } from './style';
 
 export const CourseCreatePage = () => {
-  const [selectedLanguages, setSelectedLanguages] = useRecoilState(selectedLanguagesState);
+  const [selectedLanguages, setSelectedLanguages] = useState<[] | Language[]>([]);
   const [mainLanguageImg, setMainLanguageImg] = useState('Etc');
   const { user: currentUser } = useGetProfile();
   const uId = currentUser?.id;
