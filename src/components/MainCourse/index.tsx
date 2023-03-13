@@ -161,10 +161,10 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
         await updateDoc(userRef, {
           courseHistory: newCourseHistory ?? [],
         });
+        alert(SUCCESS_DROP_COURSE);
       }
 
       resetUser();
-      alert(SUCCESS_DROP_COURSE);
     } catch (error) {
       alert(`${FALIED_TO_DROP_COURSE} ${COMMON_ALERT} ${error}`);
     } finally {
