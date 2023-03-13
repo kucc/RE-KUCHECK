@@ -65,6 +65,12 @@ export const LoginForm = () => {
     alert('전송했습니다!');
   };
 
+  const onKeyPress = (e: any) => {
+    if (e.key === 'Enter') {
+      onClickLogin();
+    }
+  };
+
   function isSmallScreen(): boolean {
     if (typeof window !== 'undefined') {
       return window.innerWidth < 800;
@@ -88,6 +94,7 @@ export const LoginForm = () => {
           value={password}
           placeholder='비밀번호'
           onChange={onChange}
+          onKeyPress={onKeyPress}
         />
         <LoadingButton
           onClick={onClickLogin}

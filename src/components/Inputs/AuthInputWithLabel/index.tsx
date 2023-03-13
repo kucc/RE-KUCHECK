@@ -8,6 +8,7 @@ export const AuthInputWithLabel = ({
   value,
   onChange,
   isRequired = true,
+  onKeyPress,
 }: {
   labelTitle?: string;
   inputName?: string;
@@ -16,6 +17,7 @@ export const AuthInputWithLabel = ({
   value: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   isRequired?: boolean;
+  onKeyPress?: any;
 }) => {
   return (
     <Wrapper isLabelTitle={labelTitle}>
@@ -27,6 +29,7 @@ export const AuthInputWithLabel = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        onKeyPress={onKeyPress}
       />
     </Wrapper>
   );
