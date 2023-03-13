@@ -50,21 +50,18 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
         instaLink: instagram,
         email: email,
       });
-      const leaderData = { emoji: emoji, comment: comment, id: user.id, name: user.name };
-      const leadingCourses = user.courseHistory
-        ? user.courseHistory.filter(course => {
-            course.courseLeader.id === user.id;
-            return course;
-          })
-        : [];
-      for await (const course of leadingCourses) {
-        const courseRef = doc(db, 'courses', course.id);
-        await updateDoc(courseRef, {
-          courseLeader: {
-            ...leaderData,
-          },
-        });
-      }
+      // const leaderData = { emoji: emoji, comment: comment, id: user.id, name: user.name };
+      // const leadingCourses = user.courseHistory?.filter(course => 
+      //       course.courseLeader.id == user.id) ?? [];
+
+      // for await (const course of leadingCourses) {
+      //   const courseRef = doc(db, 'courses', course.id);
+      //   await updateDoc(courseRef, {
+      //     courseLeader: {
+      //       ...leaderData,
+      //     },
+      //   });
+      // }
       alert(PROFILE_EDIT_SUCCESS);
     },
 
