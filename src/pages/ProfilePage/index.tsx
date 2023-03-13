@@ -41,6 +41,8 @@ import {
   StyledUserInfoContainer,
   StyledUserRole,
 } from './style';
+import { useRecoilState } from 'recoil';
+import { courseTabState } from '@recoil';
 
 type CourseTab = 'past' | 'now';
 
@@ -55,7 +57,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
 
   const history = useHistory();
   const [courseSemester, setCourseSemester] = useState<Course[] | null>(null);
-  const [courseTab, setCourseTab] = useState<CourseTab>('now');
+  const [courseTab, setCourseTab] = useRecoilState(courseTabState);
   const [modal, setModal] = useState(false);
 
   useEffect(() => {
