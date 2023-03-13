@@ -404,7 +404,6 @@ export const CourseCreatePage = () => {
                 placeholder='30자 이내로 작성해주세요.'
               />
             </div>
-
             <div>
               <StyledTitleBox style={{ marginLeft: '0' }}>
                 <StyledSubTitle style={{ marginBottom: '0' }}>사용 언어</StyledSubTitle>
