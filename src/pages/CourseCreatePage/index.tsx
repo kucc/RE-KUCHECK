@@ -354,7 +354,6 @@ export const CourseCreatePage = () => {
       alert('활동개설에 성공했습니다!');
       history.replace(`/course/detail/${docRef.id}`);
     } catch (e) {
-      console.log(e);
       alert('알 수 없는 문제로 활동개설에 실패했습니다. KUCC 관리자에게 문의해주세요.');
       history.replace('/');
     }

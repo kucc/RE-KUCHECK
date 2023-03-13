@@ -26,8 +26,6 @@ export const useGetCurrentTerm = () => {
 
   const [isEnrollmentTerm, setIsEnrollmentTerm] = useState(false);
 
-  console.log('isEnrollmentTerm', isEnrollmentTerm);
-
   const fetchTerm = async () => {
     const commonInfoRef = doc(db, 'common', 'commonInfo');
     const weekInfoRef = doc(db, 'common', 'weekInfo');

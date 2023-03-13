@@ -114,7 +114,6 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
       // 세션장이면
       if (courseDoc.courseLeader.id === userId) {
         // 유저 history에서 삭제
-        console.log(courseDoc.courseMember);
         for await (const id of courseDoc.courseMember) {
           const targetUserRef = doc(db, 'users', id);
           const targetUserDoc = (await getDoc(targetUserRef)).data() as User;
@@ -125,7 +124,6 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
             courseHistory: newCourseHistory,
           });
         }
-        console.log('delete!');
         await deleteDoc(doc(db, 'courses', courseId));
       } else {
         const newCourseHistory = courseHistory?.filter(myCourse => myCourse.id !== courseId);

@@ -53,7 +53,6 @@ export const TimeTable = ({
       } else if (!editable) {
         return <ColorTd style={{ backgroundColor: 'rgb(211, 211, 211)' }} disabled key={key} />;
       } else {
-        console.log('here1');
         return <td key={key} />;
       }
     });
