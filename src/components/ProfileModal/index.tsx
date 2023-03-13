@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteUser, getAuth } from 'firebase/auth';
+import { deleteUser, getAuth, signOut } from 'firebase/auth';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import Modal from 'react-modal';
 import { useHistory } from 'react-router-dom';
@@ -85,10 +85,11 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
       await deleteDoc(deleteDocRef);
       await deleteUser(userData);
       resetUser();
+      await signOut(auth);
       alert('회원 탈퇴 되었습니다.');
       history.push(PATH.login);
     } catch (e) {
-      console.log('Error', e);
+      alert('Error' + e);
     }
   });
 
