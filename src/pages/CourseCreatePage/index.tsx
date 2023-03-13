@@ -3,18 +3,19 @@ import { useEffect, useState } from 'react';
 import { Checkbox, Dropdown, Menu, Select, SelectProps } from 'antd';
 import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router';
+
 import { db } from '@config';
 import { LanguageList } from '@constants';
 import { useGetProfile, useRedirectToMain } from '@hooks';
 import {
+  COMMON_ALERT,
   CURRENT_SEMESTER,
+  ERROR_ALERT,
   FORM_IS_NOT_FULL,
-  StyledDownArrow,
-  defaultUserAttendance,
   NOT_REGISTER_TERM,
   SUCCESS_REGISTER_COURSE,
-  ERROR_ALERT,
-  COMMON_ALERT,
+  StyledDownArrow,
+  defaultUserAttendance,
 } from '@utility';
 
 import {
@@ -355,7 +356,6 @@ export const CourseCreatePage = () => {
       alert(SUCCESS_REGISTER_COURSE);
       history.replace(`/course/detail/${docRef.id}`);
     } catch (error) {
-      console.log(error);
       alert(`${ERROR_ALERT} ${COMMON_ALERT} ${error}`);
       history.replace('/');
     }
