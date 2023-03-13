@@ -71,7 +71,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   }, [data, courseTab]);
 
   if (isLoading || isCurrentUserLoading) return <Loading />;
-  if (isError) return <div>에러에요.</div>;
+  if (isError) return <EmptyBox />;
 
   if (isCurrentUserLoading && !currentUser) {
     alert('로그인 후 이용 가능합니다.');
