@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteUser, getAuth, signOut } from 'firebase/auth';
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import Modal from 'react-modal';
 import { useHistory } from 'react-router-dom';
 
@@ -27,6 +27,7 @@ import {
   StyledWithdrawalButton,
   StyledWrapper,
 } from './style';
+import { modifyArray } from './utils';
 
 export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) => {
   const [emoji, setEmoji] = useState(user.emoji);
@@ -42,6 +43,8 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
   const updateUser = useMutation(
     async () => {
       const docRef = doc(db, 'users', user.id);
+
+      // 1. user 본인 정보 업데이트 [O]
       await updateDoc(docRef, {
         emoji: emoji,
         comment: comment,
@@ -53,25 +56,47 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
 
       const leaderData = { emoji: emoji, comment: comment, id: user.id, name: user.name };
 
+      // 2. user가 courseLeader인 course의 courseLeader 정보 업데이트 [O]
       const leadingCourses =
         user.courseHistory?.filter(course => course.courseLeader.id === user.id) ?? [];
 
       for await (const course of leadingCourses) {
-        const courseRef = doc(db, 'courses', course.id);
+        const courseId = course.id;
+        const courseRef = doc(db, 'courses', courseId);
 
-        // 1. course의 courseLeader 정보 업데이트 [O]
         await updateDoc(courseRef, {
           courseLeader: {
             ...leaderData,
           },
         });
 
-        // 2. courseMember 의 각 member - courseHistory - courseLeader 정보 업데이트
+        // 3. courseMember 의 각 member - courseHistory - courseLeader 정보 업데이트 [보류]
         // const courseData = (await getDoc(courseRef)).data() as Course;
         // for await (const memberId of courseData.courseMember) {
         //   const memberRef = doc(db, 'users', memberId);
+        //   const memberData = (await getDoc(memberRef)).data() as User;
+        //   const courseHistory = memberData.courseHistory ?? [];
+        //   courseHistory.map((course, i) => {
+        //     const newCourse = {
+        //       ...course,
+        //       courseLeader: {
+        //         ...leaderData,
+        //       }
+        //     }
+        //     if(course.id === courseId) {
+        //       // const newCourseHistory = modifyArray(courseHistory, i, newCourse);
 
+        //     }
+        //   })
+
+        //   await updateDoc(memberRef, {
+        //     courseHistory: [
+        //       ...courseHistory,
+
+        //     ]
+        //   })
         // }
+        
       }
 
       alert(PROFILE_EDIT_SUCCESS);
