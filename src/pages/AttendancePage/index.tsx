@@ -176,7 +176,6 @@ export const AttendancePage = () => {
           }
           checkAttendance(memberIndex, weekIndex, value);
         }}
-        // selectedKeys={[attendance]}
         items={Object.values(word).map(type => ({
           label: type,
           key: type,
