@@ -284,7 +284,7 @@ export const StyledDetailContainer = styled.div`
   }
 `;
 
-export const StyledDetailTitleBase = styled.span`
+export const StyledDetailTitleBase = styled.pre`
   font-size: 16px;
   font-family: 'sfPro';
   font-weight: bold;
