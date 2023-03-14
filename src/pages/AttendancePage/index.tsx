@@ -197,6 +197,7 @@ export const AttendancePage = () => {
       return <>유고결석</>;
     }
   };
+
   const isCourseLeader = course?.courseLeader.id === user?.id;
 
   if (isLoading) return <Loading />;
