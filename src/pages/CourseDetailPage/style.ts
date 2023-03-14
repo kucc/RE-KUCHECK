@@ -308,8 +308,8 @@ export const StyledStackTitle = styled(StyledDetailTitleBase)`
   margin-right: 21px;
   white-space: nowrap;
   @media (max-width: 800px) {
-    width: 90px;
-    margin-right: 16px;
+    width: auto;
+    margin-right: 26px;
   }
 `;
 

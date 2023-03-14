@@ -139,7 +139,7 @@ export const CourseIntroduce = ({
                 <StyledTitle>사용 언어 및 기술 스택</StyledTitle>
                 <StyledLine />
               </StyledStackLine>
-              <StyledBox style={{ padding: '15px' }}>
+              <StyledBox style={{ padding: '20px' }}>
                 <StyledDescription>
                   {sessionStack.map((stack, i) => (
                     <StyledDetailContainer
