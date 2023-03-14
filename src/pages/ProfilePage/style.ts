@@ -132,7 +132,7 @@ export const StyledMobileModifyButton = styled(StyledModifyButton)`
   }
 `;
 
-const StyledTextBox = styled.div`
+const StyledTextBox = styled.pre`
   border: 1.5px solid ${LINE_GRAY};
   border-radius: 18px;
   @media (max-width: 800px) {
