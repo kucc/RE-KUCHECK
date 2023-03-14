@@ -28,7 +28,7 @@ export const Footer = () => {
             <StyledTitle>Developers</StyledTitle>
             <StyledContent>
               <StyledSubContent>KUCHECKCHECK</StyledSubContent>
-              김세진 · 김채린 · 명재위 · 이희준 · 정인아
+              강태웅 · 김세진 · 김채린 · 명재위 · 이희준 · 정인아
             </StyledContent>
           </StyledRow>
           <StyledRow>
