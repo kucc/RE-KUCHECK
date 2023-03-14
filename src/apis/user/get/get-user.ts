@@ -22,13 +22,11 @@ export const getUser = async ({
   if (courseHistory.length > 0) {
     await Promise.all(
       courseHistory.map(async (course, i) => {
-        // if (course.courseLeader.emoji === undefined) {
-          const leader_id = course.courseLeader.id;
-          const docRef2 = doc(db, 'users', leader_id);
-          const docSnap2 = (await getDoc(docRef2)).data() as User;
-          course.courseLeader.emoji = docSnap2.emoji;
-        }
-      // }
+        const leader_id = course.courseLeader.id;
+        const docRef2 = doc(db, 'users', leader_id);
+        const docSnap2 = (await getDoc(docRef2)).data() as User;
+        course.courseLeader.emoji = docSnap2.emoji;
+      }
       ),
     );
   }
