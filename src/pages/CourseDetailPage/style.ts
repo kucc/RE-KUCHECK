@@ -230,6 +230,7 @@ export const StyledDescription = styled.div`
   @media (max-width: 800px) {
     gap: 1.5rem;
     font-size: 10px;
+    word-break: break-all;
   }
 `;
 
