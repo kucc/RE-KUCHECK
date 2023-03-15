@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { arrayUnion, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { arrayRemove, arrayUnion, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router-dom';
 
 import { CancelModal } from '@components';
@@ -77,12 +77,6 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
       const courseRef = doc(db, 'courses', courseId);
       const userRef = doc(db, 'users', userId);
 
-      const { courseMember: serverCourseMemeber, courseAttendance: serverCourseAttendance } = (
-        await getDoc(courseRef)
-      ).data() as Course;
-
-      const updateData = {};
-
       // course Update
       await updateDoc(courseRef, {
         courseMember: arrayUnion(userId),
@@ -98,7 +92,13 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
         newCourseMemeber.length > maxMemberNum &&
         newCourseMemeber[newCourseMemeber.length - 1] === user.id
       ) {
-        await updateDoc(courseRef, { courseMember, courseAttendance });
+        await updateDoc(courseRef, {
+          courseMember: arrayRemove(userId),
+          courseAttendance: arrayRemove({
+            id: userId,
+            attendance: defaultUserAttendance,
+          }),
+        });
         throw new Error();
       }
 
