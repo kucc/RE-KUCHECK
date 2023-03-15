@@ -80,6 +80,7 @@ export const CourseDetailPage = ({ match }: RouteComponentProps<{ id: string }>)
 
   const onSubmitEdit = async () => {
     const courseRef = doc(db, 'courses', courseId);
+
     const commonRef = doc(db, 'common', 'timeTable');
 
     await updateDoc(courseRef, {

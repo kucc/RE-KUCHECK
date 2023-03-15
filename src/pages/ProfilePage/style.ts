@@ -132,9 +132,10 @@ export const StyledMobileModifyButton = styled(StyledModifyButton)`
   }
 `;
 
-const StyledTextBox = styled.pre`
+const StyledTextBox = styled.div`
   border: 1.5px solid ${LINE_GRAY};
   border-radius: 18px;
+  white-space: pre-wrap;
   @media (max-width: 800px) {
     border: 0.8px solid ${LINE_GRAY};
   }
@@ -147,7 +148,6 @@ export const StyledUserDetailComment = styled(StyledTextBox)`
   @media (max-width: 800px) {
     padding: 14px 30px;
     font-size: 10px;
-    text-align: center;
   }
 `;
 
