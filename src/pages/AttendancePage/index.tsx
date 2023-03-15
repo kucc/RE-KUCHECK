@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Dropdown, Menu } from 'antd';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { useHistory } from 'react-router';
 
 import { EmptyBox, Loading } from '@components';
@@ -22,6 +22,7 @@ import {
   StyledDeposit,
   StyledDepositBox,
   StyledDropDown,
+  StyledDropDownList,
   StyledEmojiBackground,
   StyledLayout,
   StyledMember,
@@ -83,16 +84,24 @@ export const AttendancePage = () => {
     setIsLoading(false);
   };
 
-  const fetchMyCourses = async (user: User) => {
-    const newMyCourses = user.courseHistory
-      ? user.courseHistory.filter(course => course.semester === currentSemester)
-      : [];
-    if (newMyCourses.length) {
-      setSelectedCourseId(newMyCourses[0].id);
+  const fetchAllCourses = async (currentSemester: string) => {
+    const q = query(collection(db, 'courses'), where('semester', '==', currentSemester));
+
+    const querySnapshot = await getDocs(q);
+    const newCourses = [];
+
+    for (const doc of querySnapshot.docs) {
+      const docData = doc.data() as Course;
+
+      newCourses.push({ ...docData, id: doc.id });
+    }
+
+    if (newCourses.length) {
+      setSelectedCourseId(newCourses[0].id);
     } else {
       setIsEmpty(true);
     }
-    setMyCourses(newMyCourses);
+    setMyCourses(newCourses);
   };
 
   const submitUpdate = async () => {
@@ -113,10 +122,10 @@ export const AttendancePage = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      fetchMyCourses(user);
+    if (currentSemester) {
+      fetchAllCourses(currentSemester);
     }
-  }, [user]);
+  }, [currentSemester]);
 
   useEffect(() => {
     if (selectedCourseId.length) {
@@ -140,7 +149,9 @@ export const AttendancePage = () => {
   };
 
   const CoursesMenu = (
-    <Menu style={{ overflowY: 'auto', height: '150px' }}>
+    <StyledDropDownList>
+
+    <Menu>
       {myCourses &&
         myCourses.map(course => {
           return (
@@ -149,13 +160,14 @@ export const AttendancePage = () => {
               onClick={() => {
                 setSelectedCourseId(course.id);
               }}>
-              <div style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'auto' }}>
+              <div>
                 {course.courseName}
               </div>
             </Menu.Item>
           );
         })}
     </Menu>
+        </StyledDropDownList>
   );
 
   const AttendanceMenu = (memberIndex: number, weekIndex: number) => {
