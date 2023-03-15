@@ -59,6 +59,11 @@ export const StyledDropDown = styled.div`
   text-align: center;
   cursor: pointer;
   margin-right: 10px;
+  div {
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
   @media (max-width: 800px) {
     margin: 0;
     font-size: 10px;
