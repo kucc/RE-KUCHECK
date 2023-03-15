@@ -2,7 +2,7 @@
 
 https://lms.kucc.co.kr/
 
-### Creaters 바닐라 자바칩
+### Creators 바닐라 자바칩
 
 곽나경 김채린 박가영 정인아
 
