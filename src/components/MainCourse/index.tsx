@@ -190,17 +190,21 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
   const checkIsCourseFulled = async () => {
     if (!user || isLoading) return;
 
+    const courseRef = doc(db, 'courses', courseId);
+    const userRef = doc(db, 'users', user.id);
+    const { courseMember: serverCourseMember } = (await getDoc(courseRef)).data() as Course;
+
+    const { courseHistory: serverCourseHistory } = (await getDoc(userRef)).data() as User;
+
     const isError =
-      !courseMember.includes(user.id) &&
-      user.courseHistory?.some(myCourse => myCourse.id === courseId);
+      !serverCourseMember.includes(user.id) &&
+      serverCourseHistory?.some(myCourse => myCourse.id === courseId);
 
     if (!isError) return;
-    const { id: userId, courseHistory } = user;
 
     try {
       setIsLoading(true);
-      const userRef = doc(db, 'users', userId);
-      const newCourseHistory = courseHistory?.filter(myCourse => myCourse.id !== courseId);
+      const newCourseHistory = serverCourseHistory?.filter(myCourse => myCourse.id !== courseId);
 
       // user Update
       await updateDoc(userRef, {
@@ -276,6 +280,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
           onClick={async e => {
             e.stopPropagation();
             await onClickApplication();
+            await checkIsCourseFulled();
           }}>
           {<>신청하기&nbsp;</>}
           {courseMember.length}/{maxMemberNum}
