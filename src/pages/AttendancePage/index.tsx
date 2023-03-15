@@ -22,6 +22,7 @@ import {
   StyledDeposit,
   StyledDepositBox,
   StyledDropDown,
+  StyledDropDownList,
   StyledEmojiBackground,
   StyledLayout,
   StyledMember,
@@ -148,22 +149,24 @@ export const AttendancePage = () => {
   };
 
   const CoursesMenu = (
-    <Menu style={{ overflowY: 'auto', height: '150px' }}>
-      {myCourses &&
-        myCourses.map(course => {
-          return (
-            <Menu.Item
-              key={course.id}
-              onClick={() => {
-                setSelectedCourseId(course.id);
-              }}>
-              <div style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'auto' }}>
-                {course.courseName}
-              </div>
-            </Menu.Item>
-          );
-        })}
-    </Menu>
+    <StyledDropDownList>
+      <Menu>
+        {myCourses &&
+          myCourses.map(course => {
+            return (
+              <Menu.Item
+                key={course.id}
+                onClick={() => {
+                  setSelectedCourseId(course.id);
+                }}>
+                <div>
+                  {course.courseName}
+                </div>
+              </Menu.Item>
+            );
+          })}
+      </Menu>
+    </StyledDropDownList>
   );
 
   const AttendanceMenu = (memberIndex: number, weekIndex: number) => {
