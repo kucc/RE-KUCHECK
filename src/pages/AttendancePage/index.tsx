@@ -59,7 +59,6 @@ export const AttendancePage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [membersData, setMembersData] = useState<MemberData[]>([]);
-  const [isEmpty, setIsEmpty] = useState(false);
 
   const { resultText } = useGetCurrentTerm();
 
@@ -86,24 +85,27 @@ export const AttendancePage = () => {
     setIsLoading(false);
   };
 
-  const fetchMyCourses = async (currentSemester: string) => {
+  const fetchAllCourses = async (currentSemester: string) => {
     const q = query(collection(db, 'courses'), where('semester', '==', currentSemester));
 
     const querySnapshot = await getDocs(q);
-    const newMyCourses = [];
+    const newCourses = [];
+    const myCoursesId = [];
 
     for (const doc of querySnapshot.docs) {
       const docData = doc.data() as Course;
-
-      newMyCourses.push({ ...docData, id: doc.id });
+      if(docData.courseMember.includes(user?.id ?? '')) {
+        myCoursesId.push(doc.id);
+      }
+      newCourses.push({ ...docData, id: doc.id });
     }
 
-    if (newMyCourses.length) {
-      setSelectedCourseId(newMyCourses[0].id);
+    if (myCoursesId.length) {
+      setSelectedCourseId(myCoursesId[0]);
     } else {
-      setIsEmpty(true);
+      setSelectedCourseId(newCourses[0].id);
     }
-    setMyCourses(newMyCourses);
+    setMyCourses(newCourses);
   };
 
   const submitUpdate = async () => {
@@ -125,7 +127,7 @@ export const AttendancePage = () => {
 
   useEffect(() => {
     if (currentSemester) {
-      fetchMyCourses(currentSemester);
+      fetchAllCourses(currentSemester);
     }
   }, [currentSemester]);
 
@@ -217,8 +219,6 @@ export const AttendancePage = () => {
 
   return (
     <StyledLayout>
-      {isEmpty && <EmptyBox />}
-      {!isEmpty && (
         <>
           <StyledTopWrapper>
             <StyledMenu>
@@ -320,7 +320,6 @@ export const AttendancePage = () => {
             })}
           </StyledCourseMembersWrapper>
         </>
-      )}
     </StyledLayout>
   );
 };
