@@ -22,7 +22,6 @@ import {
   StyledDeposit,
   StyledDepositBox,
   StyledDropDown,
-  StyledDropDownList,
   StyledEmojiBackground,
   StyledLayout,
   StyledMember,
@@ -84,24 +83,24 @@ export const AttendancePage = () => {
     setIsLoading(false);
   };
 
-  const fetchAllCourses = async (currentSemester: string) => {
+  const fetchMyCourses = async (currentSemester: string) => {
     const q = query(collection(db, 'courses'), where('semester', '==', currentSemester));
 
     const querySnapshot = await getDocs(q);
-    const newCourses = [];
+    const newMyCourses = [];
 
     for (const doc of querySnapshot.docs) {
       const docData = doc.data() as Course;
 
-      newCourses.push({ ...docData, id: doc.id });
+      newMyCourses.push({ ...docData, id: doc.id });
     }
 
-    if (newCourses.length) {
-      setSelectedCourseId(newCourses[0].id);
+    if (newMyCourses.length) {
+      setSelectedCourseId(newMyCourses[0].id);
     } else {
       setIsEmpty(true);
     }
-    setMyCourses(newCourses);
+    setMyCourses(newMyCourses);
   };
 
   const submitUpdate = async () => {
@@ -123,7 +122,7 @@ export const AttendancePage = () => {
 
   useEffect(() => {
     if (currentSemester) {
-      fetchAllCourses(currentSemester);
+      fetchMyCourses(currentSemester);
     }
   }, [currentSemester]);
 
@@ -149,9 +148,7 @@ export const AttendancePage = () => {
   };
 
   const CoursesMenu = (
-    <StyledDropDownList>
-
-    <Menu>
+    <Menu style={{ overflowY: 'auto', height: '150px' }}>
       {myCourses &&
         myCourses.map(course => {
           return (
@@ -160,14 +157,13 @@ export const AttendancePage = () => {
               onClick={() => {
                 setSelectedCourseId(course.id);
               }}>
-              <div>
+              <div style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'auto' }}>
                 {course.courseName}
               </div>
             </Menu.Item>
           );
         })}
     </Menu>
-        </StyledDropDownList>
   );
 
   const AttendanceMenu = (memberIndex: number, weekIndex: number) => {
