@@ -251,12 +251,6 @@ export const CourseIntroduce = ({
                       />
                     ) : (
                       <StyledDetailDesc>
-                        {/* {curri.split('\n').map((comment: string, i: number) => (
-                          <div key={i}>
-                            {comment}
-                            <br />
-                          </div>
-                        ))} */}
                         {curri}
                       </StyledDetailDesc>
                     )}

@@ -109,7 +109,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
           <StyledUserContainer>
             <StyledName>
               {data.name}
-              <StyledUserRole>{data.role}</StyledUserRole>
+              {/* <StyledUserRole>{data.role}</StyledUserRole> */}
             </StyledName>
             <StyledComment>{data.comment}</StyledComment>
             <StyledSocialContainer>
