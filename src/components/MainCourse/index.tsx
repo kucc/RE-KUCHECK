@@ -6,22 +6,20 @@ import { useHistory } from 'react-router-dom';
 import { CancelModal } from '@components';
 
 import { db } from '@config';
-import { useGetCurrentTerm } from '@hooks';
+import { useGetEnrollmentTerm } from '@hooks';
 import { useGetProfile } from '@hooks/use-get-profile';
 import {
   BLACK,
   COMMON_ALERT,
   COURSE_MEMBER_ALREADY_FULLED,
-  CURRENT_SEMESTER,
-  ERROR_ALERT,
+  CURRENT_SEMESTER, defaultUserAttendance, ERROR_ALERT,
   FAILED_TO_APPLY_COURSE,
   FALIED_TO_DROP_COURSE,
   GRAY,
   RED,
   SUCCESS_APPLIED_COURSE,
   SUCCESS_DELETE_COURSE,
-  SUCCESS_DROP_COURSE,
-  defaultUserAttendance,
+  SUCCESS_DROP_COURSE
 } from '@utility';
 
 import { Loading } from '..';
@@ -41,13 +39,13 @@ import {
   StyledLeader,
   StyledLeaderName,
   StyledLeaderType,
-  StyledMainCourseContainer,
+  StyledMainCourseContainer
 } from './style';
 
 export const MainCourse = ({ course, profileId }: { course: Course; profileId?: string }) => {
   const history = useHistory();
 
-  const { isEnrollmentTerm } = useGetCurrentTerm();
+  const { isEnrollmentTerm } = useGetEnrollmentTerm();
 
   const { user, resetUser } = useGetProfile();
   const [isLoading, setIsLoading] = useState(false);
@@ -90,6 +88,16 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
       // course Update
       await updateDoc(courseRef, updateData);
 
+      const docRef = doc(db, 'courses', courseId);
+      const { courseMember: newCourseMemeber } = (await getDoc(docRef)).data() as Course;
+
+      if (
+        newCourseMemeber.length >= maxMemberNum &&
+        newCourseMemeber[newCourseMemeber.length - 1] === user.id
+      ) {
+        throw new Error();
+      }
+
       // user Update
       await updateDoc(userRef, {
         courseHistory: [
@@ -110,7 +118,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
       resetUser();
       alert(SUCCESS_APPLIED_COURSE);
     } catch (error) {
-      alert(`${FAILED_TO_APPLY_COURSE} ${COMMON_ALERT} ${error}`);
+      alert(`${FAILED_TO_APPLY_COURSE}`);
     } finally {
       setIsLoading(false);
     }
@@ -258,10 +266,9 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
       return (
         <StyledCourseButton
           bgColor={RED}
-          onClick={e => {
+          onClick={async e => {
             e.stopPropagation();
-            checkIsCourseFulled();
-            onClickApplication();
+            await onClickApplication();
           }}>
           {<>신청하기&nbsp;</>}
           {courseMember.length}/{maxMemberNum}
