@@ -313,7 +313,7 @@ export const AttendancePage = () => {
                     </StyledAttendanceBox>
                   ))}
                   <StyledDepositBox editMode={isEditMode}>
-                    {course?.courseType === (2 || 3) ? '' : deposit}
+                    {course?.courseType === 1 ? deposit : ''}
                   </StyledDepositBox>
                 </StyledAttendanceList>
               </StyledAttendanceContainer>
