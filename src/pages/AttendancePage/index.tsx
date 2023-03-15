@@ -4,7 +4,7 @@ import { Dropdown, Menu } from 'antd';
 import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { useHistory } from 'react-router';
 
-import { EmptyBox, Loading } from '@components';
+import { Loading } from '@components';
 import { StyledHighLightText } from '@pages/MainPage/MainTopContainer/style';
 
 import { db } from '@config';
@@ -66,6 +66,7 @@ export const AttendancePage = () => {
 
   const fetchCourse = async (courseId: string) => {
     setIsLoading(true);
+
     const docRef = doc(db, 'courses', courseId);
     const docSnap = (await getDoc(docRef)).data() as Course;
     const newCourse = { ...docSnap, id: courseId };
@@ -94,7 +95,7 @@ export const AttendancePage = () => {
 
     for (const doc of querySnapshot.docs) {
       const docData = doc.data() as Course;
-      if(docData.courseMember.includes(user?.id ?? '')) {
+      if (docData.courseMember.includes(user?.id ?? '')) {
         myCoursesId.push(doc.id);
       }
       newCourses.push({ ...docData, id: doc.id });
@@ -219,107 +220,107 @@ export const AttendancePage = () => {
 
   return (
     <StyledLayout>
-        <>
-          <StyledTopWrapper>
-            <StyledMenu>
-              <div>출결관리</div>
-              <StyledTermText>
-                지금은 <StyledHighLightText>{resultText}</StyledHighLightText>입니다.
-              </StyledTermText>
-            </StyledMenu>
-            <StyledButtonWrapper>
-              {isCourseLeader &&
-                (isEditMode ? (
-                  <StyledAttendanceButton onClick={submitUpdate} style={{ backgroundColor: RED }}>
-                    완료
-                  </StyledAttendanceButton>
-                ) : (
-                  <StyledAttendanceButton onClick={() => setIsEditMode(prev => !prev)}>
-                    수정하기
-                  </StyledAttendanceButton>
-                ))}
-              <StyledDropDown>
-                <Dropdown trigger={['click']} overlay={CoursesMenu} placement='bottomLeft'>
-                  <div>
-                    <StyledDownArrow width='5' />
-                    <span>{course?.courseName}</span>
-                  </div>
-                </Dropdown>
-              </StyledDropDown>
-            </StyledButtonWrapper>
-          </StyledTopWrapper>
-          <StyledTitleWrapper>
-            <StyledUserWrapper>
-              <div>이모지</div>
-              <div>이름 / 역할</div>
-            </StyledUserWrapper>
-            <StyledWeekWrapper>
-              <div>1주차</div>
-              <div>2주차</div>
-              <div>3주차</div>
-              <div>4주차</div>
-              <div>5주차</div>
-              <div>6주차</div>
-              <div>7주차</div>
-              <div>8주차</div>
-            </StyledWeekWrapper>
-            <StyledDeposit>
-              <div>보증금</div>
-            </StyledDeposit>
-          </StyledTitleWrapper>
+      <>
+        <StyledTopWrapper>
+          <StyledMenu>
+            <div>출결관리</div>
+            <StyledTermText>
+              지금은 <StyledHighLightText>{resultText}</StyledHighLightText>입니다.
+            </StyledTermText>
+          </StyledMenu>
+          <StyledButtonWrapper>
+            {isCourseLeader &&
+              (isEditMode ? (
+                <StyledAttendanceButton onClick={submitUpdate} style={{ backgroundColor: RED }}>
+                  완료
+                </StyledAttendanceButton>
+              ) : (
+                <StyledAttendanceButton onClick={() => setIsEditMode(prev => !prev)}>
+                  수정하기
+                </StyledAttendanceButton>
+              ))}
+            <StyledDropDown>
+              <Dropdown trigger={['click']} overlay={CoursesMenu} placement='bottomLeft'>
+                <div>
+                  <StyledDownArrow width='5' />
+                  <span>{course?.courseName}</span>
+                </div>
+              </Dropdown>
+            </StyledDropDown>
+          </StyledButtonWrapper>
+        </StyledTopWrapper>
+        <StyledTitleWrapper>
+          <StyledUserWrapper>
+            <div>이모지</div>
+            <div>이름 / 역할</div>
+          </StyledUserWrapper>
+          <StyledWeekWrapper>
+            <div>1주차</div>
+            <div>2주차</div>
+            <div>3주차</div>
+            <div>4주차</div>
+            <div>5주차</div>
+            <div>6주차</div>
+            <div>7주차</div>
+            <div>8주차</div>
+          </StyledWeekWrapper>
+          <StyledDeposit>
+            <div>보증금</div>
+          </StyledDeposit>
+        </StyledTitleWrapper>
 
-          <StyledCourseMembersWrapper>
-            {membersData.map((memberData: MemberData, memberIndex: number) => {
-              const { id, attendance, name, emoji, deposit } = memberData;
-              const isLeader = course?.courseLeader.id === memberData.id;
-              return (
-                <StyledAttendanceContainer key={memberIndex}>
-                  <StyledMember>
-                    <StyledEmojiBackground>{emoji}</StyledEmojiBackground>
-                    <StyledProfileWrapper onClick={() => history.replace(`/profile/${id}`)}>
-                      <StyledMemberName>
-                        {name}
-                        {(isLeader && <StyledMemberType>팀장</StyledMemberType>) || (
-                          <StyledMemberType>팀원</StyledMemberType>
-                        )}
-                      </StyledMemberName>
-                      <StyledProfileLink onClick={() => history.replace(`/profile/${id}`)}>
-                        프로필 보러가기 {'>'}
-                      </StyledProfileLink>
-                    </StyledProfileWrapper>
-                  </StyledMember>
-                  <StyledAttendanceList>
-                    {attendance.map((week: number, weekIndex: number) => (
-                      <StyledAttendanceBox key={weekIndex} editMode={isEditMode}>
-                        {isEditMode ? (
-                          <Dropdown
-                            trigger={['click']}
-                            overlay={AttendanceMenu(memberIndex, weekIndex)}
-                            placement='bottomLeft'>
-                            <div>
-                              <StyledAttendanceState state={week}>
-                                {drawAttendance(week)}
-                              </StyledAttendanceState>
-                            </div>
-                          </Dropdown>
-                        ) : (
+        <StyledCourseMembersWrapper>
+          {membersData.map((memberData: MemberData, memberIndex: number) => {
+            const { id, attendance, name, emoji, deposit } = memberData;
+            const isLeader = course?.courseLeader.id === memberData.id;
+            return (
+              <StyledAttendanceContainer key={memberIndex}>
+                <StyledMember>
+                  <StyledEmojiBackground>{emoji}</StyledEmojiBackground>
+                  <StyledProfileWrapper onClick={() => history.replace(`/profile/${id}`)}>
+                    <StyledMemberName>
+                      {name}
+                      {(isLeader && <StyledMemberType>팀장</StyledMemberType>) || (
+                        <StyledMemberType>팀원</StyledMemberType>
+                      )}
+                    </StyledMemberName>
+                    <StyledProfileLink onClick={() => history.replace(`/profile/${id}`)}>
+                      프로필 보러가기 {'>'}
+                    </StyledProfileLink>
+                  </StyledProfileWrapper>
+                </StyledMember>
+                <StyledAttendanceList>
+                  {attendance.map((week: number, weekIndex: number) => (
+                    <StyledAttendanceBox key={weekIndex} editMode={isEditMode}>
+                      {isEditMode ? (
+                        <Dropdown
+                          trigger={['click']}
+                          overlay={AttendanceMenu(memberIndex, weekIndex)}
+                          placement='bottomLeft'>
                           <div>
                             <StyledAttendanceState state={week}>
                               {drawAttendance(week)}
                             </StyledAttendanceState>
                           </div>
-                        )}
-                      </StyledAttendanceBox>
-                    ))}
-                    <StyledDepositBox editMode={isEditMode}>
-                      {course?.courseType === (2 || 3) ? '' : deposit}
-                    </StyledDepositBox>
-                  </StyledAttendanceList>
-                </StyledAttendanceContainer>
-              );
-            })}
-          </StyledCourseMembersWrapper>
-        </>
+                        </Dropdown>
+                      ) : (
+                        <div>
+                          <StyledAttendanceState state={week}>
+                            {drawAttendance(week)}
+                          </StyledAttendanceState>
+                        </div>
+                      )}
+                    </StyledAttendanceBox>
+                  ))}
+                  <StyledDepositBox editMode={isEditMode}>
+                    {course?.courseType === (2 || 3) ? '' : deposit}
+                  </StyledDepositBox>
+                </StyledAttendanceList>
+              </StyledAttendanceContainer>
+            );
+          })}
+        </StyledCourseMembersWrapper>
+      </>
     </StyledLayout>
   );
 };
