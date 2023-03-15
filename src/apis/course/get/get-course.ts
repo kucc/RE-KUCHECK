@@ -9,5 +9,6 @@ export const getCourse = async ({
   const [, id] = queryKey;
   const docRef = doc(db, 'courses', id);
   const docSnap = (await getDoc(docRef)).data() as Course;
+
   return { ...docSnap, id };
 };
