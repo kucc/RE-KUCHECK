@@ -232,7 +232,6 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
           disabled={true}
           onClick={e => {
             e.stopPropagation();
-            onClickApplication();
           }}>
           수강중 {courseMember.length}/{maxMemberNum}
         </StyledCourseButton>
