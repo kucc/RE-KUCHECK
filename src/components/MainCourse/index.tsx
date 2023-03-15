@@ -77,24 +77,28 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
       const courseRef = doc(db, 'courses', courseId);
       const userRef = doc(db, 'users', userId);
 
+      const { courseMember: serverCourseMemeber, courseAttendance: serverCourseAttendance } = (
+        await getDoc(courseRef)
+      ).data() as Course;
+
       const updateData = {
-        courseMember: [...courseMember, userId],
+        courseMember: [...serverCourseMemeber, userId],
         courseAttendance: [
-          ...courseAttendance,
+          ...serverCourseAttendance,
           {
             id: userId,
             attendance: defaultUserAttendance,
           },
         ],
       };
+
       // course Update
       await updateDoc(courseRef, updateData);
 
-      const docRef = doc(db, 'courses', courseId);
-      const { courseMember: newCourseMemeber } = (await getDoc(docRef)).data() as Course;
+      const { courseMember: newCourseMemeber } = (await getDoc(courseRef)).data() as Course;
 
       if (
-        newCourseMemeber.length >= maxMemberNum &&
+        newCourseMemeber.length > maxMemberNum &&
         newCourseMemeber[newCourseMemeber.length - 1] === user.id
       ) {
         await updateDoc(courseRef, { courseMember, courseAttendance });
