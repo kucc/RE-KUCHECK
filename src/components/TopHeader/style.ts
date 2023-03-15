@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { BLACK, RED } from '@utility';
 
 export const StyledTopHeaderContainer = styled.div`
-  margin-left: calc(50% - 50vw);
+  margin-left: auto;
+  margin-right: auto;
   height: 84px;
   border-top: 8px solid ${RED};
   background-color: white;
@@ -30,7 +31,6 @@ export const StyledTopHeader = styled.div`
 `;
 
 export const StyledMainLogo = styled.img`
-  position: absolute;
   left: 0;
   width: 103px;
   height: 103px;
