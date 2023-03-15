@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Dropdown, Menu } from 'antd';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { useHistory } from 'react-router';
 
 import { EmptyBox, Loading } from '@components';
@@ -83,10 +83,18 @@ export const AttendancePage = () => {
     setIsLoading(false);
   };
 
-  const fetchMyCourses = async (user: User) => {
-    const newMyCourses = user.courseHistory
-      ? user.courseHistory.filter(course => course.semester === currentSemester)
-      : [];
+  const fetchMyCourses = async (currentSemester: string) => {
+    const q = query(collection(db, 'courses'), where('semester', '==', currentSemester));
+
+    const querySnapshot = await getDocs(q);
+    const newMyCourses = [];
+
+    for (const doc of querySnapshot.docs) {
+      const docData = doc.data() as Course;
+
+      newMyCourses.push({ ...docData, id: doc.id });
+    }
+
     if (newMyCourses.length) {
       setSelectedCourseId(newMyCourses[0].id);
     } else {
@@ -113,10 +121,10 @@ export const AttendancePage = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      fetchMyCourses(user);
+    if (currentSemester) {
+      fetchMyCourses(currentSemester);
     }
-  }, [user]);
+  }, [currentSemester]);
 
   useEffect(() => {
     if (selectedCourseId.length) {
