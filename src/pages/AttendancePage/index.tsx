@@ -19,6 +19,7 @@ import {
   StyledAttendanceState,
   StyledButtonWrapper,
   StyledCourseMembersWrapper,
+  StyledCourseName,
   StyledDeposit,
   StyledDepositBox,
   StyledDropDown,
@@ -159,9 +160,9 @@ export const AttendancePage = () => {
                 onClick={() => {
                   setSelectedCourseId(course.id);
                 }}>
-                <div>
+                <StyledCourseName myCourse={course.courseMember.includes(user?.id ?? '')}>
                   {course.courseName}
-                </div>
+                </StyledCourseName>
               </Menu.Item>
             );
           })}
@@ -274,7 +275,7 @@ export const AttendancePage = () => {
                 <StyledAttendanceContainer key={memberIndex}>
                   <StyledMember>
                     <StyledEmojiBackground>{emoji}</StyledEmojiBackground>
-                    <StyledProfileWrapper>
+                    <StyledProfileWrapper onClick={() => history.replace(`/profile/${id}`)}>
                       <StyledMemberName>
                         {name}
                         {(isLeader && <StyledMemberType>팀장</StyledMemberType>) || (

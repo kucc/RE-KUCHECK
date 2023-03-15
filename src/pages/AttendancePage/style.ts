@@ -59,11 +59,6 @@ export const StyledDropDown = styled.div`
   text-align: center;
   cursor: pointer;
   margin-right: 10px;
-  div {
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-  }
   @media (max-width: 800px) {
     margin: 0;
     font-size: 10px;
@@ -93,16 +88,20 @@ export const StyledDropDown = styled.div`
   }
 `;
 
+export const StyledCourseName = styled.div`
+  color: ${({ myCourse }: { myCourse: boolean }) => (myCourse === true ? RED : BLACK)};
+`;
+
 export const StyledDropDownList = styled.div`
   .ant-dropdown-menu {
     overflow-y: auto;
     height: 300px;
     @media (max-width: 800px) {
-      width: 300px;
+      width: 200px;
       height: 250px;
     }
   }
-`
+`;
 
 export const StyledAttendanceButton = styled.button`
   font-family: 'sdBo';
