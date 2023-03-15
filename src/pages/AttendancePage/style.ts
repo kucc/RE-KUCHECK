@@ -51,6 +51,7 @@ export const StyledButtonWrapper = styled.div`
 
 export const StyledDropDown = styled.div`
   width: 160px;
+  height: 50px;
   border-radius: 45px;
   border: 1.5px solid ${GRAY};
   height: fit-content;
@@ -58,6 +59,11 @@ export const StyledDropDown = styled.div`
   text-align: center;
   cursor: pointer;
   margin-right: 10px;
+  div {
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
   @media (max-width: 800px) {
     margin: 0;
     font-size: 10px;
@@ -86,6 +92,17 @@ export const StyledDropDown = styled.div`
     order: 1;
   }
 `;
+
+export const StyledDropDownList = styled.div`
+  .ant-dropdown-menu {
+    overflow-y: auto;
+    height: 300px;
+    @media (max-width: 800px) {
+      width: 300px;
+      height: 250px;
+    }
+  }
+`
 
 export const StyledAttendanceButton = styled.button`
   font-family: 'sdBo';
