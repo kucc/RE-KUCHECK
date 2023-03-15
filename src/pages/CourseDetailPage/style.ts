@@ -208,7 +208,7 @@ export const StyledDescBox = styled.span`
   }
 `;
 
-export const StyledBox = styled.div`
+export const StyledBox = styled.pre`
   margin-top: 5px;
   padding: 30px;
   border-radius: 10px;
@@ -285,7 +285,7 @@ export const StyledDetailContainer = styled.div`
   }
 `;
 
-export const StyledDetailTitleBase = styled.pre`
+export const StyledDetailTitleBase = styled.div`
   font-size: 16px;
   font-family: 'sfPro';
   font-weight: bold;
