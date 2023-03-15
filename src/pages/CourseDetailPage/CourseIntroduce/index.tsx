@@ -250,7 +250,9 @@ export const CourseIntroduce = ({
                         }
                       />
                     ) : (
-                      <StyledDetailDesc>{curri}</StyledDetailDesc>
+                      <StyledDetailDesc>
+                        {curri}
+                      </StyledDetailDesc>
                     )}
                   </StyledDetailContainer>
                 ))}
