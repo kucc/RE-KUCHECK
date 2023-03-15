@@ -208,11 +208,12 @@ export const StyledDescBox = styled.span`
   }
 `;
 
-export const StyledBox = styled.pre`
+export const StyledBox = styled.div`
   margin-top: 5px;
   padding: 30px;
   border-radius: 10px;
   border: solid 1.5px rgb(222, 222, 222);
+  white-space: pre-wrap;
   font-size: 16px;
   @media (max-width: 800px) {
     padding: 20px;
