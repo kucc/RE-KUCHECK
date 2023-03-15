@@ -52,6 +52,7 @@ export const AttendancePage = () => {
   const { user } = useGetProfile();
   const history = useHistory();
   const { currentSemester } = useGetSemester();
+
   const [selectedCourseId, setSelectedCourseId] = useState('');
   const [myCourses, setMyCourses] = useState<Course[]>([]);
   const [course, setCourse] = useState<Course | null>(null);
