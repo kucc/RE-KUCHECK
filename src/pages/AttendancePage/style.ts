@@ -42,10 +42,11 @@ export const StyledButtonWrapper = styled.div`
   display: flex;
   gap: 16px;
   @media (max-width: 800px) {
-    position: fixed;
-    right: 10px;
+    position: absolute;
     gap: 8px;
+    right: 10px;
     margin-top: 20px;
+    margin-right: 10px;
   }
 `;
 
@@ -63,6 +64,7 @@ export const StyledDropDown = styled.div`
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
+    padding-left: 3px;
   }
   @media (max-width: 800px) {
     margin: 0;
