@@ -12,14 +12,16 @@ import {
   BLACK,
   COMMON_ALERT,
   COURSE_MEMBER_ALREADY_FULLED,
-  CURRENT_SEMESTER, defaultUserAttendance, ERROR_ALERT,
+  CURRENT_SEMESTER,
+  ERROR_ALERT,
   FAILED_TO_APPLY_COURSE,
   FALIED_TO_DROP_COURSE,
   GRAY,
   RED,
   SUCCESS_APPLIED_COURSE,
   SUCCESS_DELETE_COURSE,
-  SUCCESS_DROP_COURSE
+  SUCCESS_DROP_COURSE,
+  defaultUserAttendance,
 } from '@utility';
 
 import { Loading } from '..';
@@ -39,7 +41,7 @@ import {
   StyledLeader,
   StyledLeaderName,
   StyledLeaderType,
-  StyledMainCourseContainer
+  StyledMainCourseContainer,
 } from './style';
 
 export const MainCourse = ({ course, profileId }: { course: Course; profileId?: string }) => {
@@ -95,6 +97,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
         newCourseMemeber.length >= maxMemberNum &&
         newCourseMemeber[newCourseMemeber.length - 1] === user.id
       ) {
+        await updateDoc(courseRef, { courseMember, courseAttendance });
         throw new Error();
       }
 
