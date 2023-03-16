@@ -5,15 +5,14 @@ import { useRecoilState } from 'recoil';
 // import { useSelector } from "react-redux";
 import { EmptyBox, MainCourse } from '@components';
 
-import { searchLanguageState, searchQueryState } from '@recoil';
+import { courseTabState, searchLanguageState, searchQueryState } from '@recoil';
 import { StyledCourseTab, StyledTab, StyledTabLine, StyledTabRightLine, StyledTabText } from '@utility/COMMON_STYLE';
 
 import { StyledCourseContainer } from './style';
 
 export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) => {
-  const [courseTab, setCourseTab] = useState(0);
+  const [courseTab, setCourseTab] = useRecoilState(courseTabState);
   const [courseList, setCourseList] = useState<Course[]>([]);
-
   const [searchQuery] = useRecoilState(searchQueryState);
   const [searchLanguage] = useRecoilState(searchLanguageState);
 

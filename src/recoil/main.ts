@@ -14,3 +14,8 @@ export const currentSemesterState = atom<string | null>({
   key: 'currentSemesterState',
   default: null,
 });
+
+export const courseTabState = atom<number>({
+  key: 'courseTab',
+  default: 0,
+})
