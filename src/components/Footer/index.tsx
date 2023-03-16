@@ -40,8 +40,8 @@ export const Footer = () => {
           </StyledRow>
           <StyledRow>
             <StyledTitle>Github</StyledTitle>
-            <StyledFooterGithubLink href='https://github.com/kucc/KUCheckCheck' target='_blank'>
-              https://github.com/kucc/KUCheckCheck
+            <StyledFooterGithubLink href='https://github.com/kucc/RE-KUCHECK' target='_blank'>
+              https://github.com/kucc/RE-KUCHECK
             </StyledFooterGithubLink>
           </StyledRow>
           <StyledRow>
