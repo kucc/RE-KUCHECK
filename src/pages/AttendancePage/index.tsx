@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react';
 import { Dropdown, Menu } from 'antd';
 import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { useHistory } from 'react-router';
+import { useRecoilState } from 'recoil';
 
 import { Loading } from '@components';
 import { StyledHighLightText } from '@pages/MainPage/MainTopContainer/style';
 
 import { db } from '@config';
 import { useGetCurrentTerm, useGetProfile, useGetSemester, useRedirectToMain } from '@hooks';
+import { selectedCourseState } from '@recoil/attendance';
 import { ATTENDANCE_SUCCESS, RED, StyledDownArrow, word } from '@utility';
 
 import {
@@ -54,6 +56,7 @@ export const AttendancePage = () => {
   const { currentSemester } = useGetSemester();
 
   const [selectedCourseId, setSelectedCourseId] = useState('');
+  const [selectedCourseIndex, setSelectedCourseIndex] = useRecoilState(selectedCourseState);
   const [myCourses, setMyCourses] = useState<Course[]>([]);
   const [course, setCourse] = useState<Course | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -102,9 +105,9 @@ export const AttendancePage = () => {
     }
 
     if (myCoursesId.length) {
-      setSelectedCourseId(myCoursesId[0]);
+      setSelectedCourseId(myCoursesId[selectedCourseIndex]);
     } else {
-      setSelectedCourseId(newCourses[0].id);
+      setSelectedCourseId(newCourses[selectedCourseIndex].id);
     }
     setMyCourses(newCourses);
   };
@@ -157,11 +160,12 @@ export const AttendancePage = () => {
     <StyledDropDownList>
       <Menu>
         {myCourses &&
-          myCourses.map(course => {
+          myCourses.map((course, i) => {
             return (
               <Menu.Item
                 key={course.id}
                 onClick={() => {
+                  setSelectedCourseIndex(i);
                   setSelectedCourseId(course.id);
                 }}>
                 <StyledCourseName myCourse={course.courseMember.includes(user?.id ?? '')}>
