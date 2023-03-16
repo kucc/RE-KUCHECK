@@ -246,7 +246,7 @@ export const AttendancePage = () => {
             <StyledDropDown>
               <Dropdown trigger={['click']} overlay={CoursesMenu} placement='bottomLeft'>
                 <div>
-                  <StyledDownArrow width='5' />
+                  <StyledDownArrow width='5' style={{ marginLeft: '3px' }} />
                   <span>{course?.courseName}</span>
                 </div>
               </Dropdown>
