@@ -12,7 +12,6 @@ export const SUCCESS_DELETE_COURSE = '강의가 삭제되었습니다.';
 export const SUCCESS_DROP_COURSE = '강의가 취소되었습니다.';
 export const SUCCESS_REGISTER_COURSE = '활동개설에 성공했습니다!';
 
-
 // error message
 export const INVALID_PASSWORD = '유효하지 않은 패스워드입니다.';
 export const PASSWORD_DOSE_NOT_MATCH = '비밀번호가 일치하지 않았습니다.';
@@ -39,3 +38,4 @@ export const LOGIN_FAILURE = '로그인에 실패했습니다.';
 export const EXISTING_EMAIL = '이미 가입된 이메일입니다.\n로그인 페이지로 이동합니다.';
 export const SIGNUP_FAILURE = '회원가입에 실패했습니다.';
 export const SIGNUP_SUCCESS = '회원가입을 완료하였습니다.';
+export const ONLY_ADMIN = '관리자만 접근할 수 있습니다.';
