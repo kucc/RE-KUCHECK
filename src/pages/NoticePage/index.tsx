@@ -71,7 +71,7 @@ export const NoticePage = () => {
                   }}>
                   <span>{String(res.id).padStart(2, '0')}</span>
                   <div>{res.title}</div>
-                  <StyledBoxDate>23.03</StyledBoxDate>
+                  <StyledBoxDate>23.09</StyledBoxDate>
                 </StyledTitleWrapper>
                 <StyledBottomBar />
                 {select.includes(res.id) && (
