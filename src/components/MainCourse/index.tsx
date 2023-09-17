@@ -88,10 +88,9 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
 
       const { courseMember: newCourseMemeber } = (await getDoc(courseRef)).data() as Course;
 
-      if (
-        newCourseMemeber.length > maxMemberNum &&
-        newCourseMemeber[newCourseMemeber.length - 1] === user.id
-      ) {
+      const overflowedCourseMember = newCourseMemeber.slice(maxMemberNum);
+
+      if (newCourseMemeber.length > maxMemberNum && overflowedCourseMember.includes(userId)) {
         await updateDoc(courseRef, {
           courseMember: arrayRemove(userId),
           courseAttendance: arrayRemove({
