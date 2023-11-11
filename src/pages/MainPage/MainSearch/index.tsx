@@ -67,7 +67,7 @@ export const MainSearch = () => {
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
         />
-        <StyledMagnifyingGlassIcon src={'/img/common/magnifyingGlassIcon.svg'} />
+        <StyledMagnifyingGlassIcon src={'/img/common/magnifyingGlassIcon.svg'} aria-hidden />
       </StyledSearchContainer>
       <StyledDropDown>
         <Dropdown

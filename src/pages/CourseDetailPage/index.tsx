@@ -105,6 +105,7 @@ export const CourseDetailPage = ({ match }: RouteComponentProps<{ id: string }>)
     <MainContainer>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <StyledBackArrowWrapper
+          aria-label='뒤로가기'
           onClick={() => {
             history.goBack();
           }}>

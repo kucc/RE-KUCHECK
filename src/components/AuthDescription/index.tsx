@@ -14,6 +14,7 @@ export const AuthDescription = ({ isLogin = false }: { isLogin?: boolean }) => {
         width={93}
         height={93}
         onClick={() => history.push('/')}
+        ariaLabel='홈 화면으로 이동'
         isPointer={true}
       />
       <StyledDescriptionTopText color='red'>KUCC</StyledDescriptionTopText>

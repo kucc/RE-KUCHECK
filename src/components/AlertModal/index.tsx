@@ -50,7 +50,10 @@ export const AlertModal = ({ isPromptModalOpened, setDeleteUser }: { isPromptMod
           <StyledStick />
           <StyledAlertDetailCommentWrapper>
             <StyledWarningWrapper>
-              <StyldWarningImg src={`${process.env.PUBLIC_URL}/img/common/vector.svg`} />
+              <StyldWarningImg
+                src={`${process.env.PUBLIC_URL}/img/common/vector.svg`}
+                aria-hidden
+              />
               <StyledWarning>Warning</StyledWarning>
             </StyledWarningWrapper>
             <StyledDesc>

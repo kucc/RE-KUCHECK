@@ -311,7 +311,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
                 <StyledCourseLanguageImage
                   key={index}
                   src={`/img/icon/${res}.svg`}
-                  alt='언어 이미지'
+                  alt={`${res} 로고`}
                 />
               );
             })}

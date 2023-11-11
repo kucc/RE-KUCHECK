@@ -7,6 +7,7 @@ export const DefaultLogo = ({
   onClick,
   isPointer = false,
   style,
+  ariaLabel,
 }: {
   logoName: string;
   width: number;
@@ -14,12 +15,14 @@ export const DefaultLogo = ({
   onClick?: () => void;
   isPointer?: boolean;
   style?: CSSProperties;
+  ariaLabel?: string;
 }) => {
   return (
     <img
       onClick={onClick}
+      aria-label={ariaLabel}
       src={`/img/logo/${logoName}.svg`}
-      alt='default-logo'
+      alt='KUCC 로고'
       width={width + 'px'}
       height={height + 'px'}
       style={{ cursor: isPointer ? 'pointer' : 'default', ...style }}

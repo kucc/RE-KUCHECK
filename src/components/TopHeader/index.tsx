@@ -54,13 +54,13 @@ export const TopHeader = () => {
         <StyledTopHeader>
           <StyledMainLogo
             src={'/img/logo/type-1-3.svg'}
-            alt='logo'
+            alt='KUCC 로고'
+            aria-label='홈 화면으로 이동'
             onClick={() => history.push(PATH.main)}
           />
-          <StyledMobileHamburgerButton
-            src='/img/icon/mobileHamburger.svg'
-            onClick={handleMobileHamburger}
-          />
+          <StyledMobileHamburgerButton onClick={handleMobileHamburger} aria-label='메뉴 열기'>
+            <img src='/img/icon/mobileHamburger.svg' />
+          </StyledMobileHamburgerButton>
           <StyledLeftContainer>
             <span>
               <StyledTimeTableLink to={PATH.timeTable}>동방 시간표</StyledTimeTableLink>

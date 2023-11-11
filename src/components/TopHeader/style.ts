@@ -40,7 +40,8 @@ export const StyledMainLogo = styled.img`
   }
 `;
 
-export const StyledMobileHamburgerButton = styled.img`
+export const StyledMobileHamburgerButton = styled.button`
+  all: unset;
   display: none;
   cursor: pointer;
   @media (max-width: 800px) {

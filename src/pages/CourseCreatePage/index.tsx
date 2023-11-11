@@ -414,13 +414,20 @@ export const CourseCreatePage = () => {
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <StyledLanguageImg
                   src={`${process.env.PUBLIC_URL}/img/icon/${mainLanguageImg}.svg`}
+                  alt={
+                    mainLanguageImg === 'Etc' ? 'KUCC 로고 (기타 언어)' : `${mainLanguageImg} 로고`
+                  }
                 />
                 <Dropdown trigger={['click']} overlay={LanguageMenu}>
                   <StyledLanguage>
                     {selectedLanguages.length > 0 ? (
                       // selectedLanguages.join(', ')
                       selectedLanguages.map((img, i) => (
-                        <img key={i} src={`${process.env.PUBLIC_URL}/img/icon/${img}.svg`} />
+                        <img
+                          key={i}
+                          src={`${process.env.PUBLIC_URL}/img/icon/${img}.svg`}
+                          alt={img === 'Etc' ? 'KUCC 로고 (기타 언어)' : `${img} 로고`}
+                        />
                       ))
                     ) : (
                       <>

@@ -98,6 +98,7 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   return (
     <MainContainer>
       <StyledBackArrowWrapper
+        aria-label='뒤로가기'
         onClick={() => {
           history.goBack();
         }}>
@@ -114,20 +115,23 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
             <StyledComment>{data.comment}</StyledComment>
             <StyledSocialContainer>
               <StyledSocialBox>
-                <img src={`${process.env.PUBLIC_URL}/img/social/email.svg`} />
+                <img src={`${process.env.PUBLIC_URL}/img/social/email.svg`} alt='이메일 아이콘' />
                 <StyledSocialLink href={email} target='_blank'>
                   {data.email}
                 </StyledSocialLink>
               </StyledSocialBox>
               <StyledSocialBox>
-                <img src={`${process.env.PUBLIC_URL}/img/social/github.svg`} />
+                <img src={`${process.env.PUBLIC_URL}/img/social/github.svg`} alt='GitHub 로고' />
                 <StyledSocialLink href={data.link} target='_blank'>
                   {/* {data.link} */}
                   {github_id}
                 </StyledSocialLink>
               </StyledSocialBox>
               <StyledSocialBox>
-                <img src={`${process.env.PUBLIC_URL}/img/social/instagram.svg`} />
+                <img
+                  src={`${process.env.PUBLIC_URL}/img/social/instagram.svg`}
+                  alt='Instagram 로고'
+                />
                 <StyledSocialLink href={instagram} target='_blank'>
                   @{data.instaLink}
                 </StyledSocialLink>
