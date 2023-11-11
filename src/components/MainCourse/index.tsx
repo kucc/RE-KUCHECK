@@ -160,10 +160,14 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
         const newCourseAttendance = courseDoc?.courseAttendance.filter(
           (member: any) => member.id !== userId,
         );
+        const newCourseOtherLeaders = courseDoc?.courseOtherLeaders?.filter(
+          (leader: any) => leader.id !== userId,
+        );
 
         const updateData = {
           courseMember: newCourseMember ?? [],
           courseAttendance: newCourseAttendance,
+          courseOtherLeaders: newCourseOtherLeaders,
         };
 
         // course Update

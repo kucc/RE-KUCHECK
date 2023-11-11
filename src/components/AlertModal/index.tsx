@@ -1,4 +1,5 @@
 import Modal from 'react-modal';
+
 import {
   StyldWarningImg,
   StyledAlert,
@@ -14,8 +15,13 @@ import {
   StyledWrapper,
 } from './style';
 
-export const AlertModal = ({ isPromptModalOpened, setDeleteUser }: { isPromptModalOpened: any, setDeleteUser: any }) => {
-
+export const AlertModal = ({
+  isPromptModalOpened,
+  setDeleteUser,
+}: {
+  isPromptModalOpened: any;
+  setDeleteUser: any;
+}) => {
   return (
     <Modal
       ariaHideApp={false}
@@ -55,7 +61,8 @@ export const AlertModal = ({ isPromptModalOpened, setDeleteUser }: { isPromptMod
             </StyledWarningWrapper>
             <StyledDesc>
               회원 정보는 즉시 삭제되고, 현재 등록 중인 세션 / 스터디 / 프로젝트에서는 자동으로 등록
-              취소됩니다. 만약 세션장일 경우에는 세션이 삭제됩니다.
+              취소됩니다. 만약 세션장일 경우에는 세션이 삭제되고, 공동 팀장인 경우에는 공동 팀장에서
+              제외됩니다.
               <br />
               삭제된 회원 정보는 복구할 수 없습니다.
             </StyledDesc>
@@ -64,8 +71,11 @@ export const AlertModal = ({ isPromptModalOpened, setDeleteUser }: { isPromptMod
         <StyledButtonWrapper>
           <StyledButton onClick={() => isPromptModalOpened(false)}>취소</StyledButton>
           <StyledConfirmButton
-            onClick={() => {setDeleteUser()}}
-          >확인</StyledConfirmButton>
+            onClick={() => {
+              setDeleteUser();
+            }}>
+            확인
+          </StyledConfirmButton>
         </StyledButtonWrapper>
       </StyledWrapper>
     </Modal>
