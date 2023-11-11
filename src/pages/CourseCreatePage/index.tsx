@@ -124,6 +124,7 @@ export const CourseCreatePage = () => {
 
   // 세부정보
   const [detailInform, setDetailInform] = useState<{ [key: string]: string | string[] }>({
+    courseOtherLeadersEmails: [],
     courseStack: [],
     courseInfo: '',
     courseGoal: '',
@@ -445,6 +446,22 @@ export const CourseCreatePage = () => {
           </StyledTitleBox>
           <StyledHorizontalLine />
           <StyledBodyBox>
+            <div>
+              <StyledSubTitle>함께할 공동 팀장</StyledSubTitle>
+              <StyledSelect>
+                <Select
+                  mode='tags'
+                  style={{ width: '100%' }}
+                  onChange={e => {
+                    onChangeDetailInform('courseOtherLeadersEmails', e);
+                  }}
+                  tokenSeparators={[',']}
+                  notFoundContent={null}
+                  placeholder='다른 팀장이 자신의 프로필에 등록한 이메일을 입력해주세요.'
+                />
+              </StyledSelect>
+            </div>
+
             <div>
               <StyledTitleBox style={{ marginLeft: '0' }}>
                 <StyledSubTitle style={{ marginBottom: '0' }}>기술 스택</StyledSubTitle>
