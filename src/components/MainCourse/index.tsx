@@ -42,6 +42,7 @@ import {
   StyledLeaderName,
   StyledLeaderType,
   StyledMainCourseContainer,
+  StyledOtherLeadersName,
 } from './style';
 
 export const MainCourse = ({ course, profileId }: { course: Course; profileId?: string }) => {
@@ -297,6 +298,14 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
           </StyledEmojiBackground>
           <StyledLeaderName>
             {course.courseLeader.name} <StyledLeaderType>팀장</StyledLeaderType>
+            {course.courseOtherLeaders && course.courseOtherLeaders.length !== 0 && (
+              <>
+                <br />
+                <StyledOtherLeadersName>
+                  외 {course.courseOtherLeaders.length}명
+                </StyledOtherLeadersName>
+              </>
+            )}
           </StyledLeaderName>
         </StyledLeader>
         <StyledCourseInfo>
