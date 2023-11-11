@@ -57,6 +57,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
   const {
     courseInfo,
     courseLeader,
+    courseOtherLeaders,
     courseName,
     courseType,
     difficulty,
@@ -109,6 +110,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
           {
             courseInfo,
             courseLeader,
+            courseOtherLeaders,
             courseName,
             courseType,
             difficulty,

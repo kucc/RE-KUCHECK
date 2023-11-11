@@ -100,6 +100,14 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
         });
       }
 
+      // FIXME
+      // 4. 다른 users의 courseHistory에서
+      //    - 1. course의 courseLeader로 있는 course에서 courseLeader 정보 업데이트
+      //    - 2. course의 courseOtherLeaders 정보에서 해당 user 정보 업데이트
+
+      // 릴레이션 없어서 한계 있음
+      // 이것 때문에 탈퇴한 유저의 세션에 참여한 유저 프로필에서 오류 발생하는 것으로 추정
+
       alert(PROFILE_EDIT_SUCCESS);
     },
 
@@ -168,6 +176,14 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
           courseMember: courseData.courseMember.filter((member: any) => member.id !== user.id),
         });
       }
+
+      // FIXME
+      // 4. 다른 users의 courseHistory에서
+      //    - 1. course의 courseLeader로 있는 course 통째로 삭제
+      //    - 2. course의 courseOtherLeaders 정보에서 해당 user 삭제
+
+      // 릴레이션 없어서 한계 있음
+      // 이것 때문에 탈퇴한 유저의 세션에 참여한 유저 프로필에서 오류 발생하는 것으로 추정
 
       const auth = getAuth();
       const userData: any = auth.currentUser;
