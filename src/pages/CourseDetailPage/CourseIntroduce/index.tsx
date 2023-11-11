@@ -29,6 +29,7 @@ import {
   StyledLine,
   StyledLine2,
   StyledName,
+  StyledOtherLeadersLine,
   StyledPcBox1,
   StyledPcBox2,
   StyledSessionDetailTitle,
@@ -133,6 +134,32 @@ export const CourseIntroduce = ({
                 />
               </StyledLeaderBox>
             </div>
+
+            {data.courseOtherLeaders && data.courseOtherLeaders.length !== 0 && (
+              <div>
+                <StyledOtherLeadersLine>
+                  <StyledTitle>공동 팀장</StyledTitle>
+                  <StyledLine />
+                </StyledOtherLeadersLine>
+                {data.courseOtherLeaders.map(otherLeader => (
+                  <StyledLeaderBox>
+                    <StyledEmoji>{otherLeader.emoji}</StyledEmoji>
+                    <StyledDescBox>
+                      <StyledName>
+                        {otherLeader.name}&nbsp;<span style={{ fontFamily: 'sdLi' }}>님</span>
+                      </StyledName>
+                      <StyledComment>{otherLeader.comment}</StyledComment>
+                    </StyledDescBox>
+                    <StyledArrow
+                      src={`${process.env.PUBLIC_URL}/img/common/arrow.svg`}
+                      onClick={() => {
+                        history.push(`/profile/${otherLeader.id}`);
+                      }}
+                    />
+                  </StyledLeaderBox>
+                ))}
+              </div>
+            )}
 
             <div>
               <StyledStackLine>
@@ -250,9 +277,7 @@ export const CourseIntroduce = ({
                         }
                       />
                     ) : (
-                      <StyledDetailDesc>
-                        {curri}
-                      </StyledDetailDesc>
+                      <StyledDetailDesc>{curri}</StyledDetailDesc>
                     )}
                   </StyledDetailContainer>
                 ))}

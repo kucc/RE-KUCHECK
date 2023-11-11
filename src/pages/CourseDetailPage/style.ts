@@ -98,6 +98,12 @@ export const StyledLeaderLine = styled(StyledLineBox)`
     width: 32px;
   }
 `;
+export const StyledOtherLeadersLine = styled(StyledLineBox)`
+  width: 100px;
+  @media (max-width: 800px) {
+    width: 56px;
+  }
+`;
 
 export const StyledStackLine = styled(StyledLineBox)`
   width: 203px;
