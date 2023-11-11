@@ -70,6 +70,36 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
         });
       }
 
+      // 3. user가 courseOtherLeaders에 있는 course의 courseOtherLeaders 정보 업데이트 [O]
+      const coursesRef = collection(db, 'courses');
+      const coursesOtherLeadersQuery = query(
+        coursesRef,
+        where('courseOtherLeaders', 'array-contains', {
+          emoji: user.emoji,
+          id: user.id,
+          name: user.name,
+          comment: user.comment,
+        }),
+      );
+      const coursesOtherLeadersQuerySnapshot = await getDocs(coursesOtherLeadersQuery);
+
+      for await (const course of coursesOtherLeadersQuerySnapshot.docs) {
+        const courseRef = doc(db, 'courses', course.id);
+        const courseData = course.data();
+
+        await updateDoc(courseRef, {
+          ...courseData,
+          courseOtherLeaders: courseData.courseOtherLeaders.map((leader: any) => {
+            if (leader.id === user.id) {
+              return {
+                ...leaderData,
+              };
+            }
+            return leader;
+          }),
+        });
+      }
+
       alert(PROFILE_EDIT_SUCCESS);
     },
 
