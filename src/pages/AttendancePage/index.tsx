@@ -219,6 +219,9 @@ export const AttendancePage = () => {
   };
 
   const isCourseLeader = course?.courseLeader.id === user?.id;
+  const isCourseOtherLeader = course?.courseOtherLeaders?.some(
+    otherLeader => otherLeader.id === user?.id,
+  );
 
   if (isLoading) return <Loading />;
 
@@ -233,16 +236,17 @@ export const AttendancePage = () => {
             </StyledTermText>
           </StyledMenu>
           <StyledButtonWrapper>
-            {isCourseLeader &&
-              (isEditMode ? (
-                <StyledAttendanceButton onClick={submitUpdate} style={{ backgroundColor: RED }}>
-                  완료
-                </StyledAttendanceButton>
-              ) : (
-                <StyledAttendanceButton onClick={() => setIsEditMode(prev => !prev)}>
-                  수정하기
-                </StyledAttendanceButton>
-              ))}
+            {isCourseLeader ||
+              (isCourseOtherLeader &&
+                (isEditMode ? (
+                  <StyledAttendanceButton onClick={submitUpdate} style={{ backgroundColor: RED }}>
+                    완료
+                  </StyledAttendanceButton>
+                ) : (
+                  <StyledAttendanceButton onClick={() => setIsEditMode(prev => !prev)}>
+                    수정하기
+                  </StyledAttendanceButton>
+                )))}
             <StyledDropDown>
               <Dropdown trigger={['click']} overlay={CoursesMenu} placement='bottomLeft'>
                 <div>
