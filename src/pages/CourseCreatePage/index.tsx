@@ -380,6 +380,21 @@ export const CourseCreatePage = () => {
     return true;
   };
 
+  const getCourseOtherLeadersDetail = async () => {
+    if (typeof detailInform.courseOtherLeadersEmails === 'string') {
+      return [];
+    }
+
+    const details = await getUserDetailsByEmails(detailInform.courseOtherLeadersEmails, {
+      select: 'all',
+      alertUser: false,
+    });
+
+    const filteredDetails = details.filter((detail: any) => detail !== null);
+
+    return filteredDetails;
+  };
+
   // 정보 등록
   const handleRegisterCourse = async () => {
     if (!currentUser) {
@@ -415,6 +430,7 @@ export const CourseCreatePage = () => {
           emoji: currentUser?.emoji,
           comment: currentUser?.comment,
         },
+        courseOtherLeaders: await getCourseOtherLeadersDetail(),
         courseMember: [uId],
         courseStack: detailInform['courseStack'],
         language: selectedLanguages,
