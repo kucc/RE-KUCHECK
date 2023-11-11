@@ -408,6 +408,10 @@ export const CourseCreatePage = () => {
       return;
     }
     try {
+      if (typeof detailInform.courseOtherLeadersEmails === 'string') {
+        return;
+      }
+
       // course Add
       const docRef = await addDoc(collection(db, 'courses'), {
         courseAttendance: [
@@ -443,28 +447,47 @@ export const CourseCreatePage = () => {
       });
 
       // user Update
-      const userRef = doc(db, 'users', currentUser.id);
-      await updateDoc(userRef, {
-        courseHistory: [
-          ...(currentUser.courseHistory ?? []),
-          {
-            courseInfo: detailInform['courseInfo'],
-            courseLeader: {
-              id: uId,
-              name: currentUser?.name,
-              emoji: currentUser?.emoji,
-              comment: currentUser?.comment,
-            },
-            courseName: requireInform['courseName'],
-            courseType: courseType,
-            difficulty: requireInform['difficulty'],
-            language: selectedLanguages,
-            requireTime: requireTime,
-            semester: CURRENT_SEMESTER,
-            id: docRef.id,
-          },
-        ],
+      const otherLeadersIds = await getUserDetailsByEmails(detailInform.courseOtherLeadersEmails, {
+        select: 'id',
+        alertUser: false,
       });
+
+      const otherLeadersIdsFiltered = otherLeadersIds.filter(id => id !== null) as string[];
+
+      const userIds = [currentUser.id, ...otherLeadersIdsFiltered];
+
+      const userUpdatePromises = userIds.map(async id => {
+        const userRef = doc(db, 'users', id);
+        const user = await getDoc(userRef);
+
+        if (!user.exists()) {
+          return;
+        }
+
+        await updateDoc(userRef, {
+          courseHistory: [
+            ...(user.data().courseHistory ?? []),
+            {
+              courseInfo: detailInform['courseInfo'],
+              courseLeader: {
+                id: uId,
+                name: currentUser.name,
+                emoji: currentUser.emoji,
+                comment: currentUser.comment,
+              },
+              courseName: requireInform['courseName'],
+              courseType: courseType,
+              difficulty: requireInform['difficulty'],
+              language: selectedLanguages,
+              requireTime: requireTime,
+              semester: CURRENT_SEMESTER,
+              id: docRef.id,
+            },
+          ],
+        });
+      });
+
+      await Promise.all(userUpdatePromises);
 
       alert(SUCCESS_REGISTER_COURSE);
       history.replace(`/course/detail/${docRef.id}`);
