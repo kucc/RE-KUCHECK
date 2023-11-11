@@ -315,7 +315,7 @@ export const CourseCreatePage = () => {
           name: emailQuerySnapshot.docs[0].data().name,
           emoji: emailQuerySnapshot.docs[0].data().emoji,
           comment: emailQuerySnapshot.docs[0].data().comment,
-        };
+        } as Leader;
       }),
     );
 
@@ -385,12 +385,12 @@ export const CourseCreatePage = () => {
       return [];
     }
 
-    const details = await getUserDetailsByEmails(detailInform.courseOtherLeadersEmails, {
+    const details = (await getUserDetailsByEmails(detailInform.courseOtherLeadersEmails, {
       select: 'all',
       alertUser: false,
-    });
+    })) as Leader[];
 
-    const filteredDetails = details.filter((detail: any) => detail !== null);
+    const filteredDetails = details.filter(detail => detail !== null);
 
     return filteredDetails;
   };
@@ -412,6 +412,10 @@ export const CourseCreatePage = () => {
         return;
       }
 
+      const otherLeadersDetail = await getCourseOtherLeadersDetail();
+      const otherLeadersIds = otherLeadersDetail.map(detail => detail.id);
+      const leadersIds = [currentUser.id, ...otherLeadersIds];
+
       // course Add
       const docRef = await addDoc(collection(db, 'courses'), {
         courseAttendance: [
@@ -419,6 +423,10 @@ export const CourseCreatePage = () => {
             attendance: defaultUserAttendance,
             id: uId,
           },
+          ...otherLeadersIds.map(id => ({
+            attendance: defaultUserAttendance,
+            id,
+          })),
         ],
         courseCheckAdmin: [uId],
         courseCurriculum: Object.values(curriInform),
@@ -434,8 +442,8 @@ export const CourseCreatePage = () => {
           emoji: currentUser?.emoji,
           comment: currentUser?.comment,
         },
-        courseOtherLeaders: await getCourseOtherLeadersDetail(),
-        courseMember: [uId],
+        courseOtherLeaders: otherLeadersDetail,
+        courseMember: leadersIds,
         courseStack: detailInform['courseStack'],
         language: selectedLanguages,
         // 1 : 세션, 2 : 스터디, 3: 프로젝트
@@ -447,16 +455,7 @@ export const CourseCreatePage = () => {
       });
 
       // user Update
-      const otherLeadersIds = await getUserDetailsByEmails(detailInform.courseOtherLeadersEmails, {
-        select: 'id',
-        alertUser: false,
-      });
-
-      const otherLeadersIdsFiltered = otherLeadersIds.filter(id => id !== null) as string[];
-
-      const userIds = [currentUser.id, ...otherLeadersIdsFiltered];
-
-      const userUpdatePromises = userIds.map(async id => {
+      const userUpdatePromises = leadersIds.map(async id => {
         const userRef = doc(db, 'users', id);
         const user = await getDoc(userRef);
 
