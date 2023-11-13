@@ -142,7 +142,7 @@ export const CourseIntroduce = ({
                   <StyledLine />
                 </StyledOtherLeadersLine>
                 {data.courseOtherLeaders.map(otherLeader => (
-                  <StyledLeaderBox>
+                  <StyledLeaderBox key={otherLeader.id}>
                     <StyledEmoji>{otherLeader.emoji}</StyledEmoji>
                     <StyledDescBox>
                       <StyledName>
