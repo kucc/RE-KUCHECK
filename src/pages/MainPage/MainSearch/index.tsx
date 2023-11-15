@@ -1,9 +1,9 @@
 import { Dropdown, Menu } from 'antd';
 import { useRecoilState } from 'recoil';
 
-import { LanguageList } from '@constants';
+import { LanguageList , SortOptions } from '@constants';
 import { useGetSemester } from '@hooks/use-get-semester';
-import { searchLanguageState, searchQueryState } from '@recoil';
+import { searchLanguageState, searchQueryState, sortCourseState } from '@recoil';
 import { StyledDownArrow } from '@utility/COMMON_STYLE';
 
 import {
@@ -18,6 +18,8 @@ import {
 export const MainSearch = () => {
   const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
   const [searchLanguage, setSearchLanguage] = useRecoilState(searchLanguageState);
+
+  const [sortCourse, setSortCourse] = useRecoilState(sortCourseState);
 
   const { currentSemester, setCurrentSemester, pastSemsters } = useGetSemester();
 
@@ -54,6 +56,21 @@ export const MainSearch = () => {
     </Menu>
   );
 
+  const handleSelect = (event) =>{
+    setSortCourse(event.target.value);
+  };
+
+  const SortMenu = () => (
+    <Menu>
+      <select onChange={handleSelect}>
+        <option value= "sortName">타이틀</option>
+        <option value= "sortTime">학점</option>
+        <option value= "sortDifficulty">난이도</option>
+      </select>
+    </Menu>
+  );
+
+
   return (
     <StyledMainSearchContainer>
       <StyledDropDown>
@@ -69,6 +86,7 @@ export const MainSearch = () => {
         />
         <StyledMagnifyingGlassIcon src={'/img/common/magnifyingGlassIcon.svg'} />
       </StyledSearchContainer>
+      
       <StyledDropDown>
         <Dropdown
           dropdownRender={menu => <div style={{ height: 500, width: 200 }}>{menu}</div>}
@@ -86,6 +104,16 @@ export const MainSearch = () => {
           </StyledSearchButton>
         </Dropdown>
       </StyledDropDown>
+      
+      <StyledDropDown>
+        <Dropdown>
+          <StyledSearchButton>
+            <SortMenu>
+            </SortMenu>
+          </StyledSearchButton>
+        </Dropdown>
+      </StyledDropDown>
+
     </StyledMainSearchContainer>
   );
 };

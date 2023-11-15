@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 // import { useSelector } from "react-redux";
 import { EmptyBox, MainCourse } from '@components';
 
-import { courseTypeTabState, searchLanguageState, searchQueryState } from '@recoil';
+import { courseTypeTabState, searchLanguageState, searchQueryState, sortCourseState } from '@recoil';
 import { StyledCourseTab, StyledTab, StyledTabLine, StyledTabRightLine, StyledTabText } from '@utility/COMMON_STYLE';
 
 import { StyledCourseContainer } from './style';
@@ -15,9 +15,11 @@ export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) 
   const [courseList, setCourseList] = useState<Course[]>([]);
   const [searchQuery] = useRecoilState(searchQueryState);
   const [searchLanguage] = useRecoilState(searchLanguageState);
+  //const [sort]
 
   useEffect(() => {
     let searchArray = mainCourseData;
+    //let sortArray = mainCourseData;
     if (courseTab !== 0) {
       searchArray = searchArray.filter(res => res.courseType === courseTab);
     }
@@ -37,7 +39,22 @@ export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) 
         res.language.find(element => element === searchLanguage),
       );
     }
-    setCourseList(searchArray);
+    /*if (sortName) {
+      // 가나다순
+      sortArray.sort((a,b) => a.courseName.toLowerCase() < b.courseName.toLowerCase() ? -1 : 1);
+    }
+    if (sortTime) {
+      // 학점순
+      sortArray.sort((a,b) => a.requireTime.toLowerCase() < b.requireTime.toLowerCase() ? -1 : 1);
+    }
+    if (sortDifficulty) {
+      // 난이도순
+      sortArray.sort((a,b) => a.difficulty.toLowerCase() < b.difficulty.toLowerCase() ? -1 : 1);
+    }
+    setCourseList(searchArray);*/
+    //set
+    
+
   }, [mainCourseData, searchQuery, searchLanguage, courseTab]);
 
   return (

@@ -19,3 +19,8 @@ export const courseTypeTabState = atom<number>({
   key: 'courseTypeTabState',
   default: 0,
 })
+
+export const sortCourseState = atom({
+  key: 'sortCourseState',
+  default: 'sortName',
+});
