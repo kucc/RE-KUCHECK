@@ -56,19 +56,28 @@ export const MainSearch = () => {
     </Menu>
   );
 
-  const handleSelect = (event) =>{
-    setSortCourse(event.target.value);
-  };
-
-  const SortMenu = () => (
+  const SortMenu = (
     <Menu>
-      <select onChange={handleSelect}>
-        <option value= "sortName">타이틀</option>
-        <option value= "sortTime">학점</option>
-        <option value= "sortDifficulty">난이도</option>
-      </select>
+      {['정렬', ...SortOptions].map((option: string, key) => {
+        return (
+          <Menu.Item key={key}>
+            <div
+              onClick={() => {
+                if(option === '정렬'){
+                  setSortCourse(null);
+                  return;
+                }
+                setSortCourse(option);
+              }}>
+              {option}
+            </div>
+          </Menu.Item>
+        );
+      })}
     </Menu>
   );
+
+
 
 
   return (
@@ -106,12 +115,23 @@ export const MainSearch = () => {
       </StyledDropDown>
       
       <StyledDropDown>
-        <Dropdown>
+        <Dropdown 
+        dropdownRender={menu => <div style={{ height: 500, width: 200 }}>{menu}</div>}
+        trigger={['click']}
+        overlay={SortMenu}>
           <StyledSearchButton>
-            <SortMenu>
-            </SortMenu>
+            {sortCourse ? (
+              sortCourse
+            ) : (
+              <>
+                <StyledDownArrow width='5' />
+                <span>정렬</span>
+              </>
+            )}
           </StyledSearchButton>
         </Dropdown>
+
+        
       </StyledDropDown>
 
     </StyledMainSearchContainer>
