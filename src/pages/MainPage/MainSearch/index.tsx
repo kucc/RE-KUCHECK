@@ -58,12 +58,12 @@ export const MainSearch = () => {
 
   const SortMenu = (
     <Menu>
-      {SortOptions.map((option: string, key) => {
+      {['정렬 방식',...SortOptions].map((option: string, key) => {
         return (
           <Menu.Item key={key}>
             <div
               onClick={() => {
-                if(option === '정렬'){
+                if(option === '정렬 방식'){
                   setSortCourse(null);
                   return;
                 }

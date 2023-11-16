@@ -40,17 +40,17 @@ export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) 
       );
     }
     let sortArray = searchArray;
-    
+    let newSortArray = sortArray;
     if (sortCourse){
       if (sortCourse === '타이틀') {
         // 타이틀순
-        sortArray.sort((a,b) => a.courseName.toLowerCase() < b.courseName.toLowerCase() ? -1 : 1);
+        newSortArray.sort((a,b) => a.courseName < b.courseName ? -1 : 1);
       }
-      else if (sortCourse === '학점') {
+      if (sortCourse === '학점') {
         // 학점순
-        sortArray.sort((a,b) => a.requireTime.toLowerCase() < b.requireTime.toLowerCase() ? -1 : 1);
+        newSortArray.sort((a,b) => a.requireTime < b.requireTime ? -1 : 1);
       }
-      else if (sortCourse === '난이도') {
+      if (sortCourse === '난이도') {
         // 난이도순
         let newSortArray =[]
         for (let i = 0; i<sortArray.length ; i++){
