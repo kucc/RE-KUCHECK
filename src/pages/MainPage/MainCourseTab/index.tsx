@@ -15,11 +15,11 @@ export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) 
   const [courseList, setCourseList] = useState<Course[]>([]);
   const [searchQuery] = useRecoilState(searchQueryState);
   const [searchLanguage] = useRecoilState(searchLanguageState);
-  //const [sort]
+  const [sortCourse] = useRecoilState(sortCourseState);
 
   useEffect(() => {
     let searchArray = mainCourseData;
-    //let sortArray = mainCourseData;
+    
     if (courseTab !== 0) {
       searchArray = searchArray.filter(res => res.courseType === courseTab);
     }
@@ -39,23 +39,25 @@ export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) 
         res.language.find(element => element === searchLanguage),
       );
     }
-    /*if (sortName) {
+    const sortArray = searchArray;
+
+    if (sortCourse === '타이틀') {
       // 가나다순
       sortArray.sort((a,b) => a.courseName.toLowerCase() < b.courseName.toLowerCase() ? -1 : 1);
     }
-    if (sortTime) {
+    if (sortCourse === '학점') {
       // 학점순
       sortArray.sort((a,b) => a.requireTime.toLowerCase() < b.requireTime.toLowerCase() ? -1 : 1);
     }
-    if (sortDifficulty) {
+    if (sortCourse === '난이도') {
       // 난이도순
       sortArray.sort((a,b) => a.difficulty.toLowerCase() < b.difficulty.toLowerCase() ? -1 : 1);
     }
-    setCourseList(searchArray);*/
-    //set
+    //setCourseList(searchArray);
+    setCourseList(sortArray);
     
 
-  }, [mainCourseData, searchQuery, searchLanguage, courseTab]);
+  }, [mainCourseData, searchQuery, searchLanguage, sortCourse, courseTab]);
 
   return (
     <StyledCourseContainer>
