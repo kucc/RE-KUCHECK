@@ -58,7 +58,7 @@ export const MainSearch = () => {
 
   const SortMenu = (
     <Menu>
-      {['정렬', ...SortOptions].map((option: string, key) => {
+      {SortOptions.map((option: string, key) => {
         return (
           <Menu.Item key={key}>
             <div

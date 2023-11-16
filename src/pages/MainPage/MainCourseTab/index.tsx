@@ -39,19 +39,35 @@ export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) 
         res.language.find(element => element === searchLanguage),
       );
     }
-    const sortArray = searchArray;
-
-    if (sortCourse === '타이틀') {
-      // 가나다순
-      sortArray.sort((a,b) => a.courseName.toLowerCase() < b.courseName.toLowerCase() ? -1 : 1);
-    }
-    if (sortCourse === '학점') {
-      // 학점순
-      sortArray.sort((a,b) => a.requireTime.toLowerCase() < b.requireTime.toLowerCase() ? -1 : 1);
-    }
-    if (sortCourse === '난이도') {
-      // 난이도순
-      sortArray.sort((a,b) => a.difficulty.toLowerCase() < b.difficulty.toLowerCase() ? -1 : 1);
+    let sortArray = searchArray;
+    
+    if (sortCourse){
+      if (sortCourse === '타이틀') {
+        // 타이틀순
+        sortArray.sort((a,b) => a.courseName.toLowerCase() < b.courseName.toLowerCase() ? -1 : 1);
+      }
+      else if (sortCourse === '학점') {
+        // 학점순
+        sortArray.sort((a,b) => a.requireTime.toLowerCase() < b.requireTime.toLowerCase() ? -1 : 1);
+      }
+      else if (sortCourse === '난이도') {
+        // 난이도순
+        let newSortArray =[]
+        for (let i = 0; i<sortArray.length ; i++){
+        if(sortArray[i].difficulty === "easy"){
+          newSortArray.push(sortArray[i])
+        }};
+        for (let i = 0; i<sortArray.length ; i++){
+        if(sortArray[i].difficulty === "medium"){
+          newSortArray.push(sortArray[i])
+        }};
+        for (let i = 0; i<sortArray.length ; i++){
+        if(sortArray[i].difficulty === "hard"){
+          newSortArray.push(sortArray[i])
+        }
+        };
+        sortArray = newSortArray;
+      }
     }
     //setCourseList(searchArray);
     setCourseList(sortArray);
