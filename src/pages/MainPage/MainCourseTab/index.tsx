@@ -39,39 +39,33 @@ export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) 
         res.language.find(element => element === searchLanguage),
       );
     }
+
+    //정렬
     let sortArray = searchArray;
-    let newSortArray = sortArray;
-    if (sortCourse){
-      if (sortCourse === '타이틀') {
-        // 타이틀순
-        newSortArray.sort((a,b) => a.courseName < b.courseName ? -1 : 1);
-      }
-      if (sortCourse === '학점') {
-        // 학점순
-        newSortArray.sort((a,b) => a.requireTime < b.requireTime ? -1 : 1);
-      }
-      if (sortCourse === '난이도') {
-        // 난이도순
-        let newSortArray =[]
-        for (let i = 0; i<sortArray.length ; i++){
-        if(sortArray[i].difficulty === "easy"){
-          newSortArray.push(sortArray[i])
-        }};
-        for (let i = 0; i<sortArray.length ; i++){
-        if(sortArray[i].difficulty === "medium"){
-          newSortArray.push(sortArray[i])
-        }};
-        for (let i = 0; i<sortArray.length ; i++){
-        if(sortArray[i].difficulty === "hard"){
-          newSortArray.push(sortArray[i])
-        }
-        };
-        sortArray = newSortArray;
-      }
+    if (sortCourse === '타이틀순') {
+      sortArray.sort((a,b) => a.courseName < b.courseName ? -1 : 1);
     }
-    //setCourseList(searchArray);
-    setCourseList(sortArray);
-    
+    if (sortCourse === '학점순') {
+      sortArray.sort((a,b) => a.requireTime < b.requireTime ? -1 : 1);
+    }
+    if (sortCourse === '난이도순') {
+      const newSortArray =[]
+      for (let i = 0; i<sortArray.length ; i++){
+      if(sortArray[i].difficulty === "easy"){
+        newSortArray.push(sortArray[i])
+      }}
+      for (let i = 0; i<sortArray.length ; i++){
+      if(sortArray[i].difficulty === "medium"){
+        newSortArray.push(sortArray[i])
+      }}
+      for (let i = 0; i<sortArray.length ; i++){
+      if(sortArray[i].difficulty === "hard"){
+        newSortArray.push(sortArray[i])
+      }}
+      sortArray = newSortArray;
+    }
+
+    setCourseList([...sortArray]);
 
   }, [mainCourseData, searchQuery, searchLanguage, sortCourse, courseTab]);
 
