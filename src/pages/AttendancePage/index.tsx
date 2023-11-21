@@ -289,14 +289,14 @@ export const AttendancePage = () => {
               <StyledAttendanceContainer key={memberIndex}>
                 <StyledMember>
                   <StyledEmojiBackground>{emoji}</StyledEmojiBackground>
-                  <StyledProfileWrapper onClick={() => history.push(`/profile/${id}`)}>
+                  <StyledProfileWrapper>
                     <StyledMemberName>
                       {name}
                       {isLeader && <StyledMemberType>팀장</StyledMemberType>}
                       {isOtherLeader && <StyledMemberType>공동 팀장</StyledMemberType>}
                       {!isLeader && !isOtherLeader && <StyledMemberType>팀원</StyledMemberType>}
                     </StyledMemberName>
-                    <StyledProfileLink onClick={() => history.push(`/profile/${id}`)}>
+                    <StyledProfileLink href={`/profile/${id}`}>
                       프로필 보러가기 {'>'}
                     </StyledProfileLink>
                   </StyledProfileWrapper>

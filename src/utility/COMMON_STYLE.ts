@@ -197,7 +197,8 @@ export const StyledCourseDetail2 = styled.span`
   color: ${RED};
 `;
 
-export const StyledBackArrowWrapper = styled.div`
+export const StyledBackArrowWrapper = styled.button`
+  all: unset;
   width: 50px;
   height: 50px;
   border-radius: 50%;

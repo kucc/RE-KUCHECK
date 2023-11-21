@@ -20,13 +20,13 @@ export const MainTopContainer = () => {
 
   return (
     <StyledTopContainer>
-      <StyledLogo alt='logo' />
+      <StyledLogo alt='KUCC 로고' />
       <StyledSpeechBubbleContainer>
         <StyledSpeechBody>
           {isMobile ? (
-            <img src='/img/common/MobileSpeechBubble.svg' alt='1' />
+            <img src='/img/common/MobileSpeechBubble.svg' aria-hidden />
           ) : (
-            <img src='/img/common/PcSpeechBubble.svg' alt='1' />
+            <img src='/img/common/PcSpeechBubble.svg' aria-hidden />
           )}
           <StyledSpeechText>
             지금은 <StyledHighLightText>{resultText}</StyledHighLightText>입니다.{' '}

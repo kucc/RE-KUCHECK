@@ -126,12 +126,11 @@ export const CourseIntroduce = ({
                   </StyledName>
                   <StyledComment>{data.courseLeader.comment}</StyledComment>
                 </StyledDescBox>
-                <StyledArrow
-                  src={`${process.env.PUBLIC_URL}/img/common/arrow.svg`}
-                  onClick={() => {
-                    history.push(`/profile/${data.courseLeader.id}`);
-                  }}
-                />
+                <a
+                  href={`/profile/${data.courseLeader.id}`}
+                  aria-label={`${data.courseLeader.name}님의 프로필로 이동`}>
+                  <StyledArrow src={`${process.env.PUBLIC_URL}/img/common/arrow.svg`} />
+                </a>
               </StyledLeaderBox>
             </div>
 
@@ -197,7 +196,11 @@ export const CourseIntroduce = ({
                 <StyledCourseTitle>{data.courseName}</StyledCourseTitle>
                 <StyledStackWrapper>
                   {data.language.map((a: string, i: number) => (
-                    <StyledStackImg key={i} src={`${process.env.PUBLIC_URL}/img/icon/${a}.svg`} />
+                    <StyledStackImg
+                      key={i}
+                      src={`${process.env.PUBLIC_URL}/img/icon/${a}.svg`}
+                      alt={a === 'Etc' ? 'KUCC 로고 (기타 언어)' : `${a} 로고`}
+                    />
                   ))}
                 </StyledStackWrapper>
               </StyledCourseTitleWrapper>
