@@ -64,6 +64,14 @@ export const StyledLeaderName = styled.div`
   }
 `;
 
+export const StyledOtherLeadersName = styled.div`
+  font-size: 12px;
+  font-family: 'sdSb';
+  @media (max-width: 800px) {
+    font-size: 6px;
+  }
+`;
+
 export const StyledLeaderType = styled.span`
   font-family: 'sdL';
 `;

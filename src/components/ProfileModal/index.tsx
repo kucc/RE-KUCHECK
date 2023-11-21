@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteUser, getAuth, signOut } from 'firebase/auth';
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import Modal from 'react-modal';
 import { useHistory } from 'react-router-dom';
 
@@ -70,6 +70,44 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
         });
       }
 
+      // 3. user가 courseOtherLeaders에 있는 course의 courseOtherLeaders 정보 업데이트 [O]
+      const coursesRef = collection(db, 'courses');
+      const coursesOtherLeadersQuery = query(
+        coursesRef,
+        where('courseOtherLeaders', 'array-contains', {
+          emoji: user.emoji,
+          id: user.id,
+          name: user.name,
+          comment: user.comment,
+        }),
+      );
+      const coursesOtherLeadersQuerySnapshot = await getDocs(coursesOtherLeadersQuery);
+
+      for await (const course of coursesOtherLeadersQuerySnapshot.docs) {
+        const courseRef = doc(db, 'courses', course.id);
+        const courseData = course.data();
+
+        await updateDoc(courseRef, {
+          ...courseData,
+          courseOtherLeaders: courseData.courseOtherLeaders.map((leader: any) => {
+            if (leader.id === user.id) {
+              return {
+                ...leaderData,
+              };
+            }
+            return leader;
+          }),
+        });
+      }
+
+      // FIXME
+      // 4. 다른 users의 courseHistory에서
+      //    - 1. course의 courseLeader로 있는 course에서 courseLeader 정보 업데이트
+      //    - 2. course의 courseOtherLeaders 정보에서 해당 user 정보 업데이트
+
+      // 릴레이션 없어서 한계 있음
+      // 이것 때문에 탈퇴한 유저의 세션에 참여한 유저 프로필에서 오류 발생하는 것으로 추정
+
       alert(PROFILE_EDIT_SUCCESS);
     },
 
@@ -84,10 +122,72 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
 
   const deleteUserData = useMutation(async () => {
     try {
-      const deleteDocRef = doc(db, 'users', user.id);
+      const userRef = doc(db, 'users', user.id);
+
+      // 1. user가 courseLeader인 course 삭제
+      const coursesRef = collection(db, 'courses');
+      const coursesByUserQuery = query(coursesRef, where('courseLeader.id', '==', user.id));
+      const coursesByUserQuerySnapshot = await getDocs(coursesByUserQuery);
+
+      for await (const course of coursesByUserQuerySnapshot.docs) {
+        await deleteDoc(course.ref);
+      }
+
+      // 2. user가 courseOtherLeaders에 있는 course에서 user 삭제
+      const coursesOtherLeadersQuery = query(
+        coursesRef,
+        where('courseOtherLeaders', 'array-contains', {
+          emoji: user.emoji,
+          id: user.id,
+          name: user.name,
+          comment: user.comment,
+        }),
+      );
+      const coursesOtherLeadersQuerySnapshot = await getDocs(coursesOtherLeadersQuery);
+
+      for await (const course of coursesOtherLeadersQuerySnapshot.docs) {
+        const courseRef = doc(db, 'courses', course.id);
+        const courseData = course.data();
+
+        await updateDoc(courseRef, {
+          ...courseData,
+          courseOtherLeaders: courseData.courseOtherLeaders.filter(
+            (leader: any) => leader.id !== user.id,
+          ),
+        });
+      }
+
+      // 3. user가 courseMember에 있는 course에서 user 삭제
+      const coursesAttendedQuery = query(
+        coursesRef,
+        where('courseMember', 'array-contains', user.id),
+      );
+      const coursesAttendedQuerySnapshot = await getDocs(coursesAttendedQuery);
+
+      for await (const course of coursesAttendedQuerySnapshot.docs) {
+        const courseRef = doc(db, 'courses', course.id);
+        const courseData = course.data();
+
+        await updateDoc(courseRef, {
+          ...courseData,
+          courseAttendance: courseData.courseAttendance.filter(
+            (person: any) => person.id !== user.id,
+          ),
+          courseMember: courseData.courseMember.filter((member: any) => member.id !== user.id),
+        });
+      }
+
+      // FIXME
+      // 4. 다른 users의 courseHistory에서
+      //    - 1. course의 courseLeader로 있는 course 통째로 삭제
+      //    - 2. course의 courseOtherLeaders 정보에서 해당 user 삭제
+
+      // 릴레이션 없어서 한계 있음
+      // 이것 때문에 탈퇴한 유저의 세션에 참여한 유저 프로필에서 오류 발생하는 것으로 추정
+
       const auth = getAuth();
       const userData: any = auth.currentUser;
-      await deleteDoc(deleteDocRef);
+      await deleteDoc(userRef);
       await deleteUser(userData);
       resetUser();
       await signOut(auth);

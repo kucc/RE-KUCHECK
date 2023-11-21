@@ -3,8 +3,8 @@ import Modal from 'react-modal';
 import {
   StyledAlert,
   StyledAlertComment,
-  StyledCancelButton,
   StyledButtonWrapper,
+  StyledCancelButton,
   StyledConfirmButton,
   StyledWrapper,
 } from './style';
@@ -47,7 +47,7 @@ export const CancelModal = ({
         <StyledAlert>수강 취소</StyledAlert>
         <StyledAlertComment>
           수강을 취소합니다. <br />
-          만약 세션장일 경우 세션이 사라지게 됩니다.
+          만약 세션장일 경우에는 세션이 삭제되고, 공동 팀장인 경우에는 공동 팀장에서 제외됩니다.
         </StyledAlertComment>
         <StyledButtonWrapper>
           <StyledCancelButton onClick={() => isPromptModalOpened(false)}>취소</StyledCancelButton>

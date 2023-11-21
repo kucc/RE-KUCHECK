@@ -10,17 +10,20 @@ interface CourseDeatilInfo {
   courseNotice: string;
   coursePlace: string;
 }
+
+interface Leader {
+  id: string;
+  name: string;
+  emoji: string;
+  comment: string;
+}
 interface Course extends CourseDeatilInfo {
   courseAttendance: Attendance[];
   courseCheckAdmin: string[];
   courseCurriculum: string[];
   courseName: string;
-  courseLeader: {
-    id: string;
-    name: string;
-    emoji: string;
-    comment: string;
-  };
+  courseLeader: Leader;
+  courseOtherLeaders?: Leader[];
   id: string;
   courseMember: string[];
   courseStack: string[];

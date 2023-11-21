@@ -219,6 +219,9 @@ export const AttendancePage = () => {
   };
 
   const isCourseLeader = course?.courseLeader.id === user?.id;
+  const isCourseOtherLeader = course?.courseOtherLeaders?.some(
+    otherLeader => otherLeader.id === user?.id,
+  );
 
   if (isLoading) return <Loading />;
 
@@ -233,16 +236,17 @@ export const AttendancePage = () => {
             </StyledTermText>
           </StyledMenu>
           <StyledButtonWrapper>
-            {isCourseLeader &&
-              (isEditMode ? (
-                <StyledAttendanceButton onClick={submitUpdate} style={{ backgroundColor: RED }}>
-                  완료
-                </StyledAttendanceButton>
-              ) : (
-                <StyledAttendanceButton onClick={() => setIsEditMode(prev => !prev)}>
-                  수정하기
-                </StyledAttendanceButton>
-              ))}
+            {isCourseLeader ||
+              (isCourseOtherLeader &&
+                (isEditMode ? (
+                  <StyledAttendanceButton onClick={submitUpdate} style={{ backgroundColor: RED }}>
+                    완료
+                  </StyledAttendanceButton>
+                ) : (
+                  <StyledAttendanceButton onClick={() => setIsEditMode(prev => !prev)}>
+                    수정하기
+                  </StyledAttendanceButton>
+                )))}
             <StyledDropDown>
               <Dropdown trigger={['click']} overlay={CoursesMenu} placement='bottomLeft'>
                 <div>
@@ -277,6 +281,10 @@ export const AttendancePage = () => {
           {membersData.map((memberData: MemberData, memberIndex: number) => {
             const { id, attendance, name, emoji, deposit } = memberData;
             const isLeader = course?.courseLeader.id === memberData.id;
+            const isOtherLeader = course?.courseOtherLeaders?.some(
+              otherLeader => otherLeader.id === memberData.id,
+            );
+
             return (
               <StyledAttendanceContainer key={memberIndex}>
                 <StyledMember>
@@ -284,9 +292,9 @@ export const AttendancePage = () => {
                   <StyledProfileWrapper onClick={() => history.push(`/profile/${id}`)}>
                     <StyledMemberName>
                       {name}
-                      {(isLeader && <StyledMemberType>팀장</StyledMemberType>) || (
-                        <StyledMemberType>팀원</StyledMemberType>
-                      )}
+                      {isLeader && <StyledMemberType>팀장</StyledMemberType>}
+                      {isOtherLeader && <StyledMemberType>공동 팀장</StyledMemberType>}
+                      {!isLeader && !isOtherLeader && <StyledMemberType>팀원</StyledMemberType>}
                     </StyledMemberName>
                     <StyledProfileLink onClick={() => history.push(`/profile/${id}`)}>
                       프로필 보러가기 {'>'}

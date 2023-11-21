@@ -1,7 +1,16 @@
 import { useEffect, useState } from 'react';
 
 import { Checkbox, Dropdown, Menu, Select, SelectProps } from 'antd';
-import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
 import { useHistory } from 'react-router';
 
 import { db } from '@config';
@@ -124,6 +133,7 @@ export const CourseCreatePage = () => {
 
   // 세부정보
   const [detailInform, setDetailInform] = useState<{ [key: string]: string | string[] }>({
+    courseOtherLeadersEmails: [],
     courseStack: [],
     courseInfo: '',
     courseGoal: '',
@@ -269,6 +279,90 @@ export const CourseCreatePage = () => {
     });
   });
 
+  const getUserDetailsByEmails = async (
+    emails: string[],
+    option: {
+      select: 'id' | 'all';
+      alertUser?: boolean;
+    },
+  ) => {
+    const details = await Promise.all(
+      emails.map(async (email: string) => {
+        const usersRef = collection(db, 'users');
+        const emailQuery = query(usersRef, where('email', '==', email));
+        const emailQuerySnapshot = await getDocs(emailQuery);
+
+        if (emailQuerySnapshot.size === 0) {
+          if (option.alertUser) {
+            alert(`${email} 이메일을 가진 사용자가 없습니다.`);
+          }
+          return null;
+        }
+
+        if (emailQuerySnapshot.size > 1) {
+          if (option.alertUser) {
+            alert(`${email} 이메일을 가진 사용자가 여러 명입니다.`);
+          }
+          return null;
+        }
+
+        if (option.select === 'id') {
+          return emailQuerySnapshot.docs[0].id;
+        }
+
+        return {
+          id: emailQuerySnapshot.docs[0].id,
+          name: emailQuerySnapshot.docs[0].data().name,
+          emoji: emailQuerySnapshot.docs[0].data().emoji,
+          comment: emailQuerySnapshot.docs[0].data().comment,
+        } as Leader;
+      }),
+    );
+
+    return details;
+  };
+
+  const validationOtherLeaders = async () => {
+    if (typeof detailInform.courseOtherLeadersEmails === 'string') {
+      alert('알 수 없는 오류가 발생했습니다.');
+      return false;
+    }
+
+    if (detailInform.courseOtherLeadersEmails.length === 0) {
+      return true;
+    }
+
+    const isAllEmailsValid = detailInform.courseOtherLeadersEmails.every((email: string) => {
+      return email.match(/^\S+@\S+\.\S+$/);
+    });
+
+    if (!isAllEmailsValid) {
+      alert('모든 공동 팀장의 이메일 형식이 올바른지 확인해주세요.');
+      return false;
+    }
+
+    const otherLeadersIds = await getUserDetailsByEmails(detailInform.courseOtherLeadersEmails, {
+      select: 'id',
+      alertUser: true,
+    });
+
+    if (!currentUser) {
+      alert('알 수 없는 오류가 발생했습니다.');
+      return false;
+    }
+
+    if (otherLeadersIds.includes(currentUser.id)) {
+      alert('자기 자신을 공동 팀장으로 등록할 수 없습니다.');
+      return false;
+    }
+
+    if (otherLeadersIds.includes(null)) {
+      return false;
+    }
+
+    return true;
+  };
+
   const validationSignUp = () => {
     if (
       Object.values(requireInform).includes('') ||
@@ -286,9 +380,27 @@ export const CourseCreatePage = () => {
     return true;
   };
 
+  const getCourseOtherLeadersDetail = async () => {
+    if (typeof detailInform.courseOtherLeadersEmails === 'string') {
+      return [];
+    }
+
+    const details = (await getUserDetailsByEmails(detailInform.courseOtherLeadersEmails, {
+      select: 'all',
+      alertUser: false,
+    })) as Leader[];
+
+    const filteredDetails = details.filter(detail => detail !== null);
+
+    return filteredDetails;
+  };
+
   // 정보 등록
   const handleRegisterCourse = async () => {
     if (!currentUser) {
+      return;
+    }
+    if ((await validationOtherLeaders()) === false) {
       return;
     }
     if (!validationSignUp()) {
@@ -296,6 +408,14 @@ export const CourseCreatePage = () => {
       return;
     }
     try {
+      if (typeof detailInform.courseOtherLeadersEmails === 'string') {
+        return;
+      }
+
+      const otherLeadersDetail = await getCourseOtherLeadersDetail();
+      const otherLeadersIds = otherLeadersDetail.map(detail => detail.id);
+      const leadersIds = [currentUser.id, ...otherLeadersIds];
+
       // course Add
       const docRef = await addDoc(collection(db, 'courses'), {
         courseAttendance: [
@@ -303,6 +423,10 @@ export const CourseCreatePage = () => {
             attendance: defaultUserAttendance,
             id: uId,
           },
+          ...otherLeadersIds.map(id => ({
+            attendance: defaultUserAttendance,
+            id,
+          })),
         ],
         courseCheckAdmin: [uId],
         courseCurriculum: Object.values(curriInform),
@@ -318,7 +442,8 @@ export const CourseCreatePage = () => {
           emoji: currentUser?.emoji,
           comment: currentUser?.comment,
         },
-        courseMember: [uId],
+        courseOtherLeaders: otherLeadersDetail,
+        courseMember: leadersIds,
         courseStack: detailInform['courseStack'],
         language: selectedLanguages,
         // 1 : 세션, 2 : 스터디, 3: 프로젝트
@@ -330,28 +455,38 @@ export const CourseCreatePage = () => {
       });
 
       // user Update
-      const userRef = doc(db, 'users', currentUser.id);
-      await updateDoc(userRef, {
-        courseHistory: [
-          ...(currentUser.courseHistory ?? []),
-          {
-            courseInfo: detailInform['courseInfo'],
-            courseLeader: {
-              id: uId,
-              name: currentUser?.name,
-              emoji: currentUser?.emoji,
-              comment: currentUser?.comment,
+      const userUpdatePromises = leadersIds.map(async id => {
+        const userRef = doc(db, 'users', id);
+        const user = await getDoc(userRef);
+
+        if (!user.exists()) {
+          return;
+        }
+
+        await updateDoc(userRef, {
+          courseHistory: [
+            ...(user.data().courseHistory ?? []),
+            {
+              courseInfo: detailInform['courseInfo'],
+              courseLeader: {
+                id: uId,
+                name: currentUser.name,
+                emoji: currentUser.emoji,
+                comment: currentUser.comment,
+              },
+              courseName: requireInform['courseName'],
+              courseType: courseType,
+              difficulty: requireInform['difficulty'],
+              language: selectedLanguages,
+              requireTime: requireTime,
+              semester: CURRENT_SEMESTER,
+              id: docRef.id,
             },
-            courseName: requireInform['courseName'],
-            courseType: courseType,
-            difficulty: requireInform['difficulty'],
-            language: selectedLanguages,
-            requireTime: requireTime,
-            semester: CURRENT_SEMESTER,
-            id: docRef.id,
-          },
-        ],
+          ],
+        });
       });
+
+      await Promise.all(userUpdatePromises);
 
       alert(SUCCESS_REGISTER_COURSE);
       history.replace(`/course/detail/${docRef.id}`);
@@ -445,6 +580,22 @@ export const CourseCreatePage = () => {
           </StyledTitleBox>
           <StyledHorizontalLine />
           <StyledBodyBox>
+            <div>
+              <StyledSubTitle>함께할 공동 팀장</StyledSubTitle>
+              <StyledSelect>
+                <Select
+                  mode='tags'
+                  style={{ width: '100%' }}
+                  onChange={e => {
+                    onChangeDetailInform('courseOtherLeadersEmails', e);
+                  }}
+                  tokenSeparators={[',']}
+                  notFoundContent={null}
+                  placeholder='다른 팀장이 자신의 프로필에 등록한 이메일을 입력해주세요.'
+                />
+              </StyledSelect>
+            </div>
+
             <div>
               <StyledTitleBox style={{ marginLeft: '0' }}>
                 <StyledSubTitle style={{ marginBottom: '0' }}>기술 스택</StyledSubTitle>
