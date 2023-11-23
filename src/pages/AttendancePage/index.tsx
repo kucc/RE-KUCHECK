@@ -236,8 +236,8 @@ export const AttendancePage = () => {
             </StyledTermText>
           </StyledMenu>
           <StyledButtonWrapper>
-            {isCourseLeader ||
-              (isCourseOtherLeader &&
+            {(isCourseLeader ||
+              isCourseOtherLeader) &&
                 (isEditMode ? (
                   <StyledAttendanceButton onClick={submitUpdate} style={{ backgroundColor: RED }}>
                     완료
@@ -246,7 +246,7 @@ export const AttendancePage = () => {
                   <StyledAttendanceButton onClick={() => setIsEditMode(prev => !prev)}>
                     수정하기
                   </StyledAttendanceButton>
-                )))}
+                ))}
             <StyledDropDown>
               <Dropdown trigger={['click']} overlay={CoursesMenu} placement='bottomLeft'>
                 <div>
