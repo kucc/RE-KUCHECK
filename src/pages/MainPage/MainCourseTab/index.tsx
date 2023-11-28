@@ -49,19 +49,16 @@ export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) 
       sortArray.sort((a,b) => a.requireTime < b.requireTime ? -1 : 1);
     }
     if (sortCourse === '난이도순') {
-      const newSortArray =[]
-      for (let i = 0; i<sortArray.length ; i++){
-      if(sortArray[i].difficulty === "easy"){
-        newSortArray.push(sortArray[i])
-      }}
-      for (let i = 0; i<sortArray.length ; i++){
-      if(sortArray[i].difficulty === "medium"){
-        newSortArray.push(sortArray[i])
-      }}
-      for (let i = 0; i<sortArray.length ; i++){
-      if(sortArray[i].difficulty === "hard"){
-        newSortArray.push(sortArray[i])
-      }}
+      const newSortArray: any[] =[]
+      const difficultyList = ["easy", "medium", "hard"]
+      difficultyList.forEach(difficulty => {
+        sortArray.forEach(course => {
+          if (course.difficulty === difficulty){
+            newSortArray.push(course);
+          }
+        });
+      });
+
       sortArray = newSortArray;
     }
 
