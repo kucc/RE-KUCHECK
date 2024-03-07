@@ -38,7 +38,7 @@ export const StyledDropDown = styled.div`
 
 export const StyledSearchContainer = styled.div`
   position: relative;
-  margin: 0 10px;
+  margin: 0 5px;
   @media (max-width: 800px) {
     display: flex;
     order: 2;
@@ -55,6 +55,7 @@ export const StyledSearchButton = styled(Button)`
   background-color: white;
   border-radius: 30px;
   border: 1px solid ${LINE_GRAY};
+  margin: 0 5px;
   span {
     font-family: 'sdBo';
   }

@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 // import { useSelector } from "react-redux";
 import { EmptyBox, MainCourse } from '@components';
 
-import { courseTypeTabState, searchLanguageState, searchQueryState } from '@recoil';
+import { courseTypeTabState, searchLanguageState, searchQueryState, sortCourseState } from '@recoil';
 import { StyledCourseTab, StyledTab, StyledTabLine, StyledTabRightLine, StyledTabText } from '@utility/COMMON_STYLE';
 
 import { StyledCourseContainer } from './style';
@@ -15,9 +15,11 @@ export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) 
   const [courseList, setCourseList] = useState<Course[]>([]);
   const [searchQuery] = useRecoilState(searchQueryState);
   const [searchLanguage] = useRecoilState(searchLanguageState);
+  const [sortCourse] = useRecoilState(sortCourseState);
 
   useEffect(() => {
     let searchArray = mainCourseData;
+    
     if (courseTab !== 0) {
       searchArray = searchArray.filter(res => res.courseType === courseTab);
     }
@@ -37,8 +39,32 @@ export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) 
         res.language.find(element => element === searchLanguage),
       );
     }
-    setCourseList(searchArray);
-  }, [mainCourseData, searchQuery, searchLanguage, courseTab]);
+
+    //정렬
+    let sortArray = searchArray;
+    if (sortCourse === '타이틀순') {
+      sortArray.sort((a,b) => a.courseName < b.courseName ? -1 : 1);
+    }
+    if (sortCourse === '학점순') {
+      sortArray.sort((a,b) => a.requireTime < b.requireTime ? -1 : 1);
+    }
+    if (sortCourse === '난이도순') {
+      const newSortArray: any[] =[]
+      const difficultyList = ["easy", "medium", "hard"]
+      difficultyList.forEach(difficulty => {
+        sortArray.forEach(course => {
+          if (course.difficulty === difficulty){
+            newSortArray.push(course);
+          }
+        });
+      });
+
+      sortArray = newSortArray;
+    }
+
+    setCourseList([...sortArray]);
+
+  }, [mainCourseData, searchQuery, searchLanguage, sortCourse, courseTab]);
 
   return (
     <StyledCourseContainer>
