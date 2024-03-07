@@ -1,4 +1,4 @@
-export const CURRENT_SEMESTER = '23-2';
+export const CURRENT_SEMESTER = '24-1';
 
 export const timeTableSelectedDefault = [
   [false, false, false, false, false, false, false, false],
@@ -147,7 +147,13 @@ export const timeTableTimeList = [
   },
 ];
 
-export const word = { attend: '출석', late: '지각', absent: '결석', excusedAbsent: '유고결석', null: '-' };
+export const word = {
+  attend: '출석',
+  late: '지각',
+  absent: '결석',
+  excusedAbsent: '유고결석',
+  null: '-',
+};
 
 export const defaultUserAttendance = [3, 3, 3, 3, 3, 3, 3, 3];
 
