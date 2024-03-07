@@ -6,13 +6,12 @@ import { useHistory } from 'react-router-dom';
 import { CancelModal } from '@components';
 
 import { db } from '@config';
-import { useGetEnrollmentTerm } from '@hooks';
+import { useGetSemester, useGetEnrollmentTerm } from '@hooks';
 import { useGetProfile } from '@hooks/use-get-profile';
 import {
   BLACK,
   COMMON_ALERT,
   COURSE_MEMBER_ALREADY_FULLED,
-  CURRENT_SEMESTER,
   ERROR_ALERT,
   FAILED_TO_APPLY_COURSE,
   FALIED_TO_DROP_COURSE,
@@ -49,8 +48,9 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
   const history = useHistory();
 
   const { isEnrollmentTerm } = useGetEnrollmentTerm();
-
+  
   const { user, resetUser } = useGetProfile();
+  const { currentSemester } = useGetSemester();
   const [isLoading, setIsLoading] = useState(false);
   const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
 
@@ -343,7 +343,7 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
             </StyledCourseCase>
           </StyledCourseBottom>
         </StyledCourseInfo>
-        {semester === CURRENT_SEMESTER && renderButton()}
+        {semester === currentSemester && renderButton()}
       </StyledMainCourseContainer>
       {isCancelModalVisible && (
         <CancelModal isPromptModalOpened={setIsCancelModalVisible} onCancel={dropCourse} />

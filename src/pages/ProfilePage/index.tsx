@@ -10,14 +10,13 @@ import { MainContainer } from '@pages/MainPage/style';
 
 import { getUser } from '@apis';
 import { QUERY_KEY } from '@constants';
-import { useGetProfile } from '@hooks/use-get-profile';
+import { useGetSemester, useGetProfile } from '@hooks';
 import { PATH } from '@utility/COMMON_FUNCTION';
 import {
   StyledBackArrow,
   StyledBackArrowWrapper,
   StyledCommonPcLayout,
 } from '@utility/COMMON_STYLE';
-import { CURRENT_SEMESTER } from '@utility/CONSTANTS';
 
 import {
   StyledComment,
@@ -49,6 +48,7 @@ type CourseTab = 'past' | 'now';
 export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   const userId = match.params.id;
   const { user: currentUser, isLoading: isCurrentUserLoading } = useGetProfile();
+  const { currentSemester } = useGetSemester();
 
   const { isLoading, isError, data } = useQuery({
     queryFn: getUser,
@@ -63,8 +63,8 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   useEffect(() => {
     if (!data) return;
     const courseHistory = data.courseHistory ?? [];
-    const courseNow = courseHistory.filter(course => course.semester === CURRENT_SEMESTER);
-    const coursePast = courseHistory.filter(course => course.semester !== CURRENT_SEMESTER);
+    const courseNow = courseHistory.filter(course => course.semester === currentSemester);
+    const coursePast = courseHistory.filter(course => course.semester !== currentSemester);
     if (courseTab === 'now') {
       setCourseSemester(courseNow);
     } else if (courseTab === 'past') {
