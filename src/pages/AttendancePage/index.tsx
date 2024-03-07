@@ -53,7 +53,7 @@ interface MemberData {
 export const AttendancePage = () => {
   const { user } = useGetProfile();
   const history = useHistory();
-  const { currentSemester } = useGetSemester();
+  const { checkedSemester } = useGetSemester();
 
   const [selectedCourseId, setSelectedCourseId] = useState('');
   const [selectedCourseIndex, setSelectedCourseIndex] = useRecoilState(selectedCourseState);
@@ -89,8 +89,8 @@ export const AttendancePage = () => {
     setIsLoading(false);
   };
 
-  const fetchAllCourses = async (currentSemester: string) => {
-    const q = query(collection(db, 'courses'), where('semester', '==', currentSemester));
+  const fetchAllCourses = async (checkedSemester: string) => {
+    const q = query(collection(db, 'courses'), where('semester', '==', checkedSemester));
 
     const querySnapshot = await getDocs(q);
     const newCourses = [];
@@ -130,10 +130,10 @@ export const AttendancePage = () => {
   };
 
   useEffect(() => {
-    if (currentSemester) {
-      fetchAllCourses(currentSemester);
+    if (checkedSemester) {
+      fetchAllCourses(checkedSemester);
     }
-  }, [currentSemester]);
+  }, [checkedSemester]);
 
   useEffect(() => {
     if (selectedCourseId.length) {
