@@ -15,10 +15,9 @@ import { useHistory } from 'react-router';
 
 import { db } from '@config';
 import { LanguageList } from '@constants';
-import { useGetProfile, useRedirectToMain } from '@hooks';
+import { useGetSemester, useGetProfile, useRedirectToMain } from '@hooks';
 import {
   COMMON_ALERT,
-  CURRENT_SEMESTER,
   ERROR_ALERT,
   FORM_IS_NOT_FULL,
   NOT_REGISTER_TERM,
@@ -56,6 +55,7 @@ import {
 export const CourseCreatePage = () => {
   const [selectedLanguages, setSelectedLanguages] = useState<[] | Language[]>([]);
   const [mainLanguageImg, setMainLanguageImg] = useState('Etc');
+  const { currentSemester } = useGetSemester();
   const { user: currentUser } = useGetProfile();
   const uId = currentUser?.id;
 
@@ -451,7 +451,7 @@ export const CourseCreatePage = () => {
         difficulty: requireInform['difficulty'],
         maxMemberNum: Number(detailInform['maxMemberNum']),
         requireTime: requireTime,
-        semester: CURRENT_SEMESTER,
+        semester: currentSemester,
       });
 
       // user Update
@@ -479,7 +479,7 @@ export const CourseCreatePage = () => {
               difficulty: requireInform['difficulty'],
               language: selectedLanguages,
               requireTime: requireTime,
-              semester: CURRENT_SEMESTER,
+              semester: currentSemester,
               id: docRef.id,
             },
           ],
