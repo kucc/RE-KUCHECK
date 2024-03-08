@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { CancelModal } from '@components';
 
 import { db } from '@config';
-import { useGetSemester, useGetEnrollmentTerm } from '@hooks';
+import { useGetEnrollmentTerm } from '@hooks';
 import { useGetProfile } from '@hooks/use-get-profile';
 import {
   BLACK,
@@ -44,13 +44,20 @@ import {
   StyledOtherLeadersName,
 } from './style';
 
-export const MainCourse = ({ course, profileId }: { course: Course; profileId?: string }) => {
+export const MainCourse = ({
+  course,
+  profileId,
+  currentSemester,
+}: {
+  course: Course;
+  profileId?: string;
+  currentSemester: string;
+}) => {
   const history = useHistory();
 
   const { isEnrollmentTerm } = useGetEnrollmentTerm();
-  
+
   const { user, resetUser } = useGetProfile();
-  const { currentSemester } = useGetSemester();
   const [isLoading, setIsLoading] = useState(false);
   const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
 
@@ -67,7 +74,6 @@ export const MainCourse = ({ course, profileId }: { course: Course; profileId?: 
     id: courseId,
     maxMemberNum,
     courseMember,
-    courseAttendance,
   } = course;
 
   const onClickApplication = async () => {
