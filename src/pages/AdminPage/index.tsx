@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { saveAs } from 'file-saver';
-import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router';
 
 import { db } from '@config';
-import { useGetProfile, useRedirectToMain } from '@hooks';
+import { useGetSemester, useGetProfile, useRedirectToMain } from '@hooks';
 import { ONLY_ADMIN } from '@utility/ALERT_MESSAGE';
 
 import { AddUser } from './AddUser';
@@ -16,17 +16,13 @@ export const AdminPage = () => {
   const history = useHistory();
   const [data, setData] = useState('');
   const [attendanceData, setAttendanceData] = useState<any>({});
-  const [currentSemester, setCurrentSemester] = useState('');
+  const [newSemester, setNewSemester] = useState<string>("");
+  const { currentSemester, setCurrentSemester } = useGetSemester();
 
   useRedirectToMain();
 
   useEffect(() => {
     async function getCSVData() {
-      const commonInfoRef = doc(db, 'common', 'commonInfo');
-
-      const { currentSemester } = (await getDoc(commonInfoRef)).data() as any;
-      setCurrentSemester(currentSemester);
-
       const userObject: any = {};
       const attendanceObject: any = {};
       // userName - userId match object
@@ -104,6 +100,18 @@ export const AdminPage = () => {
     );
   };
 
+  const changeSemester = async () => {
+    const regexp = new RegExp(/^\d{2}-[1-2]{1}$/);
+    if (!regexp.test(newSemester)) {
+      alert("형식에 맞춰 작성해주세요");
+      return;
+    }
+    const docRef = doc(db, 'common', 'commonInfo');
+    await updateDoc(docRef, { currentSemester: newSemester })
+    setCurrentSemester(newSemester);
+    alert("변경되었습니다.")
+  }
+
   useEffect(() => {
     if (user && user.role !== '관리자') {
       alert(ONLY_ADMIN);
@@ -137,6 +145,14 @@ export const AdminPage = () => {
       </button>
       <h1 style={{ marginTop: 30 }}>3. 강의 넣어주기</h1>
       <AddUser />
-    </div>
+      <h1 style={{ marginTop: 30 }}>4. 새학기 등록</h1>
+      <h3>현재 학기: {currentSemester} </h3>
+      <h3>바꿀 학기:
+        <input type="text" placeholder={currentSemester || '24-1'} value={newSemester} onChange={(e) => setNewSemester(e.target.value)} />
+        <button onClick={changeSemester} style={{ border: '1px solid black', padding: 20 }}>
+          변경
+        </button>
+      </h3>
+    </div >
   );
 };

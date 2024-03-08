@@ -19,14 +19,14 @@ export const MainSearch = () => {
   const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
   const [searchLanguage, setSearchLanguage] = useRecoilState(searchLanguageState);
 
-  const { currentSemester, setCurrentSemester, pastSemsters } = useGetSemester();
+  const { checkedSemester, setCheckedSemester, allSemesters } = useGetSemester();
 
   const SemesterMenu = (
     <Menu>
-      {pastSemsters.map((semester: string, key) => {
+      {allSemesters.map((semester: string, key) => {
         return (
           <Menu.Item key={key}>
-            <a onClick={() => setCurrentSemester(semester)}>20{semester}학기</a>
+            <a onClick={() => setCheckedSemester(semester)}>20{semester}학기</a>
           </Menu.Item>
         );
       })}
@@ -58,7 +58,7 @@ export const MainSearch = () => {
     <StyledMainSearchContainer>
       <StyledDropDown>
         <Dropdown overlay={SemesterMenu} placement='bottomLeft'>
-          <StyledSearchButton>20{currentSemester}학기</StyledSearchButton>
+          <StyledSearchButton>20{checkedSemester}학기</StyledSearchButton>
         </Dropdown>
       </StyledDropDown>
       <StyledSearchContainer>
