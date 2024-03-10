@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { RouteComponentProps } from 'react-router';
 import { useHistory } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 import { EmptyBox, Loading, MainCourse } from '@components';
 import { ProfileModal } from '@components/ProfileModal';
@@ -10,7 +11,8 @@ import { MainContainer } from '@pages/MainPage/style';
 
 import { getUser } from '@apis';
 import { QUERY_KEY } from '@constants';
-import { useGetSemester, useGetProfile } from '@hooks';
+import { useGetProfile, useGetSemester } from '@hooks';
+import { courseTabState } from '@recoil';
 import { PATH } from '@utility/COMMON_FUNCTION';
 import {
   StyledBackArrow,
@@ -38,10 +40,7 @@ import {
   StyledUserDetailComment,
   StyledUserEmoji,
   StyledUserInfoContainer,
-  StyledUserRole,
 } from './style';
-import { useRecoilState } from 'recoil';
-import { courseTabState } from '@recoil';
 
 type CourseTab = 'past' | 'now';
 
@@ -180,9 +179,15 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
           <StyledLine />
           <StyledMainCourseWrapper>
             {courseSemester?.length === 0 && <EmptyBox />}
-            {courseSemester?.map((course: Course, i: number) => (
-              <MainCourse course={course} key={i} profileId={userId} />
-            ))}
+            {currentSemester !== null &&
+              courseSemester?.map((course: Course, i: number) => (
+                <MainCourse
+                  course={course}
+                  key={i}
+                  profileId={userId}
+                  currentSemester={currentSemester}
+                />
+              ))}
           </StyledMainCourseWrapper>
         </StyledCourseContainer>
       </StyledCommonPcLayout>

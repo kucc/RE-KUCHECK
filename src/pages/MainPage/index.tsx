@@ -13,22 +13,22 @@ import { MainContainer } from './style';
 
 export const MainPage = () => {
   // const dispatch = useDispatch();
-  const { currentSemester } = useGetSemester();
+  const { checkedSemester } = useGetSemester();
 
   const [data, setData] = useState<Course[] | null>(null);
 
-  const getData = async (currentSemester: string) => {
-    const unsubscribe = await getCourses(currentSemester, courses => setData(courses));
+  const getData = async (checkedSemester: string) => {
+    const unsubscribe = await getCourses(checkedSemester, courses => setData(courses));
     return () => {
       unsubscribe();
     };
   };
 
   useEffect(() => {
-    if (currentSemester) {
-      getData(currentSemester);
+    if (checkedSemester) {
+      getData(checkedSemester);
     }
-  }, [currentSemester]);
+  }, [checkedSemester]);
 
   if (!data) return <Loading />;
 

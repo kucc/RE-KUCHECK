@@ -5,13 +5,21 @@ import { useRecoilState } from 'recoil';
 // import { useSelector } from "react-redux";
 import { EmptyBox, MainCourse } from '@components';
 
+import { useGetSemester } from '@hooks';
 import { courseTypeTabState, searchLanguageState, searchQueryState } from '@recoil';
-import { StyledCourseTab, StyledTab, StyledTabLine, StyledTabRightLine, StyledTabText } from '@utility/COMMON_STYLE';
+import {
+  StyledCourseTab,
+  StyledTab,
+  StyledTabLine,
+  StyledTabRightLine,
+  StyledTabText,
+} from '@utility/COMMON_STYLE';
 
 import { StyledCourseContainer } from './style';
 
 export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) => {
   const [courseTab, setCourseTab] = useRecoilState(courseTypeTabState);
+  const { currentSemester } = useGetSemester();
   const [courseList, setCourseList] = useState<Course[]>([]);
   const [searchQuery] = useRecoilState(searchQueryState);
   const [searchLanguage] = useRecoilState(searchLanguageState);
@@ -66,9 +74,12 @@ export const MainCourseTab = ({ mainCourseData }: { mainCourseData: Course[] }) 
       </StyledCourseTab>
       {courseList.length === 0 && <EmptyBox />}
       {courseList.length > 0 &&
+        currentSemester !== null &&
         courseList.map(res => {
-          if (courseTab === 0) return <MainCourse course={res} key={res.id} />;
-          else if (courseTab === res.courseType) return <MainCourse course={res} key={res.id} />;
+          if (courseTab === 0)
+            return <MainCourse course={res} key={res.id} currentSemester={currentSemester} />;
+          else if (courseTab === res.courseType)
+            return <MainCourse course={res} key={res.id} currentSemester={currentSemester} />;
         })}
     </StyledCourseContainer>
   );
