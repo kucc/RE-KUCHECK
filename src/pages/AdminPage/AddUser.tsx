@@ -4,6 +4,7 @@ import { Button, Select } from 'antd';
 import { arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc } from 'firebase/firestore';
 
 import { db } from '@config';
+import { defaultUserAttendance } from '@utility/CONSTANTS';
 
 const { Option } = Select;
 export const AddUser = () => {
@@ -37,23 +38,21 @@ export const AddUser = () => {
   };
 
   const onButtonClicked = async () => {
-    const userDocRef = doc(db, 'users', selectedUser);
-    const courseDocRef = doc(db, 'courses', selectedCourse);
-    const selectedCourseData = (await getDoc(courseDocRef)).data() as any;
+    const userRef = doc(db, 'users', selectedUser);
+    const courseRef = doc(db, 'courses', selectedCourse);
+    const selectedCourseData = (await getDoc(courseRef)).data() as any;
+    const userId = selectedUser;
 
-    await updateDoc(userDocRef, {
-      courseHistory: arrayUnion({
-        selectedCourseData,
-        id: courseDocRef.id,
-      }),
+    await updateDoc(userRef, {
+      courseHistory: arrayUnion({ ...selectedCourseData, id: selectedCourse }),
     });
-
-    await updateDoc(courseDocRef, {
+    // course Update
+    await updateDoc(courseRef, {
+      courseMember: arrayUnion(userId),
       courseAttendance: arrayUnion({
-        attendance: [3, 3, 3, 3, 3, 3, 3, 3],
-        id: userDocRef.id,
+        id: userId,
+        attendance: defaultUserAttendance,
       }),
-      courseMember: arrayUnion(userDocRef.id),
     });
 
     alert('성공!');
