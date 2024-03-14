@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { BLACK, RED } from '@utility';
+import { BLACK, RED, WHITE } from '@utility';
 
 export const StyledTopHeaderContainer = styled.div`
   margin-left: auto;
@@ -28,6 +28,22 @@ export const StyledTopHeader = styled.div`
   align-items: center;
   margin: 0 auto;
   padding: 0px 16px;
+`;
+
+export const StyledDebugMode = styled.div`
+  position: fixed;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-right: 80px solid transparent;
+  border-top: 80px solid ${RED};
+`;
+
+export const StyledDebugModeText = styled.div`
+  position: fixed;
+  top: 15px;
+  transform: rotate(-45deg);
+  color: ${WHITE};
 `;
 
 export const StyledMainLogo = styled.img`
