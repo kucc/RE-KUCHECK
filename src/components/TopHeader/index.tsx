@@ -11,6 +11,8 @@ import { StyledDownArrow } from '@utility/COMMON_STYLE';
 
 import { Header } from '..';
 import {
+  StyledDebugMode,
+  StyledDebugModeText,
   StyledDropContent,
   StyledLeftContainer,
   StyledLoginLink,
@@ -51,6 +53,12 @@ export const TopHeader = () => {
   return (
     <>
       <StyledTopHeaderContainer>
+        {process.env.REACT_APP_PROJECT_ID === 'kucc-dev-43149' && (
+          <StyledDebugMode>
+            <StyledDebugModeText>debug🐛</StyledDebugModeText>
+          </StyledDebugMode>
+        )}
+
         <StyledTopHeader>
           <StyledMainLogo
             src={'/img/logo/type-1-3.svg'}
