@@ -168,6 +168,7 @@ function JoinForm() {
         value={instagram_id}
         onChange={onChange}
       />
+
       <LoadingButton
         style={{
           width: '220px',
@@ -176,7 +177,13 @@ function JoinForm() {
           margin: '18% auto',
         }}
         text='JOIN'
-        onClick={handleSignUp}
+        onClick={() =>
+          window.open(
+            process.env.REACT_APP_SSO_HOST,
+            '',
+            'width=400,height=600,toolbar=no,menubar=no,scrollbars=no,resizable=no',
+          )
+        }
         isLoading={isLoading}
         isActive={validationSignUp()}
       />

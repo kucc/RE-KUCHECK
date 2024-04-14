@@ -1,7 +1,21 @@
 import { useState } from 'react';
 
 import { FirebaseError } from 'firebase/app';
-import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  sendPasswordResetEmail,
+  signInWithCustomToken,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
 import Modal from 'react-modal';
 import { useHistory } from 'react-router';
 
@@ -9,9 +23,9 @@ import { useHistory } from 'react-router';
 // import { loginRequest } from '@redux/actions/_member_action';
 import { AuthInputWithLabel, LoadingButton } from '@components';
 
-import { auth } from '@config';
+import { auth, db } from '@config';
 import { GRAY, RED, WHITE } from '@utility/COLORS';
-import { PATH } from '@utility/COMMON_FUNCTION';
+import { PATH, RandomEmoji } from '@utility/COMMON_FUNCTION';
 
 import { StyledForm, StyledSignUpButton } from './style';
 
@@ -43,7 +57,67 @@ export const LoginForm = () => {
 
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const ssoResult = await fetch(
+        `${process.env.REACT_APP_SSO_HOST}/api/auth/firebase`,
+
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          body: JSON.stringify({ email, password, type: 'playground' }),
+        },
+      );
+
+      if (ssoResult.status === 404) {
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+          history.push('/migrate');
+        } catch (e) {
+          alert('해당 이메일로 가입한 유저가 존재하지 않습니다.');
+        }
+      }
+
+      const {
+        firebaseToken,
+      }: {
+        firebaseToken: string;
+      } = await ssoResult.json();
+      const res = await signInWithCustomToken(auth, firebaseToken);
+      const user = await res.user.getIdTokenResult();
+
+      const findUserQuery = await query(
+        collection(db, 'users'),
+        where('email', '==', user.claims.email),
+      );
+
+      const findUser = await getDocs(findUserQuery);
+
+      if (findUser.size > 0) {
+        await updateDoc(doc(db, 'users', findUser.docs[0].id), {
+          name: user.claims.name,
+          comment: user.claims.description,
+          detailComment: user.claims.detailDescription,
+          link: user.claims.github,
+          instaLink: user.claims.instagram,
+        });
+        return;
+      }
+
+      console.log(user.claims.uid);
+
+      await setDoc(doc(db, 'users', user.claims.uid), {
+        email: user.claims.email,
+        name: user.claims.name,
+        comment: user.claims.description,
+        detailComment: user.claims.detailDescription,
+        link: user.claims.github,
+        instaLink: user.claims.instagram,
+        role: '준회원',
+        emoji: RandomEmoji(),
+        courseHistory: [],
+      });
+
       history.replace('/');
     } catch (e) {
       const error = e as FirebaseError;
@@ -108,7 +182,16 @@ export const LoginForm = () => {
           isLoading={isLoading}
           isActive={true}
         />
-        <StyledSignUpButton to={PATH.signUp}>JOIN</StyledSignUpButton>
+        <StyledSignUpButton
+          onClick={() =>
+            window.open(
+              process.env.REACT_APP_SSO_HOST,
+              '',
+              'width=400,height=600,toolbar=no,menubar=no,scrollbars=no,resizable=no',
+            )
+          }>
+          JOIN
+        </StyledSignUpButton>
         <div
           style={{
             marginTop: 30,

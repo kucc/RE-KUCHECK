@@ -17,6 +17,7 @@ import {
   ProfilePage,
   TimeTablePage,
 } from '@pages';
+import MigratePage from '@pages/MigratePage';
 
 import './App.less';
 import GlobalStyle from './GlobalStyle';
@@ -38,6 +39,7 @@ function App() {
           <TopHeader />
           <Sidebar>
             <Switch>
+              <Route exact path={PATH.migrate} component={MigratePage} />
               <Route exact path={PATH.login} component={LoginPage} />
               <Route path={PATH.signUp} component={JoinPage} />
               <Route exact path={PATH.main} component={MainPage} />
