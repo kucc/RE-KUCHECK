@@ -19,13 +19,11 @@ import {
 import Modal from 'react-modal';
 import { useHistory } from 'react-router';
 
-// import { useDispatch, useSelector } from "react-redux";
-// import { loginRequest } from '@redux/actions/_member_action';
 import { AuthInputWithLabel, LoadingButton } from '@components';
 
 import { auth, db } from '@config';
 import { GRAY, RED, WHITE } from '@utility/COLORS';
-import { PATH, RandomEmoji } from '@utility/COMMON_FUNCTION';
+import { RandomEmoji } from '@utility/COMMON_FUNCTION';
 
 import { StyledForm, StyledSignUpButton } from './style';
 
@@ -71,7 +69,7 @@ export const LoginForm = () => {
 
       if (ssoResult.status === 404) {
         await signInWithEmailAndPassword(auth, email, password);
-        history.push('/migrate');
+        history.replace('/migrate');
       }
 
       const {

@@ -2,7 +2,6 @@ import { ChangeEvent, useState } from 'react';
 
 import { useHistory } from 'react-router';
 
-import { AuthDescription } from '@components/AuthDescription';
 import { LoadingButton } from '@components/Buttons';
 import { StyledAuthContainer, StyledCenterContainer } from '@pages/LoginPage/style';
 
@@ -11,26 +10,16 @@ import { useGetProfile } from '@hooks';
 import { StyledInput, StyledSelect } from './style';
 
 export default function MigratePage() {
-  function isSmallScreen(): boolean {
-    if (typeof window !== 'undefined') {
-      return window.innerWidth < 800;
-    }
-    return false;
-  }
-
+  const { user, isLoading: isUserLoading } = useGetProfile();
+  const history = useHistory();
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
   const [studentID, setStudentID] = useState('');
-  const [registeredYear, setRegisteredYear] = useState('');
-  const [registeredSemeseter, setRegisteredSemeseter] = useState('');
+  const [registeredYear, setRegisteredYear] = useState('2024');
+  const [registeredSemeseter, setRegisteredSemeseter] = useState('1');
 
   const [isLoading, setIsLoading] = useState(false);
-
-  const { user } = useGetProfile();
-  const history = useHistory();
-
-  if (!user) history.replace('/login');
 
   const onClickMigrate = async () => {
     if (!user) return;
@@ -54,12 +43,19 @@ export default function MigratePage() {
           instagram: user.instaLink,
         }),
       });
+      alert('계정 이전이 완료되었습니다.');
+      history.replace('/');
     } catch (e) {
       console.log(e);
     } finally {
       setIsLoading(false);
     }
   };
+
+  if (isUserLoading) return <div />;
+  if (!user) {
+    history.replace('/login');
+  }
 
   return (
     <StyledCenterContainer>
@@ -125,7 +121,8 @@ export default function MigratePage() {
               width: '100%',
             }}>
             <StyledSelect
-              onChange={(e: ChangeEvent<HTMLSelectElement>) => setRegisteredYear(e.target.value)}>
+              onChange={(e: ChangeEvent<HTMLSelectElement>) => setRegisteredYear(e.target.value)}
+              value={registeredYear}>
               <option value='' disabled>
                 가입 년도
               </option>
@@ -138,7 +135,8 @@ export default function MigratePage() {
             <StyledSelect
               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                 setRegisteredSemeseter(e.target.value)
-              }>
+              }
+              value={registeredSemeseter}>
               <option value='' disabled>
                 학기
               </option>
