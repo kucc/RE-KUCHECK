@@ -55,17 +55,13 @@ export const LoginForm = () => {
 
     setIsLoading(true);
     try {
-      const ssoResult = await fetch(
-        `${process.env.REACT_APP_SSO_HOST}/api/auth/firebase`,
-
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-          body: JSON.stringify({ email, password, type: 'playground' }),
+      const ssoResult = await fetch(`${process.env.REACT_APP_SSO_HOST}/api/auth/firebase`, {
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        method: 'POST',
+        body: JSON.stringify({ email, password, type: 'playground' }),
+      });
 
       if (ssoResult.status === 404) {
         await signInWithEmailAndPassword(auth, email, password);
@@ -110,6 +106,7 @@ export const LoginForm = () => {
         role: '준회원',
         emoji: RandomEmoji(),
         courseHistory: [],
+        migrated: true,
       });
 
       history.replace('/');

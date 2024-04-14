@@ -1,10 +1,12 @@
 import { ChangeEvent, useState } from 'react';
 
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router';
 
 import { LoadingButton } from '@components/Buttons';
 import { StyledAuthContainer, StyledCenterContainer } from '@pages/LoginPage/style';
 
+import { db } from '@config';
 import { useGetProfile } from '@hooks';
 
 import { StyledInput, StyledSelect } from './style';
@@ -43,6 +45,7 @@ export default function MigratePage() {
           instagram: user.instaLink,
         }),
       });
+      await updateDoc(doc(db, 'users', user.id), { migrated: true });
       alert('계정 이전이 완료되었습니다.');
       history.replace('/');
     } catch (e) {
@@ -53,7 +56,7 @@ export default function MigratePage() {
   };
 
   if (isUserLoading) return <div />;
-  if (!user) {
+  if (!user || user.migrated) {
     history.replace('/login');
   }
 
