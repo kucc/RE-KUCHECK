@@ -70,12 +70,8 @@ export const LoginForm = () => {
       );
 
       if (ssoResult.status === 404) {
-        try {
-          await signInWithEmailAndPassword(auth, email, password);
-          history.push('/migrate');
-        } catch (e) {
-          alert('해당 이메일로 가입한 유저가 존재하지 않습니다.');
-        }
+        await signInWithEmailAndPassword(auth, email, password);
+        history.push('/migrate');
       }
 
       const {

@@ -30,7 +30,7 @@ export default function MigratePage() {
   const { user } = useGetProfile();
   const history = useHistory();
 
-  // if (!user) history.replace('/login');
+  if (!user) history.replace('/login');
 
   const onClickMigrate = async () => {
     if (!user) return;
