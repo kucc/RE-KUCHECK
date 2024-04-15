@@ -6,7 +6,16 @@ import {
   signInWithCustomToken,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { collection, doc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
 import Modal from 'react-modal';
 import { useHistory } from 'react-router';
 
@@ -68,25 +77,10 @@ export const LoginForm = () => {
       const res = await signInWithCustomToken(auth, firebaseToken);
       const user = await res.user.getIdTokenResult();
 
-      const findUserQuery = await query(
-        collection(db, 'users'),
-        where('email', '==', user.claims.email),
-      );
-
-      const findUser = await getDocs(findUserQuery);
-
-      if (findUser.size > 0) {
-        await updateDoc(doc(db, 'users', findUser.docs[0].id), {
-          name: user.claims.name,
-          comment: user.claims.description,
-          detailComment: user.claims.detailDescription,
-          link: user.claims.github,
-          instaLink: user.claims.instagram,
-        });
+      const findUser = await getDoc(doc(db, 'users', user.claims.uid));
+      if (findUser.exists()) {
         return;
       }
-
-      console.log(user.claims.uid);
 
       await setDoc(doc(db, 'users', user.claims.uid), {
         email: user.claims.email,
