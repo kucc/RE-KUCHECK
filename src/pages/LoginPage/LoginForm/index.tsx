@@ -1,21 +1,7 @@
 import { useState } from 'react';
 
-import { FirebaseError } from 'firebase/app';
-import {
-  sendPasswordResetEmail,
-  signInWithCustomToken,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  setDoc,
-  updateDoc,
-  where,
-} from 'firebase/firestore';
+import { sendPasswordResetEmail, signInWithCustomToken } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import Modal from 'react-modal';
 import { useHistory } from 'react-router';
 
@@ -45,6 +31,8 @@ export const LoginForm = () => {
       [name]: value,
     });
   };
+
+  const [resendEmail, setResendEmail] = useState('');
 
   const onClickLogin = async () => {
     if (isLoading) return;
@@ -104,9 +92,21 @@ export const LoginForm = () => {
   };
 
   const onClickSendMail = async () => {
-    await sendPasswordResetEmail(auth, email);
-    setModal(false);
-    alert('전송했습니다!');
+    try {
+      await fetch(`${process.env.REACT_APP_SSO_HOST}/api/auth/requestReset`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify({ email: resendEmail }),
+      });
+      alert('이메일을 전송했습니다.');
+    } catch (e) {
+      const error = e as Error;
+      alert(error.message);
+    } finally {
+      setModal(false);
+    }
   };
 
   const onKeyPress = (e: any) => {
@@ -204,9 +204,11 @@ export const LoginForm = () => {
         <div style={{ fontWeight: 700, fontSize: 20, marginBottom: 30 }}>이메일 전송하기</div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <input
-            value={email}
+            value={resendEmail}
             placeholder='이메일'
-            onChange={onChange}
+            onChange={e => {
+              setResendEmail(e.target.value);
+            }}
             style={{ border: 'none', height: 30, paddingLeft: 10, borderRadius: 10, width: 300 }}
           />
           <button
