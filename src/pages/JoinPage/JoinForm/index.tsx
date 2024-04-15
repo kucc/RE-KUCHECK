@@ -61,50 +61,6 @@ function JoinForm() {
     return true;
   };
 
-  const handleSignUp = async () => {
-    if (isLoading) return;
-    if (!validationSignUp()) {
-      alert(FORM_IS_NOT_FULL);
-      return;
-    }
-
-    if (password !== passwordConfirm) {
-      alert(PASSWORD_DOSE_NOT_MATCH);
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
-      const uid = result.user.uid;
-      if (!result.user.email) throw new Error();
-
-      await setDoc(doc(db, 'users', uid), {
-        email,
-        name,
-        comment,
-        detailComment: detail_comment,
-        link: github_id,
-        instaLink: instagram_id,
-        role: '준회원',
-        emoji,
-        courseHistory: [],
-      });
-      alert('회원 가입에 성공했습니다!');
-      history.replace('/');
-    } catch (e) {
-      const error = e as FirebaseError;
-
-      if (error.code === 'auth/email-already-in-use') {
-        alert('이미 해당 이메일로 가입한 계정이 있습니다.');
-      } else {
-        alert('알 수 없는 문제로 가입에 실패했습니다. KUCC 관리자에게 문의해주세요.');
-      }
-      setIsLoading(false);
-    }
-  };
-
   return (
     <StyledForm>
       <AuthInputWithLabel
