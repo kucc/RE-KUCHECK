@@ -94,7 +94,7 @@ export const LoginForm = () => {
         courseHistory: [],
       });
 
-      history.replace('/');
+      history.replace(`/profile/${user.claims.uid}`);
     } catch (e) {
       const error = e as Error;
       alert(error.message);

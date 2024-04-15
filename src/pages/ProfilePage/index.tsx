@@ -119,22 +119,26 @@ export const ProfilePage = ({ match }: RouteComponentProps<{ id: string }>) => {
                   {data.email}
                 </StyledSocialLink>
               </StyledSocialBox>
-              <StyledSocialBox>
-                <img src={`${process.env.PUBLIC_URL}/img/social/github.svg`} alt='GitHub 로고' />
-                <StyledSocialLink href={data.link} target='_blank'>
-                  {/* {data.link} */}
-                  {github_id}
-                </StyledSocialLink>
-              </StyledSocialBox>
-              <StyledSocialBox>
-                <img
-                  src={`${process.env.PUBLIC_URL}/img/social/instagram.svg`}
-                  alt='Instagram 로고'
-                />
-                <StyledSocialLink href={instagram} target='_blank'>
-                  @{data.instaLink}
-                </StyledSocialLink>
-              </StyledSocialBox>
+              {github_id && (
+                <StyledSocialBox>
+                  <img src={`${process.env.PUBLIC_URL}/img/social/github.svg`} alt='GitHub 로고' />
+                  <StyledSocialLink href={data.link} target='_blank'>
+                    {/* {data.link} */}
+                    {github_id}
+                  </StyledSocialLink>
+                </StyledSocialBox>
+              )}
+              {data.instaLink && (
+                <StyledSocialBox>
+                  <img
+                    src={`${process.env.PUBLIC_URL}/img/social/instagram.svg`}
+                    alt='Instagram 로고'
+                  />
+                  <StyledSocialLink href={instagram} target='_blank'>
+                    @{data.instaLink}
+                  </StyledSocialLink>
+                </StyledSocialBox>
+              )}
             </StyledSocialContainer>
           </StyledUserContainer>
           {uId === userId && (
