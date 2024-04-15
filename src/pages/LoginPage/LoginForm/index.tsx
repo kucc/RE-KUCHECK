@@ -6,16 +6,7 @@ import {
   signInWithCustomToken,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  setDoc,
-  updateDoc,
-  where,
-} from 'firebase/firestore';
+import { collection, doc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
 import Modal from 'react-modal';
 import { useHistory } from 'react-router';
 
@@ -60,12 +51,13 @@ export const LoginForm = () => {
           'Content-Type': 'application/json',
         },
         method: 'POST',
-        body: JSON.stringify({ email, password, type: 'playground' }),
+        body: JSON.stringify({ email, password, type: 'lms' }),
       });
 
       if (ssoResult.status === 404) {
-        await signInWithEmailAndPassword(auth, email, password);
-        history.replace('/migrate');
+        throw new Error('해당 이메일로 가입한 유저가 존재하지 않습니다.');
+      } else if (ssoResult.status === 401) {
+        throw new Error('비밀번호가 일치하지 않습니다.');
       }
 
       const {
@@ -106,19 +98,12 @@ export const LoginForm = () => {
         role: '준회원',
         emoji: RandomEmoji(),
         courseHistory: [],
-        migrated: true,
       });
 
       history.replace('/');
     } catch (e) {
-      const error = e as FirebaseError;
-      if (error.code === 'auth/invalid-email') {
-        alert('이메일이 유효하지 않습니다.');
-      } else if (error.code === 'auth/wrong-password') {
-        alert('비밀번호가 일치하지 않습니다.');
-      } else if (error.code === 'auth/user-not-found') {
-        alert('해당 이메일로 가입한 유저가 존재하지 않습니다.');
-      }
+      const error = e as Error;
+      alert(error.message);
     } finally {
       setIsLoading(false);
     }

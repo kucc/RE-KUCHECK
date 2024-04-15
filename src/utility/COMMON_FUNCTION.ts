@@ -1,7 +1,6 @@
 export const PATH = {
   // 리뉴얼 페이지 PATH
   login: '/login', // 로그인
-  migrate: '/migrate', // 마이그레이션
   signUp: '/signup', // 회원가입
   main: '/', // 메인
   courseCreate: '/course/create', // 활동 개설

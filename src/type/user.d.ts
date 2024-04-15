@@ -9,5 +9,4 @@ interface User {
   instaLink?: string;
   role: '정회원' | '준회원' | '관리자';
   courseHistory?: Course[];
-  migrated?: boolean;
 }

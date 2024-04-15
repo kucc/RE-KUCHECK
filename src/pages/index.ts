@@ -5,7 +5,6 @@ export * from './CourseCreatePage';
 export * from './CourseDetailPage';
 export * from './JoinPage';
 export * from './LoginPage';
-export * from './MigratePage';
 export * from './MainPage';
 export * from './NoticePage';
 export * from './ProfilePage';
