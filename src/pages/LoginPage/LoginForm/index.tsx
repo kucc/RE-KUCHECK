@@ -93,13 +93,16 @@ export const LoginForm = () => {
 
   const onClickSendMail = async () => {
     try {
-      await fetch(`${process.env.REACT_APP_SSO_HOST}/api/auth/requestReset`, {
+      const res = await fetch(`${process.env.REACT_APP_SSO_HOST}/api/auth/requestReset`, {
         headers: {
           'Content-Type': 'application/json',
         },
         method: 'POST',
         body: JSON.stringify({ email: resendEmail }),
       });
+      if (res.status === 404) {
+        throw new Error('해당 이메일로 가입한 유저가 존재하지 않습니다.');
+      }
       alert('이메일을 전송했습니다.');
     } catch (e) {
       const error = e as Error;
