@@ -19,6 +19,7 @@ export const getUser = async ({
   const docRef = doc(db, 'users', id);
   const docSnap = (await getDoc(docRef)).data() as User;
   const courseHistory = docSnap.courseHistory ?? [];
+
   if (courseHistory.length > 0) {
     await Promise.all(
       courseHistory.map(async (course, i) => {
@@ -26,8 +27,7 @@ export const getUser = async ({
         const docRef2 = doc(db, 'users', leader_id);
         const docSnap2 = (await getDoc(docRef2)).data() as User;
         course.courseLeader.emoji = docSnap2.emoji;
-      }
-      ),
+      }),
     );
   }
   return { ...docSnap, id };

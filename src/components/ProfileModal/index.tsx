@@ -278,7 +278,7 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
             />
           </StyledForm>
           <StyledForm>
-            <StyledTitleText>인스타그램 링크 수정</StyledTitleText>
+            <StyledTitleText>인스타그램 아이디 수정</StyledTitleText>
             <StyledInput
               defaultValue={user.instaLink}
               spellCheck={false}
@@ -287,7 +287,7 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
               }}
             />
           </StyledForm>
-          <StyledForm>
+          {/* <StyledForm>
             <StyledTitleText>이메일 링크 수정</StyledTitleText>
             <StyledInput
               defaultValue={user.email}
@@ -296,7 +296,7 @@ export const ProfileModal = ({ user, setModal }: { user: User; setModal: any }) 
                 setEmail(e.target.value);
               }}
             />
-          </StyledForm>
+          </StyledForm> */}
         </StyledWrapper>
         <StyledWithdrawalButton
           onClick={() => {

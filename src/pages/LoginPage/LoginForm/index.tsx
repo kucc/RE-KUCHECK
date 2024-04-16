@@ -1,17 +1,15 @@
 import { useState } from 'react';
 
-import { FirebaseError } from 'firebase/app';
-import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import { sendPasswordResetEmail, signInWithCustomToken } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import Modal from 'react-modal';
 import { useHistory } from 'react-router';
 
-// import { useDispatch, useSelector } from "react-redux";
-// import { loginRequest } from '@redux/actions/_member_action';
 import { AuthInputWithLabel, LoadingButton } from '@components';
 
-import { auth } from '@config';
+import { auth, db } from '@config';
 import { GRAY, RED, WHITE } from '@utility/COLORS';
-import { PATH } from '@utility/COMMON_FUNCTION';
+import { RandomEmoji } from '@utility/COMMON_FUNCTION';
 
 import { StyledForm, StyledSignUpButton } from './style';
 
@@ -34,6 +32,8 @@ export const LoginForm = () => {
     });
   };
 
+  const [resendEmail, setResendEmail] = useState('');
+
   const onClickLogin = async () => {
     if (isLoading) return;
     if (!email.length || !password.length) {
@@ -43,26 +43,73 @@ export const LoginForm = () => {
 
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      history.replace('/');
-    } catch (e) {
-      const error = e as FirebaseError;
-      if (error.code === 'auth/invalid-email') {
-        alert('이메일이 유효하지 않습니다.');
-      } else if (error.code === 'auth/wrong-password') {
-        alert('비밀번호가 일치하지 않습니다.');
-      } else if (error.code === 'auth/user-not-found') {
-        alert('해당 이메일로 가입한 유저가 존재하지 않습니다.');
+      const ssoResult = await fetch(`${process.env.REACT_APP_SSO_HOST}/api/auth/firebase`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify({ email, password, type: 'lms' }),
+      });
+
+      if (ssoResult.status === 404) {
+        throw new Error('해당 이메일로 가입한 유저가 존재하지 않습니다.');
+      } else if (ssoResult.status === 401) {
+        throw new Error('비밀번호가 일치하지 않습니다.');
       }
+
+      const {
+        firebaseToken,
+      }: {
+        firebaseToken: string;
+      } = await ssoResult.json();
+      const res = await signInWithCustomToken(auth, firebaseToken);
+      const user = await res.user.getIdTokenResult();
+
+      const findUser = await getDoc(doc(db, 'users', user.claims.uid));
+      if (findUser.exists()) {
+        return;
+      }
+
+      await setDoc(doc(db, 'users', user.claims.uid), {
+        email: user.claims.email,
+        name: user.claims.name,
+        comment: '',
+        detailComment: '',
+        link: '',
+        instaLink: '',
+        role: '준회원',
+        emoji: RandomEmoji(),
+        courseHistory: [],
+      });
+
+      history.replace(`/profile/${user.claims.uid}`);
+    } catch (e) {
+      const error = e as Error;
+      alert(error.message);
     } finally {
       setIsLoading(false);
     }
   };
 
   const onClickSendMail = async () => {
-    await sendPasswordResetEmail(auth, email);
-    setModal(false);
-    alert('전송했습니다!');
+    try {
+      const res = await fetch(`${process.env.REACT_APP_SSO_HOST}/api/auth/requestReset`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify({ email: resendEmail }),
+      });
+      if (res.status === 404) {
+        throw new Error('해당 이메일로 가입한 유저가 존재하지 않습니다.');
+      }
+      alert('이메일을 전송했습니다.');
+    } catch (e) {
+      const error = e as Error;
+      alert(error.message);
+    } finally {
+      setModal(false);
+    }
   };
 
   const onKeyPress = (e: any) => {
@@ -108,7 +155,16 @@ export const LoginForm = () => {
           isLoading={isLoading}
           isActive={true}
         />
-        <StyledSignUpButton to={PATH.signUp}>JOIN</StyledSignUpButton>
+        <StyledSignUpButton
+          onClick={() =>
+            window.open(
+              process.env.REACT_APP_SSO_HOST,
+              '',
+              'width=400,height=600,toolbar=no,menubar=no,scrollbars=no,resizable=no',
+            )
+          }>
+          JOIN
+        </StyledSignUpButton>
         <div
           style={{
             marginTop: 30,
@@ -151,9 +207,11 @@ export const LoginForm = () => {
         <div style={{ fontWeight: 700, fontSize: 20, marginBottom: 30 }}>이메일 전송하기</div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <input
-            value={email}
+            value={resendEmail}
             placeholder='이메일'
-            onChange={onChange}
+            onChange={e => {
+              setResendEmail(e.target.value);
+            }}
             style={{ border: 'none', height: 30, paddingLeft: 10, borderRadius: 10, width: 300 }}
           />
           <button
