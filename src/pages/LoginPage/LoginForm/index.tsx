@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { FirebaseError } from 'firebase/app';
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
@@ -23,6 +23,9 @@ export const LoginForm = () => {
     password: '',
   });
   const { email, password } = inputs;
+
+  const [resetEmail, setResetEmail] = useState('');
+
   const [isLoading, setIsLoading] = useState(false);
   const [modal, setModal] = useState(false);
 
@@ -32,6 +35,10 @@ export const LoginForm = () => {
       ...inputs,
       [name]: value,
     });
+  };
+
+  const onChangeReset = (event: any) => {
+    setResetEmail(event.target.value);
   };
 
   const onClickLogin = async () => {
@@ -77,6 +84,10 @@ export const LoginForm = () => {
     }
     return false;
   }
+
+  useEffect(() => {
+    setResetEmail(email);
+  }, [email]);
 
   return (
     <>
@@ -151,9 +162,9 @@ export const LoginForm = () => {
         <div style={{ fontWeight: 700, fontSize: 20, marginBottom: 30 }}>이메일 전송하기</div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <input
-            value={email}
+            value={resetEmail}
             placeholder='이메일'
-            onChange={onChange}
+            onChange={onChangeReset}
             style={{ border: 'none', height: 30, paddingLeft: 10, borderRadius: 10, width: 300 }}
           />
           <button
