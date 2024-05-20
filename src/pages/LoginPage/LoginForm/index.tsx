@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { FirebaseError } from 'firebase/app';
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
@@ -67,9 +67,18 @@ export const LoginForm = () => {
   };
 
   const onClickSendMail = async () => {
-    await sendPasswordResetEmail(auth, email);
+    await sendPasswordResetEmail(auth, resetEmail)
+      .then(() => {
+        // Password reset email sent!
+        alert('전송했습니다!');
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(`전송에 실패했습니다. ${errorCode} ${errorMessage}`);
+      });
+
     setModal(false);
-    alert('전송했습니다!');
   };
 
   const onKeyPress = (e: any) => {
@@ -85,9 +94,9 @@ export const LoginForm = () => {
     return false;
   }
 
-  useEffect(() => {
-    setResetEmail(email);
-  }, [email]);
+  // useEffect(() => {
+  //   setResetEmail(email);
+  // }, [email]);
 
   return (
     <>
