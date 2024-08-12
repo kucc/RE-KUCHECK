@@ -37,13 +37,23 @@ export const StyledDebugMode = styled.div`
   height: 0;
   border-right: 80px solid transparent;
   border-top: 80px solid ${RED};
+  @media (max-width: 800px) {
+    border-right: 20px solid transparent;
+    border-top: 20px solid ${RED};
+  }
 `;
 
 export const StyledDebugModeText = styled.div`
   position: fixed;
   top: 15px;
+  left: 8px;
   transform: rotate(-45deg);
   color: ${WHITE};
+  @media (max-width: 800px) {
+    top: 10px;
+    left: 3px;
+    font-size: 10px;
+  }
 `;
 
 export const StyledMainLogo = styled.img`

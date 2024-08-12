@@ -48,6 +48,7 @@ export const NoticePage = () => {
 
   return (
     <div>
+      {/* TODO: 관리자 공지사항 작성 및 수정 기능 추가 */}
       <StyledBody>
         <StyledMenu>공지사항</StyledMenu>
         <StyledSubTitle>KUCC 내 활동 관련 운영 정책들을 확인해보세요!</StyledSubTitle>
