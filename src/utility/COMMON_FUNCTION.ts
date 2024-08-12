@@ -23,8 +23,8 @@ export const INCLUDE_HEADERPATH_LIST = [
 ];
 
 export const MEMBER_ROLE = {
-  MEMBER: 'MEMBER',
-  MANAGER: 'MANAGER',
+  MEMBER: '준회원',
+  MANAGER: '관리자',
 };
 
 export const RandomEmoji = () => {

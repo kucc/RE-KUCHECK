@@ -55,7 +55,7 @@ export const TopHeader = () => {
       <StyledTopHeaderContainer>
         {process.env.REACT_APP_PROJECT_ID === 'kucc-dev-43149' && (
           <StyledDebugMode>
-            <StyledDebugModeText>debug🐛</StyledDebugModeText>
+            <StyledDebugModeText>DEV</StyledDebugModeText>
           </StyledDebugMode>
         )}
 
