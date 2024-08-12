@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { Dropdown, Menu } from 'antd';
 import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
-import { useHistory } from 'react-router';
 import { useRecoilState } from 'recoil';
 
 import { Loading } from '@components';
@@ -49,10 +48,9 @@ interface MemberData {
   id: string;
   deposit: number;
 }
-
+/* TODO: 학기별로 조회 가능하도록 */
 export const AttendancePage = () => {
   const { user } = useGetProfile();
-  const history = useHistory();
   const { checkedSemester } = useGetSemester();
 
   const [selectedCourseId, setSelectedCourseId] = useState('');
@@ -89,27 +87,43 @@ export const AttendancePage = () => {
     setIsLoading(false);
   };
 
+  const fetchCoursesBySemester = async (semester: string) => {
+    const q = query(collection(db, 'courses'), where('semester', '==', semester));
+    return await getDocs(q);
+  };
+
   const fetchAllCourses = async (checkedSemester: string) => {
-    const q = query(collection(db, 'courses'), where('semester', '==', checkedSemester));
+    let querySnapshot = await fetchCoursesBySemester(checkedSemester);
 
-    const querySnapshot = await getDocs(q);
-    const newCourses = [];
-    const myCoursesId = [];
+    if (querySnapshot?.docs.length === 0) {
+      const commonDocRef = doc(db, 'common', 'commonInfo');
+      const commonDocData = (await getDoc(commonDocRef)).data();
+      const pastSemester = commonDocData?.pastSemester?.slice(-2, -1)[0];
 
-    for (const doc of querySnapshot.docs) {
-      const docData = doc.data() as Course;
-      if (docData.courseMember.includes(user?.id ?? '')) {
-        myCoursesId.push(doc.id);
+      if (pastSemester) {
+        querySnapshot = await fetchCoursesBySemester(pastSemester);
       }
-      newCourses.push({ ...docData, id: doc.id });
     }
 
-    if (myCoursesId.length) {
-      setSelectedCourseId(myCoursesId[selectedCourseIndex]);
-    } else {
-      setSelectedCourseId(newCourses[selectedCourseIndex].id);
+    if (querySnapshot) {
+      const newCourses = [];
+      const myCoursesId = [];
+
+      for (const doc of querySnapshot.docs) {
+        const docData = doc.data() as Course;
+        newCourses.push({ ...docData, id: doc.id });
+        if (docData.courseMember.includes(user?.id ?? '')) {
+          myCoursesId.push(doc.id);
+        }
+      }
+
+      if (myCoursesId.length) {
+        setSelectedCourseId(myCoursesId[selectedCourseIndex]);
+      } else if (newCourses.length) {
+        setSelectedCourseId(newCourses[selectedCourseIndex].id);
+      }
+      setMyCourses(newCourses);
     }
-    setMyCourses(newCourses);
   };
 
   const submitUpdate = async () => {
@@ -129,18 +143,6 @@ export const AttendancePage = () => {
     location.reload();
   };
 
-  useEffect(() => {
-    if (checkedSemester) {
-      fetchAllCourses(checkedSemester);
-    }
-  }, [checkedSemester]);
-
-  useEffect(() => {
-    if (selectedCourseId.length) {
-      fetchCourse(selectedCourseId);
-    }
-  }, [selectedCourseId]);
-
   const checkAttendance = (memberIndex: number, weekIndex: number, value: number) => {
     setMembersData(prev => {
       const currentMemberData = prev[memberIndex];
@@ -155,6 +157,18 @@ export const AttendancePage = () => {
       return newMembersData;
     });
   };
+
+  useEffect(() => {
+    if (checkedSemester) {
+      fetchAllCourses(checkedSemester);
+    }
+  }, [checkedSemester]);
+
+  useEffect(() => {
+    if (selectedCourseId.length) {
+      fetchCourse(selectedCourseId);
+    }
+  }, [selectedCourseId]);
 
   const CoursesMenu = (
     <StyledDropDownList>
@@ -236,17 +250,16 @@ export const AttendancePage = () => {
             </StyledTermText>
           </StyledMenu>
           <StyledButtonWrapper>
-            {(isCourseLeader ||
-              isCourseOtherLeader) &&
-                (isEditMode ? (
-                  <StyledAttendanceButton onClick={submitUpdate} style={{ backgroundColor: RED }}>
-                    완료
-                  </StyledAttendanceButton>
-                ) : (
-                  <StyledAttendanceButton onClick={() => setIsEditMode(prev => !prev)}>
-                    수정하기
-                  </StyledAttendanceButton>
-                ))}
+            {(isCourseLeader || isCourseOtherLeader) &&
+              (isEditMode ? (
+                <StyledAttendanceButton onClick={submitUpdate} style={{ backgroundColor: RED }}>
+                  완료
+                </StyledAttendanceButton>
+              ) : (
+                <StyledAttendanceButton onClick={() => setIsEditMode(prev => !prev)}>
+                  수정하기
+                </StyledAttendanceButton>
+              ))}
             <StyledDropDown>
               <Dropdown trigger={['click']} overlay={CoursesMenu} placement='bottomLeft'>
                 <div>
