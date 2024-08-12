@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 
+import { DoubleRightOutlined } from '@ant-design/icons';
 import { Button, Select } from 'antd';
 import { arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc } from 'firebase/firestore';
 
 import { db } from '@config';
+import { RED, WHITE } from '@utility/COLORS';
 
 const { Option } = Select;
 export const AddUser = () => {
   const [userData, setUserData] = useState<any[]>([]);
   const [courseData, setCourseData] = useState<any[]>([]);
-  const [selectedUser, setSelectedUser] = useState('');
+  const [selectedUser, setSelectedUser] = useState<string[]>([]);
   const [selectedCourse, setSelectedCourse] = useState('');
 
   const getAllUserData = async () => {
@@ -36,24 +38,35 @@ export const AddUser = () => {
     setCourseData(newCourseData);
   };
 
-  const onButtonClicked = async () => {
-    const userDocRef = doc(db, 'users', selectedUser);
-    const courseDocRef = doc(db, 'courses', selectedCourse);
-    const selectedCourseData = (await getDoc(courseDocRef)).data() as any;
+  const onButtonClicked = () => {
+    selectedUser.forEach(async user => {
+      const userId = user.split('/')[1];
 
-    await updateDoc(userDocRef, {
-      courseHistory: arrayUnion({
-        selectedCourseData,
-        id: courseDocRef.id,
-      }),
-    });
+      const userDocRef = doc(db, 'users', userId);
+      const courseDocRef = doc(db, 'courses', selectedCourse);
+      const selectedCourseData = (await getDoc(courseDocRef)).data() as any;
 
-    await updateDoc(courseDocRef, {
-      courseAttendance: arrayUnion({
-        attendance: [3, 3, 3, 3, 3, 3, 3, 3],
-        id: userDocRef.id,
-      }),
-      courseMember: arrayUnion(userDocRef.id),
+      await updateDoc(userDocRef, {
+        courseHistory: arrayUnion({
+          courseInfo: selectedCourseData.courseInfo,
+          courseLeader: selectedCourseData.courseLeader,
+          courseName: selectedCourseData.courseName,
+          courseType: selectedCourseData.courseType,
+          difficulty: selectedCourseData.difficulty,
+          id: courseDocRef.id,
+          language: selectedCourseData.language,
+          requireTime: selectedCourseData.requireTime,
+          semester: selectedCourseData.semester,
+        }),
+      });
+
+      await updateDoc(courseDocRef, {
+        courseAttendance: arrayUnion({
+          attendance: [3, 3, 3, 3, 3, 3, 3, 3],
+          id: userDocRef.id,
+        }),
+        courseMember: arrayUnion(userDocRef.id),
+      });
     });
 
     alert('성공!');
@@ -65,17 +78,27 @@ export const AddUser = () => {
   }, []);
 
   return (
-    <div style={{ display: 'flex', gap: '10px' }}>
-      <Select onChange={value => setSelectedUser(value)} style={{ width: '350px' }}>
+    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+      <Select
+        mode='multiple'
+        placeholder='수강생을 선택해주세요.'
+        onChange={value => {
+          setSelectedUser(value);
+        }}
+        style={{ width: '350px' }}>
         {userData.length > 0 &&
           userData.map((user, index) => (
-            <Option key={index} value={user.id} style={{ fontSize: '11px' }}>
-              {user.id + '/' + user.name}
+            <Option key={index} value={`${user.name}/${user.id}`} style={{ fontSize: '11px' }}>
+              <strong>{user.name}</strong>/<span>{user.id}</span>
             </Option>
           ))}
       </Select>
-      {'  =>  '}
-      <Select onChange={value => setSelectedCourse(value)} style={{ width: '350px' }}>
+
+      <DoubleRightOutlined />
+      <Select
+        placeholder='세션을 선택해주세요.'
+        onChange={value => setSelectedCourse(value)}
+        style={{ width: '350px' }}>
         {courseData.length > 0 &&
           courseData.map((course, index) => (
             <Option key={index} value={course.id} style={{ fontSize: '11px' }}>
@@ -83,7 +106,14 @@ export const AddUser = () => {
             </Option>
           ))}
       </Select>
-      <Button onClick={onButtonClicked}>GO!</Button>
+      <Button
+        onClick={onButtonClicked}
+        style={{
+          backgroundColor: selectedCourse && selectedUser && RED,
+          color: selectedCourse && selectedUser && WHITE,
+        }}>
+        GO!
+      </Button>
     </div>
   );
 };

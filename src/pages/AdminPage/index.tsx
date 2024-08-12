@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 
+import { Button } from 'antd';
+import ButtonGroup from 'antd/es/button/button-group';
+import Input from 'antd/es/input/Input';
 import { saveAs } from 'file-saver';
 import { collection, doc, getDoc, getDocs, query, updateDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router';
@@ -7,8 +10,10 @@ import { useHistory } from 'react-router';
 import { db } from '@config';
 import { useGetProfile, useGetSemester, useRedirectToMain } from '@hooks';
 import { ONLY_ADMIN } from '@utility/ALERT_MESSAGE';
+import { RED } from '@utility/COLORS';
 
 import { AddUser } from './AddUser';
+import { StyledItem, StyledLayout, StyledSubTitle, StyledTitle } from './style';
 import { handleTimeTableReset } from './utils';
 
 export const AdminPage = () => {
@@ -132,45 +137,62 @@ export const AdminPage = () => {
   }, [user]);
 
   return (
-    <div>
-      <h1 style={{ marginTop: 30 }}>1. 시간표 초기화하기</h1>
-      <h4>누르면 바로 초기화되니 주의하세요.</h4>
-      <button onClick={handleTimeTableReset} style={{ border: '1px solid black', padding: 20 }}>
-        초기화!
-      </button>
+    <StyledLayout>
+      <StyledItem>
+        <StyledTitle>
+          1. 시간표 초기화하기
+          <p style={{ color: RED, fontSize: '13px', marginTop: '2px' }}>
+            누르면 바로 초기화되니 주의하세요.
+          </p>
+        </StyledTitle>
+        <Button onClick={handleTimeTableReset} style={{ maxWidth: '150px' }} size='large'>
+          초기화!
+        </Button>
+      </StyledItem>
 
-      <h1 style={{ marginTop: 30 }}>2. 엑셀 추출</h1>
-      <button
-        onClick={() =>
-          saveAs(
-            new Blob(['\uFEFF' + data], {
-              type: 'text/csv;charset=utf-8',
-            }),
-            `${currentSemester}_kucc_attendance_session.csv`,
-          )
-        }
-        style={{ border: '1px solid black', padding: 20 }}>
-        세션별
-      </button>
-      <button onClick={handleMemberClick} style={{ border: '1px solid black', padding: 20 }}>
-        세션별
-      </button>
-      <h1 style={{ marginTop: 30 }}>3. 강의 넣어주기</h1>
-      <AddUser />
-      <h1 style={{ marginTop: 30 }}>4. 새학기 등록</h1>
-      <h3>현재 학기: {currentSemester} </h3>
-      <h3>
-        바꿀 학기:
-        <input
-          type='text'
-          placeholder={currentSemester || ''}
-          value={newSemester}
-          onChange={e => setNewSemester(e.target.value)}
-        />
-        <button onClick={changeSemester} style={{ border: '1px solid black', padding: 20 }}>
-          변경
-        </button>
-      </h3>
-    </div>
+      <StyledItem>
+        <StyledTitle>2. 엑셀 추출</StyledTitle>
+        <ButtonGroup size='large'>
+          <Button
+            onClick={() =>
+              saveAs(
+                new Blob(['\uFEFF' + data], {
+                  type: 'text/csv;charset=utf-8',
+                }),
+                `${currentSemester}_kucc_attendance_session.csv`,
+              )
+            }>
+            세션별
+          </Button>
+          <Button onClick={handleMemberClick}>멤버별</Button>
+        </ButtonGroup>
+      </StyledItem>
+
+      <StyledItem>
+        <StyledTitle>3. 강의 넣어주기</StyledTitle>
+        <AddUser />
+      </StyledItem>
+
+      <StyledItem>
+        <StyledTitle>4. 새학기 등록</StyledTitle>
+
+        <StyledSubTitle>현재 학기: {currentSemester}</StyledSubTitle>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <StyledSubTitle>바꿀 학기:</StyledSubTitle>
+          <span style={{ display: 'flex', gap: '5px' }}>
+            <Input
+              style={{ maxWidth: '200px' }}
+              type='text'
+              placeholder={currentSemester || ''}
+              value={newSemester}
+              onChange={e => setNewSemester(e.target.value)}
+            />
+            <Button onClick={changeSemester} type='primary'>
+              변경
+            </Button>
+          </span>
+        </div>
+      </StyledItem>
+    </StyledLayout>
   );
 };

@@ -5,9 +5,17 @@ import { useHistory, useLocation } from 'react-router';
 
 import { StyleActive, StyledActiveLine, StyledLinkButton } from '@components/Header/style';
 
-import { CheckCircleIcon, EditIcon, HomeIcon, NoticeIcon, TimeTableIcon } from '@/svg/header';
+import {
+  CheckCircleIcon,
+  EditIcon,
+  HomeIcon,
+  LockStatesIcon,
+  NoticeIcon,
+  TimeTableIcon,
+} from '@/svg/header';
+import { useGetProfile } from '@hooks';
 import { BLACK, RED } from '@utility/COLORS';
-import { PATH } from '@utility/COMMON_FUNCTION';
+import { MEMBER_ROLE, PATH } from '@utility/COMMON_FUNCTION';
 
 import { StyledMainContent, StyledSidebar, StyledSidebarContainer } from './style';
 
@@ -42,8 +50,8 @@ export const Sidebar = ({ children }: { children: React.ReactElement }) => {
   const isMobile = useMediaQuery({ query: '(max-width: 800px)' });
 
   const history = useHistory();
-
   const location = useLocation();
+  const { user } = useGetProfile();
 
   const pathname = location.pathname;
 
@@ -65,6 +73,17 @@ export const Sidebar = ({ children }: { children: React.ReactElement }) => {
             </StyleActive>
           </StyledLinkButton>
         ))}
+        {user && user.role === MEMBER_ROLE.MANAGER && (
+          <StyledLinkButton
+            onClick={() => {
+              history.push(PATH.admin);
+            }}>
+            <StyleActive active={pathname === PATH.admin}>
+              <LockStatesIcon fill={pathname === PATH.admin ? RED : BLACK} />
+              <span>관리자</span>
+            </StyleActive>
+          </StyledLinkButton>
+        )}
       </StyledSidebar>
       <StyledMainContent>{children}</StyledMainContent>
     </StyledSidebarContainer>
