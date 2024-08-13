@@ -27,8 +27,8 @@ export const StyledCommonTitle = styled.div`
 `;
 
 export const StyledSubTitle = styled.div`
-  font-size: 18px;
-  font-family: 'sdBo';
+  font-size: 16px;
+  /* font-family: 'sdBo'; */
   color: ${BLACK};
   padding-left: 29px;
   @media (max-width: 800px) {
@@ -59,7 +59,7 @@ export const StyledTitleWrapper = styled(StyledBarMenu1)`
     padding: 16px 0 16px 6px;
     font-size: 12px;
   }
-`
+`;
 export const StyledBarMenu3 = styled.span`
   margin-left: auto;
   @media (max-width: 800px) {
@@ -81,8 +81,7 @@ export const StyledBar = styled.hr`
 export const StyledBottomBar = styled(StyledBar)`
   height: 0.5px;
   background-color: ${LINE_GRAY};
-`
-
+`;
 
 export const CollapseBox = styled.div`
   display: flex;
@@ -116,4 +115,11 @@ export const StyledContent = styled.div`
     line-height: 17px;
     padding: 20px;
   }
-`
+`;
+
+export const StyledContent2 = styled.div`
+  padding: 22px 57px 22px 29px;
+  @media (max-width: 800px) {
+    padding: 16px 0 16px 6px;
+  }
+`;
