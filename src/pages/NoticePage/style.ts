@@ -16,6 +16,7 @@ export const StyledMenu = styled.div`
 
 export const StyledBody = styled.div`
   padding-left: 20px;
+  padding-right: 20px;
   padding-bottom: 150px;
 `;
 
@@ -118,8 +119,15 @@ export const StyledContent = styled.div`
 `;
 
 export const StyledContent2 = styled.div`
-  padding: 22px 57px 22px 29px;
+  padding: 22px 57px 22px 60px;
   @media (max-width: 800px) {
     padding: 16px 0 16px 6px;
+    font-size: 12px;
   }
+`;
+
+export const StyledAddNoticeButtonWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 `;

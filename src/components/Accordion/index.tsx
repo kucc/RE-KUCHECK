@@ -32,7 +32,12 @@ export default function Accordion({
         <TitleWrapper>
           <span>{title}</span>
           {date && (
-            <span style={{ color: '#a6a5a5', fontFamily: '-moz-initial', marginTop: '4px' }}>
+            <span
+              style={{
+                color: '#a6a5a5',
+                fontFamily: '-moz-initial',
+                marginTop: '4px',
+              }}>
               {date}
             </span>
           )}
@@ -57,11 +62,11 @@ const Button = styled.button`
   border: none;
   font-family: 'sdBo';
   width: 100%;
-  padding: 22px 57px 22px 29px;
+  padding: 22px 57px 22px 57px;
   font-size: 18px;
   cursor: pointer;
   @media (max-width: 800px) {
-    padding: 16px 0 16px 6px;
+    padding: 16px 6px 16px 6px;
     font-size: 12px;
   }
 `;
