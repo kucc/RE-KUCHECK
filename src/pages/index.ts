@@ -6,6 +6,7 @@ export * from './CourseDetailPage';
 export * from './JoinPage';
 export * from './LoginPage';
 export * from './MainPage';
+export * from './NoticeAdminPage';
 export * from './NoticePage';
 export * from './ProfilePage';
 export * from './TimeTablePage';

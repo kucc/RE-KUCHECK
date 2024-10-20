@@ -8,6 +8,7 @@ export const PATH = {
   attendance: '/attendance', // 출결 관리
   timeTable: '/timetable', // 동방 시간표
   profile: '/profile/:id', // 내 정보
+  noticeAdmin: '/notice/admin', // 공지사항 작성 및 수정,
   notice: '/notice', // 공지사항
   admin: '/admin', // 관리자
 };

@@ -17,6 +17,7 @@ import {
   ProfilePage,
   TimeTablePage,
 } from '@pages';
+import NoticeAdminPage from '@pages/NoticeAdminPage';
 
 import './App.less';
 import GlobalStyle from './GlobalStyle';
@@ -46,7 +47,8 @@ function App() {
               <Route path={PATH.attendance} component={AttendancePage} />
               <Route path={PATH.timeTable} component={TimeTablePage} />
               <Route path={PATH.profile} component={ProfilePage} />
-              <Route path={PATH.notice} component={NoticePage} />
+              <Route exact path={PATH.notice} component={NoticePage} />
+              <Route exact path={PATH.noticeAdmin} component={NoticeAdminPage} />
               <Route path={PATH.admin} component={AdminPage} />
             </Switch>
           </Sidebar>
